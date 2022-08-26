@@ -25,6 +25,8 @@ Use the command below to test reconstructor to ensure correct installation.
 ```
 python -m reconstructor --test yes
 ```
+*YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
+
 ## Usage:
 ### Use reconstructor via command line
 Now that reconstructor and all dependency databases are installed, you can proceed to use reconstructor via command line. An example would be:
