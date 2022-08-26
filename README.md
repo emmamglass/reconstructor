@@ -25,6 +25,8 @@ Use the command below to test reconstructor to ensure correct installation.
 ```
 python -m reconstructor --test yes
 ```
+*YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
+
 ## Usage:
 ### Use reconstructor via command line
 Now that reconstructor and all dependency databases are installed, you can proceed to use reconstructor via command line. An example would be:
@@ -83,3 +85,9 @@ python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
 ```
 --test <run installation tests, default = no>
 ```
+## Additional Information
+Thank you for your interest in reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
+
+If you encounter any problems, please file an [issue](https://github.com/emmamglass/reconstructor/issues) along with a detailed description.
+
+Distributed under the terms of the [MIT license](https://github.com/emmamglass/reconstructor/blob/main/reconstructor/LICENSE), "reconstructor" is free and open source software
