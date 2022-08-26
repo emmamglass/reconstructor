@@ -378,7 +378,21 @@ if os.path.exists(script_path+'/testfiles') == False:
     wget.download(url, out = script_path+'/testfiles')
 
 
+
 if test == 'yes':
+    exe = 'glpk_interface.py'
+    for root, dirs, files in os.walk('/Users',topdown = True):
+        for name in files:
+            if name == exe:
+                file_path = os.path.abspath(os.path.join(root,name))
+                path = os.path.abspath(os.path.join(root))
+
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                
+                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/glpk_interface.py"
+                wget.download(url, out = path)
+
     cmd_line = "python -m reconstructor --input " + script_path+"/testfiles/488.146.fa --type 1 --gram negative"
     os.system(cmd_line)
 
