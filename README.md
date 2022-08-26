@@ -90,4 +90,4 @@ Thank you for your interest in reconstructor. If you have any additional questio
 
 If you encounter any problems, please file an [issue](https://github.com/emmamglass/reconstructor/issues) along with a detailed description.
 
-Distributed under the terms of the MIT license, "reconstructor" is free and open source software
+Distributed under the terms of the [MIT license](https://github.com/emmamglass/reconstructor/blob/main/reconstructor/LICENSE), "reconstructor" is free and open source software
