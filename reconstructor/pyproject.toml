@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "reconstructor"
-version = "1.0.23"
+version = "1.0.24"
 description = "COBRApy Compatible Genome Scale Metabolic Network Reconstruction Tool: Reconstructor"
 authors = ["Matt Jenior and Emma Glass"]
 license = "MIT"

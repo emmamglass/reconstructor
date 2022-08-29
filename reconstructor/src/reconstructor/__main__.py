@@ -363,6 +363,9 @@ if os.path.exists(script_path+'/refs') == False:
     wget.download(url, out = script_path+'/refs')
 
 #import test files 
+##488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
+# JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
+# fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
 if os.path.exists(script_path+'/testfiles') == False:
     os.makedirs(script_path+'/testfiles')
 
