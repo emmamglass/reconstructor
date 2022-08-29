@@ -340,6 +340,11 @@ processors = int(args.cpu)
 test = str(args.test)
 
 #######################################################################################################'''
+## import reference files from github
+## gene_modelseed.pickle: creates a dictionary that turns kegg genes into modelseed reactions
+## gene_names.pickle: KEGG genes database, used for adding gene names to the draft gener
+## screened_kegg_prokaryotes_pep_db.dmd: The database used for the blast search using the diamond sequence aligner
+## universal.pickle: The universal model that the draft genres draw from
 script_path = str(os.path.dirname(os.path.realpath(__file__)))
 if os.path.exists(script_path+'/refs') == False:
 
@@ -357,6 +362,7 @@ if os.path.exists(script_path+'/refs') == False:
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
     wget.download(url, out = script_path+'/refs')
 
+#import test files 
 if os.path.exists(script_path+'/testfiles') == False:
     os.makedirs(script_path+'/testfiles')
 
