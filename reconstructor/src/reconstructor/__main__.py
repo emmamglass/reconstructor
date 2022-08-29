@@ -344,19 +344,11 @@ script_path = str(os.path.dirname(os.path.realpath(__file__)))
 if os.path.exists(script_path+'/refs') == False:
 
     os.makedirs(script_path+'/refs')
-    url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/biomass.sbml"
-    wget.download(url, out = script_path+'/refs')
-
-    url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/compounds.json"
-    wget.download(url, out = script_path+'/refs')
 
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_modelseed.pickle"
     wget.download(url, out = script_path+'/refs')
 
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_names.pickle"
-    wget.download(url, out = script_path+'/refs')
-
-    url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/reactions.json"
     wget.download(url, out = script_path+'/refs')
 
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
