@@ -402,7 +402,7 @@ if platform == 'Darwin':
 
 if platform == 'Windows':
     if os.path.exists(script_path+r'\testfiles' == False):
-        os.makedirs(script_path+reactions'\testfiles')
+        os.makedirs(script_path+r'\testfiles')
     if os.path.exists(script_path+r'\testfiles\488.146.fa') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/488.146.fa"
         wget.download(url, out = script_path+r'\testfiles')
