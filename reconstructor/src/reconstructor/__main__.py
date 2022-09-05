@@ -350,7 +350,7 @@ script_path = str(os.path.dirname(os.path.realpath(__file__)))
 platform =  platform.system()
 print(platform)
 
-if platform == 'Darwin':
+if platform == 'Darwin' or platform == 'Linux':
     if os.path.exists(script_path+'/refs') == False:
             os.makedirs(script_path+'/refs')
     if os.path.exists(script_path+'/refs/gene_modelseed.pickle') == False:
@@ -387,7 +387,7 @@ if platform == 'Windows':
 ##488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
 # JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
 # fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
-if platform == 'Darwin':
+if platform == 'Darwin' or platform == 'Linux':
     if os.path.exists(script_path+'/testfiles') == False:
         os.makedirs(script_path+'/testfiles')
     if os.path.exists(script_path+'/testfiles/488.146.fa') == False:
