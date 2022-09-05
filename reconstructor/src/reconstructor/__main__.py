@@ -348,6 +348,7 @@ test = str(args.test)
 ## universal.pickle: The universal model that the draft genres draw from
 script_path = str(os.path.dirname(os.path.realpath(__file__)))
 platform =  platform.system()
+print(platform)
 
 if platform == 'Darwin':
     if os.path.exists(script_path+'/refs') == False:
@@ -365,21 +366,21 @@ if platform == 'Darwin':
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
         wget.download(url, out = script_path+'/refs')
 
-if platform == 'Windows'
-    if os.path.exists(script_path+'\refs') == False:
-        os.makedirs(script_path+'\refs')
-    if os.path.exists(script_path+'\refs\gene_modelseed.pickle') == False:
+if platform == 'Windows':
+    if os.path.exists(script_path+r'\refs') == False:
+        os.makedirs(script_path+r'\refs')
+    if os.path.exists(script_path+r'\refs\gene_modelseed.pickle') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_modelseed.pickle"
         wget.download(url, out = script_path+'\refs')
-    if os.path.exists(script_path+'\refs\gene_names.pickle') == False:
+    if os.path.exists(script_path+r'\refs\gene_names.pickle') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_names.pickle"
         wget.download(url, out = script_path+'\refs')
-    if os.path.exists(script_path+'\refs\screened_kegg_prokaryotes_pep_db.dmnd') == False:
+    if os.path.exists(script_path+r'\refs\screened_kegg_prokaryotes_pep_db.dmnd') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
         wget.download(url, out = script_path+'\refs')
-    if os.path.exists(script_path+'\refs\universal.pickle') == False:
+    if os.path.exists(script_path+r'\refs\universal.pickle') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
-        wget.download(url, out = script_path+'\refs')
+        wget.download(url, out = script_path+r'\refs')
 
 
 #import test files 
@@ -400,17 +401,17 @@ if platform == 'Darwin':
         wget.download(url, out = script_path+'/testfiles')
 
 if platform == 'Windows':
-    if os.path.exists(script_path+'\testfiles' == False):
-        os.makedirs(script_path+'\testfiles')
-    if os.path.exists(script_path+'\testfiles\488.146.fa') == False:
+    if os.path.exists(script_path+r'\testfiles' == False):
+        os.makedirs(script_path+reactions'\testfiles')
+    if os.path.exists(script_path+r'\testfiles\488.146.fa') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/488.146.fa"
-        wget.download(url, out = script_path+'\testfiles')
-    if os.path.exists(script_path+'\testfiles\JCP8151B.KEGGprot.out') == False:
+        wget.download(url, out = script_path+r'\testfiles')
+    if os.path.exists(script_path+r'\testfiles\JCP8151B.KEGGprot.out') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/JCP8151B.KEGGprot.out"
-        wget.download(url, out = script_path+'\testfiles')
-    if os.path.exists(script_path+'\testfiles\fmt.metaG.01044A.bin.149.KEGGprot.sbml') == False:
+        wget.download(url, out = script_path+r'\testfiles')
+    if os.path.exists(script_path+r'\testfiles\fmt.metaG.01044A.bin.149.KEGGprot.sbml') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/fmt.metaG.01044A.bin.149.KEGGprot.sbml"
-        wget.download(url, out = script_path+'\testfiles')
+        wget.download(url, out = script_path+r'\testfiles')
 
 if test == 'yes':
     exe = 'glpk_interface.py'
