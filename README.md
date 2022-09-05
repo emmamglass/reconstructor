@@ -17,6 +17,11 @@ pip install reconstructor
 
 *You must be running >= Python 3.8
 
+Some windows configurations may require you to include ``` --user ``` in the pip install line like below:
+```
+pip install --user reconstructor
+```
+
 ## Test suite:
 #### Use the following command to run the test suite
 Run the following test to ensure reconstruction was installed correctly and is functional. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
