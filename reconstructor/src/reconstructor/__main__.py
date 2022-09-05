@@ -355,13 +355,13 @@ if platform == 'Darwin':
     if os.path.exists(script_path+'/refs/gene_modelseed.pickle') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_modelseed.pickle"
         wget.download(url, out = script_path+'/refs')
-    if os.path.exists(script_path+'\refs\gene_names.pickle') == False:
+    if os.path.exists(script_path+'/refs/gene_names.pickle') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_names.pickle"
         wget.download(url, out = script_path+'/refs')
-    if os.path.exists(script_path+'\refs\screened_kegg_prokaryotes_pep_db.dmnd') == False:
+    if os.path.exists(script_path+'/refs/screened_kegg_prokaryotes_pep_db.dmnd') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
         wget.download(url, out = script_path+'/refs')
-    if os.path.exists(script_path+'\refs\universal.pickle') == False:
+    if os.path.exists(script_path+'/refs/universal.pickle') == False:
         url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
         wget.download(url, out = script_path+'/refs')
 
