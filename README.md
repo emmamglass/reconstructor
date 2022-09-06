@@ -26,7 +26,10 @@ pip install --user reconstructor
 #### Use the following command to run the test suite
 Run the following test to ensure reconstruction was installed correctly and is functional. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
 
-Use the command below to test reconstructor to ensure correct installation.
+Use the command below to test reconstructor to ensure correct installation. 
+
+MAC USERS MAY BE ASKED FOR TERMINAL TO HAVE ACCESS TO DOWNLOADS, CAMERA, LOCATION, ETC. Please allow terminal to have access to all locations on your computer. Reconstructor will NOT gather data from your camera, location, or other sensitive information. Reconstructor is simply searching for the file titled glpk_interface.py on your local machine (installed when COBRA module is installed) and replacing it with a new version from my github that is actually functional.
+
 ```
 python -m reconstructor --test yes
 ```
