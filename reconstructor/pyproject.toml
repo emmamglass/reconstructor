@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "reconstructor"
-version = "1.0.31"
+version = "1.0.33"
 description = "COBRApy Compatible Genome Scale Metabolic Network Reconstruction Tool: Reconstructor"
 authors = ["Matt Jenior and Emma Glass"]
 license = "MIT"
@@ -12,6 +12,7 @@ cobra = "0.22.1"
 argparse = "^1.4.0"
 symengine = "^0.9.2"
 python-libsbml = "5.19.0"
+cmake = "3.24.1"
 wget = "^3.2"
 
 [tool.poetry.dev-dependencies]
