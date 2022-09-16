@@ -1,7 +1,7 @@
 # Reconstructor
 This repository contains all source code in the reconstructor python package, important file dependencies, and benchmarking scores for reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from gene fastas based on KEGG annotations.
 
-****Reconstructor is only currently compatible on MacOSX and Linux machines****
+****Reconstructor is currently only compatible on MacOSX and Linux machines****
 
 #### /MEMOTE
 contains benchmarking scores for 10 representative reconstructor models
