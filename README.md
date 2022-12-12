@@ -10,6 +10,9 @@ contains benchmarking scores for 10 representative reconstructor models
 contains all package source code
 
 ## Installation:
+### Download DIAMOND Aligner
+You must first have the diamond sequence aligner downloaded, installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)
+
 ### Install Reconstructor python package
 This can be done via pip in terminal on mac
 
