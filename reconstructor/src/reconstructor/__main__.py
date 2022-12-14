@@ -35,8 +35,8 @@ parser.add_argument('--cpu', default=1, help='Number of processors to use')
 parser.add_argument('--test', default = 'no', help = 'Running test cases to ensure correct installation')
 args = parser.parse_args()
 
-# Run protein BLAST and save results
 def _run_blast(inputfile, outputfile, database, processors, script_path):
+    ''' runs protein BLAST and saves results '''
     script_path = str(os.path.dirname(os.path.realpath(__file__)))
 
     print('blasting %s vs %s'%(input_file,database))
@@ -49,8 +49,8 @@ def _run_blast(inputfile, outputfile, database, processors, script_path):
 
     return outputfile
 
-# Retreive KEGG hits
 def _read_blast(blast_hits):
+    ''' Retrieves KEGG hits '''
     hits = set()
     with open(blast_hits, 'r') as inFile:
         for line in inFile:
@@ -58,9 +58,8 @@ def _read_blast(blast_hits):
             hits |= set([line[1]])
     return hits
 
-# Translate genes to ModelSEED reactions
 def _genes_to_rxns(kegg_hits, gene_modelseed, organism):
-
+    ''' Translates genes to ModelSEED reactions '''
     if organism != 'default':
         new_hits = _get_org_rxns(gene_modelseed, organism)
         gene_count = len(kegg_hits)
@@ -85,8 +84,8 @@ def _genes_to_rxns(kegg_hits, gene_modelseed, organism):
     return rxn_db
 
 
-# Get genes for organism from reference genome
 def _get_org_rxns(gene_modelseed, organism):
+    ''' Get genes for organism from reference genome '''
     rxn_db = {}
 
     org_genes = []
@@ -98,8 +97,8 @@ def _get_org_rxns(gene_modelseed, organism):
     return set(org_genes)
 
 
-# Create draft GENRE and integrate GPRs
 def _create_model(rxn_db, universal, input_id):
+    ''' Create draft GENRE and integrate GPRs '''
     new_model = cobra.Model('new_model')
 
     for x in rxn_db.keys():
@@ -116,8 +115,8 @@ def _create_model(rxn_db, universal, input_id):
     return new_model
 
 
-# Add gene names
 def _add_names(model, gene_db):
+    ''' Add gene names '''
     for gene in model.genes:
         try:
             gene.name = gene_db[gene.id].title()
@@ -127,9 +126,11 @@ def _add_names(model, gene_db):
     return model
 
 
-# pFBA gapfiller
 def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step, file_type):
-
+    ''' pFBA gapfiller that modifies universal reaction bag, removes overlapping reacitons from universal reaction bag
+    and resets objective if needed, adds model reaction to universal bag, sets lower bound for metabolic tasks, 
+    sets minimum lower bound for previous objective, assemble forward and reverse components of all reactions,
+    create objective, based on pFBA, run FBA and identify reactions from universal that are now active'''
     stdout.write('\r[                                         ]')
     stdout.flush()
 
@@ -217,6 +218,8 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
 
 # Add new reactions to model
 def _gapfill_model(model, universal, new_rxn_ids, obj, step):
+    '''Adds new reactions to model by getting reactions and metabolites to be added to the model, creates gapfilled model, 
+    and identifies extracellular metabolites that still need exchanges '''
 
     # Get reactions and metabolites to be added to the model
     new_rxns = []
@@ -246,6 +249,7 @@ def _gapfill_model(model, universal, new_rxn_ids, obj, step):
 
 # Set uptake of specific metabolites in complete medium gap-filling
 def _set_base_inputs(model, universal):
+    ''' Set uptake of specific metabolites in complete medium gap-filling '''
     tasks = ['EX_cpd00035_e','EX_cpd00051_e','EX_cpd00132_e','EX_cpd00041_e','EX_cpd00084_e','EX_cpd00053_e','EX_cpd00023_e',
     'EX_cpd00033_e','EX_cpd00119_e','EX_cpd00322_e','EX_cpd00107_e','EX_cpd00039_e','EX_cpd00060_e','EX_cpd00066_e','EX_cpd00129_e',
     'EX_cpd00054_e','EX_cpd00161_e','EX_cpd00065_e','EX_cpd00069_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00149_e','EX_cpd00030_e',
@@ -264,6 +268,7 @@ def _set_base_inputs(model, universal):
 
 
 def _add_annotation(model, obj='built'):
+    ''' Add gene, metabolite, reaction ,biomass reaction annotations '''
     
     # Genes
     for gene in model.genes:
@@ -306,7 +311,8 @@ def _add_annotation(model, obj='built'):
 
 # Run some basic checks on new models
 def _checkModel(pre_reactions, pre_metabolites, post_model):
-
+    ''' Run basic checks on new models (checking for objective flux'''
+    
     # Check for objective flux
     new_genes = len(post_model.genes)
     new_rxn_ids = set([x.id for x in post_model.reactions]).difference(pre_reactions)
