@@ -7,7 +7,7 @@ This repository contains all source code in the reconstructor python package, im
 
 /RepresentativeGENREs/ModelSEED: Corresponding GENREs created with ModelSEED using the same genome sequence information as used in reconstructor. 
 
-/RepresentativeGRENREs/ModelSEED: Corresponding GENREs created with CARVEME using genome sequences from the same species, but not exactly the same strain. These models were taken from the CARVEME database [https://github.com/cdanielmachado/carveme](https://github.com/cdanielmachado/carveme).
+/RepresentativeGRENREs/ModelSEED: Corresponding GENREs created with CARVEME using genome sequences from the same species, but not exactly the same strain. These models were taken from the CARVEME database ([https://github.com/cdanielmachado/carveme](https://github.com/cdanielmachado/carveme)).
 
 #### /MEMOTE
 contains raw .html files for benchmarking scores for 10 representative reconstructor models
