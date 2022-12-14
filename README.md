@@ -7,16 +7,16 @@ This repository contains all source code in the reconstructor python package, im
 contains raw .htm files for benchmarking scores for 10 representative reconstructor models
 
 To view rendered html benchmarking scores use the links below:  
-[__Porphyromonas gingivalis__](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html)  
-[__Bacillus amyloliquefaciens__](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)  
-[__Citrobacter braakii__](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)  
-[__Acinetobacter bereziniae__](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html)  
-[__Tropheryma whipplei__](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html)  
-[__Proteus mirabilis__](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.sbml.html)  
-[__Clostridiodes difficile__](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.sbml.html)  
-[__Campylobacter jejuni__](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.sbml.html)  
-[__Helicobacter pylori__](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.sbml.html)  
-[__Escherichia coli__](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.sbml.html)  
+[**Porphyromonas gingivalis**](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html)  
+[**Bacillus amyloliquefaciens**](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)  
+[**Citrobacter braakii**](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)  
+[**Acinetobacter bereziniae**](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html)  
+[**Tropheryma whipplei**](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html)  
+[**Proteus mirabilis**](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.sbml.html)  
+[**Clostridiodes difficile**](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.sbml.html)  
+[**Campylobacter jejuni**](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.sbml.html)  
+[**Helicobacter pylori**](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.sbml.html)  
+[**Escherichia coli**](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.sbml.html)  
 
 #### /reconstructor
 contains all package source code
