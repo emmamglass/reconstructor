@@ -4,9 +4,9 @@ This repository contains all source code in the reconstructor python package, im
 ****Reconstructor is currently only compatible on MacOSX and Linux machines****
 
 #### /MEMOTE
-contains raw .htm files for benchmarking scores for 10 representative reconstructor models
+contains raw .html files for benchmarking scores for 10 representative reconstructor models
 
-To view rendered html benchmarking scores use the links below:  
+To view rendered .html MEMOTE benchmarking scores use the links below:  
 [ *Porphyromonas gingivalis* ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html)  
 [ *Bacillus amyloliquefaciens* ](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)  
 [ *Citrobacter braakii* ](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)  
