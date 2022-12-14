@@ -10,7 +10,7 @@ This repository contains all source code in the reconstructor python package, im
 /RepresentativeGRENREs/ModelSEED: Corresponding GENREs created with CARVEME using genome sequences from the same species, but not exactly the same strain. These models were taken from the CARVEME database ([https://github.com/cdanielmachado/carveme](https://github.com/cdanielmachado/carveme)).
 
 #### /MEMOTE
-contains raw .html files for benchmarking scores for 10 representative reconstructor models
+Contains raw .html files for benchmarking scores for 10 representative reconstructor models
 
 To view rendered .html MEMOTE benchmarking scores use the links below:  
 [ *Porphyromonas gingivalis* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) || [ *Porphyromonas gingivalis* (ModelSEED) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html) || [ *Porphyromonas gingivalis* (CARVEME) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83C.html)  
