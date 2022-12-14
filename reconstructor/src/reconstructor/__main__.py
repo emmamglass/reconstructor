@@ -1,3 +1,46 @@
+''' Reconstructor 
+
+Reconstructor is an automatic genome scale metabolic network reconstruction tool that is user-friendly, COBRApy compatible, and uses a pFBA-based
+gap-filling technique. 
+
+Inputs
+---------
+Type 1: Annotated protein fasta file
+Type 2: BLASTp outpu
+Type 3: SBML Model
+
+Output
+---------
+Well-annotated SBML model that uses ModelSEED namespace and is directly compatible with COBRApy without the need for additional compatibility modules
+
+
+Example of how to run reconstructor
+-----------------------------------
+Type 1 input:  python -m reconstructor --input Osplanchnicus.aa.fasta --type 1 --gram negative --other_args <args>
+Type 2 input: python -m reconstructor --input Osplanchnicus.hits.out --type 2 --gram negative --other_args <args>
+Type 3 input: python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
+
+Options for Running Reconstructor 
+---------------------------------
+--input <input file, Required>
+--type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1> 
+--gram <Type of Gram classificiation (positive or negative), default = positive>
+--media <List of metabolites composing the media condition. Not required.>
+--tasks <List of metabolic tasks. Not required>
+--org <KEGG organism code. Not required>
+--min_frac <Minimum objective fraction required during gapfilling, default = 0.01>
+--max_frac <Maximum objective fraction allowed during gapfilling, default = 0.5>
+--out <Name of output GENRE file, default = default>
+--name <ID of output GENRE, default = default>
+--cpu <Number of processors to use, default = 1>
+--test <run installation tests, default = no>
+
+
+'''
+
+
+
+
 # Process input settings
 import sys
 import wget
