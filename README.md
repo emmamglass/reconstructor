@@ -8,7 +8,7 @@ contains raw .htm files for benchmarking scores for 10 representative reconstruc
 
 To view rendered html benchmarking scores use the links below: 
 
-[Porphyromonas gingivalis](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html)
+[Porphyromonas gingivalis](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html)  
 [Bacillus amyloliquefaciens](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)
 [Citrobacter braakii](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)
 [Acinetobacter bereziniae](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html)
