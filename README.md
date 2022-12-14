@@ -4,7 +4,20 @@ This repository contains all source code in the reconstructor python package, im
 ****Reconstructor is currently only compatible on MacOSX and Linux machines****
 
 #### /MEMOTE
-contains benchmarking scores for 10 representative reconstructor models
+contains raw .htm files for benchmarking scores for 10 representative reconstructor models
+
+To view rendered html benchmarking scores use the links below: 
+Porphyromonas gingivalis: [https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html)
+Bacillus amyloliquefaciens: [https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)
+Citrobacter braakii: [https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)
+Acinetobacter bereziniae: [https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html
+Tropheryma whipplei: [https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html)
+Proteus mirabilis: [https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.sbml.html)
+Clostridiodes difficile: [https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.sbml.html)
+Campylobacter jejuni: [https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.sbml.html)
+Helicobacter pylori: [https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.sbml.html)
+Escherichia coli: [https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.sbml.html](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.sbml.html)
+
 
 #### /reconstructor
 contains all package source code
