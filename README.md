@@ -13,21 +13,16 @@ This repository contains all source code in the reconstructor python package, im
 Contains raw .html files for benchmarking scores for 10 representative reconstructor models
 
 To view rendered .html MEMOTE benchmarking scores use the links below:  
-*Porphyromonas gingivalis* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83C.html)  
-*Bacillus amyloliquefaciens* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556C.html)  
-*Citrobacter braakii* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84C.html)  
-*Acinetobacter bereziniae* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html) || *Acinetobacter bereziniae* [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24C.html)  
-*Tropheryma whipplei* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4C.html)  
-
-*Proteus mirabilis* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6C.html)  
-
-*Clostridiodes difficile* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5C.html)  
-
-*Campylobacter jejuni* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3C.html)  
-
-*Helicobacter pylori* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3C.html)  
-
-*Escherichia coli* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3C.html)  
+__*Porphyromonas gingivalis:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83C.html)  
+__*Bacillus amyloliquefaciens:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556C.html)  
+__*Citrobacter braakii:__* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84C.html)  
+__*Acinetobacter bereziniae:__* [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html) || *Acinetobacter bereziniae* [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24C.html)  
+__*Tropheryma whipplei:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4C.html)  
+__*Proteus mirabilis:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6C.html)  
+__*Clostridiodes difficile:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5C.html)  
+__*Campylobacter jejuni:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3C.html)  
+__*Helicobacter pylori:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3C.html)  
+__*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3MS.html) || [CARVEME](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3C.html)  
 
 #### /reconstructor
 contains all package source code
