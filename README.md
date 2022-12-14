@@ -12,7 +12,7 @@ This repository contains all source code in the reconstructor python package, im
 #### /MEMOTE
 Contains raw .html files for benchmarking scores for 10 representative reconstructor models
 
-To view rendered .html MEMOTE benchmarking scores for Reconstructor models and the corresponding ModelSEED/CARVEME models, use the links below:  
+To view rendered .html MEMOTE benchmarking scores for Reconstructor models and the corresponding ModelSEED/CarveME models, use the links below:  
 __*Porphyromonas gingivalis:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83C.html)  
 __*Bacillus amyloliquefaciens:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556C.html)  
 __*Citrobacter braakii:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84C.html)  
