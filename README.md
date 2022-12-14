@@ -9,7 +9,7 @@ Contains 10 representative bacterial GENRES in .sbml format created by reconstru
 contains raw .html files for benchmarking scores for 10 representative reconstructor models
 
 To view rendered .html MEMOTE benchmarking scores use the links below:  
-[ *Porphyromonas gingivalis* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) [ *Porphyromonas gingivalis* (ModelSEED) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html)   
+[ *Porphyromonas gingivalis* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) || [ *Porphyromonas gingivalis* (ModelSEED) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html)   
 [ *Bacillus amyloliquefaciens* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)  
 [ *Citrobacter braakii* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)  
 [ *Acinetobacter bereziniae* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html)  
