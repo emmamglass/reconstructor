@@ -10,7 +10,7 @@ contains raw .html files for benchmarking scores for 10 representative reconstru
 
 To view rendered .html MEMOTE benchmarking scores use the links below:  
 [ *Porphyromonas gingivalis* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83.sbml.html) || [ *Porphyromonas gingivalis* (ModelSEED) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html)   
-[ *Bacillus amyloliquefaciens* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html)  
+[ *Bacillus amyloliquefaciens* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.sbml.html) || [ *Bacillus amyloliquefaciens* (ModelSEED) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556MS.html)  
 [ *Citrobacter braakii* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.sbml.html)  
 [ *Acinetobacter bereziniae* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.sbml.html)  
 [ *Tropheryma whipplei* (Resonstructor) ](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.sbml.html)  
