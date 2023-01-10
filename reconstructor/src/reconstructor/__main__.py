@@ -34,6 +34,7 @@ Options for Running Reconstructor
 --name <ID of output GENRE, default = default>
 --cpu <Number of processors to use, default = 1>
 --test <run installation tests, default = no>
+--gapfill <specify if you would like reconstructor preform pfba gapfilling or just end with the draft reconstruction, default = 'yes'>
 
 
 '''
@@ -76,6 +77,7 @@ parser.add_argument('--out', default='default', help='Name of output GENRE file'
 parser.add_argument('--name', default='default', help='ID of output GENRE')
 parser.add_argument('--cpu', default=1, help='Number of processors to use')
 parser.add_argument('--test', default = 'no', help = 'Running test cases to ensure correct installation')
+parser.add_argument('--gapfill', default = 'yes', help='Run pfba gapfilling? yes/no')
 args = parser.parse_args()
 
 def _run_blast(inputfile, outputfile, database, processors, script_path):
@@ -388,6 +390,7 @@ new_id = str(args.name)
 gram_type = str(args.gram)
 processors = int(args.cpu)
 test = str(args.test)
+grapfill = str(args.gapfill)
 
 #######################################################################################################'''
 ## import reference files from github
@@ -554,7 +557,7 @@ else:
 
 
 # Handle gap-filling if that's all that is needed
-if file_type != 3:
+if file_type != 3 & gapfill == 'yes':
     if blast_results != 'none':
         print('Creating draft GENRE from BLAST results...')
         gene_hits = _read_blast(blast_results)
@@ -593,16 +596,16 @@ if len(media) != 0:
             universal.reactions.get_by_id(rxn).bounds = (0.0, 1000.0)
 
 # Gapfill new model
-if file_type != 3:
+if file_type != 3 & gapfill == 'yes':
     print('Identifying new metabolism (Step 1 of 2)...')
-if file_type == 3:
+if file_type == 3 & gapfill == 'yes':
     print('Identifying new metabolism...')
 draft_reactions = set([x.id for x in draft_genre.reactions])
 draft_metabolites = set([x.id for x in draft_genre.metabolites])
 warnings.filterwarnings('ignore')
 new_reactions = _find_reactions(draft_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 1, file_type)
 filled_genre = _gapfill_model(draft_genre, universal, new_reactions, universal_obj, 1)
-if file_type != 3:
+if file_type != 3 & gapfill == 'yes':
     print('Identifying new metabolism (Step 2 of 2)...')
     filled_genre = _set_base_inputs(filled_genre, universal)
     media_reactions = _find_reactions(filled_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 2, file_type)
