@@ -6,7 +6,7 @@ gap-filling technique.
 Inputs
 ---------
 Type 1: Annotated protein fasta file
-Type 2: BLASTp outpu
+Type 2: BLASTp output
 Type 3: SBML Model
 
 Output
