@@ -26,6 +26,12 @@ __*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/Reconstruct
 
 Reconstructor outperforms ModelSEED and CarveMe in terms of memote scores in all MEMOTE subcategories and in overall total score:
 <img src="https://github.com/emmamglass/reconstructor/blob/main/MemoteComparison.png" width=50% height=50% class="center">
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 
 #### /reconstructor
 contains all package source code
