@@ -36,7 +36,7 @@ contains all package source code
 
 ## Installation:
 ### Download DIAMOND Aligner
-You must first have the diamond sequence aligner downloaded (__MUST BE VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond) 
+You must first have the diamond sequence aligner downloaded (__MUST BE VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
 If you think you already have DIAMOND installed, you can check your version using the command:
 ```
 diamond --version
