@@ -24,6 +24,9 @@ __*Campylobacter jejuni:*__ [Resonstructor](https://emmamglass.github.io/Reconst
 __*Helicobacter pylori:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3C.html)  
 __*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3C.html)  
 
+Reconstructor outperforms ModelSEED and CarveMe in terms of memote scores in all categories
+![image](https://github.com/emmamglass/reconstructor/blob/main/MemoteComparison.png)
+
 #### /reconstructor
 contains all package source code
 
