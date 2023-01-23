@@ -29,6 +29,8 @@ Reconstructor outperforms ModelSEED and CarveMe in terms of memote scores in all
   <img src="https://github.com/emmamglass/reconstructor/blob/main/MemoteComparison.png" width=70% height=70% class="center">
 </p>
 
+A) MEMOTE consistency score break down by category, B) MEMOTE score for each overall category, C) Total overall score comparison
+
 #### /reconstructor
 contains all package source code
 
