@@ -143,7 +143,7 @@ cpd00035, cpd00051, cpd00132, cpd00041, cpd00084, cpd00053, cpd00023, cpd00033, 
 The MEMOTE scores for *C. difficile* reconstruction in complete media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.redo.html)  
 
 __Rich media__ contains the following ModelSEED compounds:  
-cpd00001, cpd00035, cpd00041, cpd00023, cpd00119, cpd00107, cpd00060, cpd00161, cpd00069, cpd00084, cpd00033, cpd00322, cpd00066, cpd00054, cpd00065, cpd00156, cpd00220, cpd00644, cpd00393, cpd00133, cpd00263, cpd00104, cpd00149, cpd00971, cpd00099, cpd00205, cpd00009, cpd00063, cpd00254, cpd10515, cpd00030, cpd00242, cpd00226, cpd01242, cpd00307, cpd00092, cpd00117, cpd00067, cpd00567, cpd00132, cpd00210, cpd00320, cpd03279, cpd00246, cpd00311, cpd00367, cpd00277, cpd00182, cpd00654, cpd00412, cpd00438, cpd00274, cpd00186, cpd00637, cpd00105, cpd00305, cpd00309, cpd00098, cpd00207, cpd00082, cpd00129
+cpd00001, cpd00035, cpd00041, cpd00023, cpd00119, cpd00107, cpd00060, cpd00161, cpd00069, cpd00084, cpd00033, cpd00322, cpd00066, cpd00054, cpd00065, cpd00156, cpd00220, cpd00644, cpd00393, cpd00133, cpd00263, cpd00104, cpd00149, cpd00971, cpd00099, cpd00205, cpd00009, cpd00063, cpd00254, cpd10515, cpd00030, cpd00242, cpd00226, cpd01242, cpd00307, cpd00092, cpd00117, cpd00067, cpd00567, cpd00132, cpd00210, cpd00320, cpd03279, cpd00246, cpd00311, cpd00367, cpd00277, cpd00182, cpd00654, cpd00412, cpd00438, cpd00274, cpd00186, cpd00637, cpd00105, cpd00305, cpd00309, cpd00098, cpd00207, cpd00082, cpd00129  
 The MEMOTE scores for *C. difficile* reconstruction in rich media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.richmedia.html)  
 
 __Minimal media__ contains the following ModelSEED compounds:  
