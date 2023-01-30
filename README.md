@@ -121,6 +121,31 @@ python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
 ```
 --test <run installation tests, default = no>
 ```
+
+# Supplementary Model Checks and Analyses
+
+## Comparison of Reconstructor, ModelSEED, and CarveME GENREs
+To view rendered .html MEMOTE benchmarking scores for Reconstructor models and the corresponding ModelSEED/CarveME models, use the links below:  
+__*Porphyromonas gingivalis:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.134.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83C.html)  
+__*Bacillus amyloliquefaciens:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556C.html)  
+__*Citrobacter braakii:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/57706.84C.html)  
+__*Acinetobacter bereziniae:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/106648.24C.html)  
+__*Tropheryma whipplei:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/218496.4C.html)  
+__*Proteus mirabilis:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/529507.6C.html)  
+__*Clostridiodes difficile:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5C.html)  
+__*Campylobacter jejuni:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1349827.3C.html)  
+__*Helicobacter pylori:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1382925.3C.html)  
+__*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3C.html)
+
+## *C. difficile* reconstructions on Complete (Default), Rich, Minimal, and Defined media
+__Complete media__ contains the following ModelSEED compounds:  
+The memote scores for *C. difficile* reconstruction in complete media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.redo.html)
+__Rich media__ contains the following ModelSEED compounds:  
+The memote scores for *C. difficile* reconstruction in rich media can be found [here]
+(https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.richmedia.html)
+__Minimal media__ contains the following ModelSEED compounds:  
+__*C. difficile* defined media__ contains the following ModelSEED compounds:  
+
 ## Additional Information
 Thank you for your interest in reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
 
