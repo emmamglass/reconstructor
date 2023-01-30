@@ -139,12 +139,15 @@ __*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/Reconstruct
 
 ## *C. difficile* reconstructions on Complete (Default), Rich, Minimal, and Defined media
 __Complete media__ contains the following ModelSEED compounds:  
-*Default Complete Media*: cpd00035, cpd00051, cpd00132, cpd00041, cpd00084, cpd00053, cpd00023, cpd00033, cpd00119, cpd00322, cpd00107, cpd00039, cpd00060, cpd00066, cpd00129, cpd00054, cpd00161, cpd00065, cpd00069, cpd00156, cpd00027, cpd00149, cpd00030, cpd00254, cpd00971, cpd00063, cpd10515, cpd00205, cpd00099. 
+cpd00035, cpd00051, cpd00132, cpd00041, cpd00084, cpd00053, cpd00023, cpd00033, cpd00119, cpd00322, cpd00107, cpd00039, cpd00060, cpd00066, cpd00129, cpd00054, cpd00161, cpd00065, cpd00069, cpd00156, cpd00027, cpd00149, cpd00030, cpd00254, cpd00971, cpd00063, cpd10515, cpd00205, cpd00099  
 The MEMOTE scores for *C. difficile* reconstruction in complete media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.redo.html)  
+
 __Rich media__ contains the following ModelSEED compounds:  
 The MEMOTE scores for *C. difficile* reconstruction in rich media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.richmedia.html)  
+
 __Minimal media__ contains the following ModelSEED compounds:  
 The MEMOTE scores for *C. difficile* reconstruction in minimal media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.minimalmedia.html) 
+
 __*C. difficile* defined media__ contains the following ModelSEED compounds:  
 
 ## Additional Information
