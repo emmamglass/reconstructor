@@ -147,6 +147,7 @@ cpd00001, cpd00035, cpd00041, cpd00023, cpd00119, cpd00107, cpd00060, cpd00161, 
 The MEMOTE scores for *C. difficile* reconstruction in rich media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.richmedia.html)  
 
 __Minimal media__ contains the following ModelSEED compounds:  
+cpd00001, cpd00065, cpd00060, cpd00322, cpd00129, cpd00156, cpd00107, cpd00084, cpd00149, cpd00099, cpd10515, cpd00030, cpd00254, cpd00063, cpd00205, cpd00009, cpd00971, cpd00242, cpd00104, cpd00644, cpd00263, cpd00082  
 The MEMOTE scores for *C. difficile* reconstruction in minimal media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.minimalmedia.html) 
 
 __*C. difficile* defined media__ contains the following ModelSEED compounds:  
