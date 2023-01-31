@@ -83,7 +83,7 @@ python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
 --gram <Type of Gram classificiation (positive or negative), default = positive>
 ```
 ```
---media <List of metabolites composing the media condition. Not required.>
+--media <List of strings of metabolites in modelseed namespace composing the media condition. Must begin with EX_ and end with _e. For example: EX_cpd00001_e. Not required.>
 ```
 ```
 --tasks <List of metabolic tasks. Not required>
