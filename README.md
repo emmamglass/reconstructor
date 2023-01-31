@@ -168,7 +168,7 @@ This reconstruction was generated using the following arguments:
 ```
 --input 699034.5.fa --type 1 --gram positive --media 'EX_cpd00001_e','EX_cpd00104_e','EX_cpd00644_e','EX_cpd00263_e','EX_cpd00149_e','EX_cpd00099_e','EX_cpd10515_e','EX_cpd00030_e','EX_cpd00254_e','EX_cpd00063_e','EX_cpd00205_e','EX_cpd00009_e','EX_cpd00971_e','EX_cpd00242_e','EX_cpd00322_e','EX_cpd00129_e','EX_cpd00156_e','EX_cpd00107_e','EX_cpd00084_e','EX_cpd00065_e','EX_cpd00027_e'
 ```
-The MEMOTE scores for *C. difficile* reconstruction in minimal defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.minimaldefined.html) 
+The MEMOTE scores for *C. difficile* reconstruction in minimal defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedminimal.html) 
 
 __*C. difficile* defined enriched media__ contains the following ModelSEED compounds:  
 cpd00035 (Alanine), cpd00041 (Aspartic Acid), cpd00023 (Glutamic Acid), cpd00119 (Histidine), cpd00107 (Leucine), cpd00060 (Methionine), cpd00129 (Proline), cpd00161 (Threonine), cpd00051 (Arginine), cpd00069 (Tyrosine), cpd00084 (Cysteine), cpd00033 (Glycine), cpd00322 (Isoleucine), cpd00039 (Lysine), cpd00066 (Phenylalanine), cpd00054 (Serine), cpd00065 (Tryptophan), cpd00156 (Valine), cpd00027 (Glucose),
@@ -178,7 +178,7 @@ This reconstruction was generated using the following arguments"
 ```
 --input 699034.5.fa --type 1 --gram positive --media 'EX_cpd00035_e','EX_cpd00041_e','EX_cpd00023_e','EX_cpd00119_e','EX_cpd00107_e','EX_cpd00060_e','EX_cpd00129_e','EX_cpd00161_e','EX_cpd00051_e','EX_cpd00069_e','EX_cpd00084_e','EX_cpd00033_e','EX_cpd00322_e','EX_cpd00039_e','EX_cpd00066_e','EX_cpd00054_e','EX_cpd00065_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00220_e','EX_cpd00644_e','EX_cpd00393_e','EX_cpd00133_e','EX_cpd00263_e','EX_cpd00104_e','EX_cpd00149_e','EX_cpd00971_e','EX_cpd00099_e','EX_cpd00205_e','EX_cpd00009_e','EX_cpd00063_e','EX_cpd00254_e','EX_cpd10515_e','EX_cpd00030_e','EX_cpd00242_e','EX_cpd00001_e','EX_cpd00226_e','EX_cpd01242_e','EX_cpd00307_e','EX_cpd00092_e'
 ```
-The MEMOTE scores for *C. difficile* reconstruction in enriched defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.richdefined.html) 
+The MEMOTE scores for *C. difficile* reconstruction in enriched defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedrich.html) 
 
 ## Additional Information
 Thank you for your interest in reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
