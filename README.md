@@ -138,8 +138,12 @@ __*Helicobacter pylori:*__ [Resonstructor](https://emmamglass.github.io/Reconstr
 __*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/2848143.3C.html)
 
 ## *C. difficile* reconstructions on Complete (Default), Rich, Minimal, *C. difficile* Defined Minimal, *C. difficile* Defined Enriched
+
+#### /C_difficile_Media
+This folder contains .sbml reconstrucitons for *C. difficile* on five different media conditions described below. These include a complete media (default reconstructor media if no media is defined), rich media (built into reconstructor), minimal media (built into reconstructor), *C. difficile* specific defined minimal media (user inputted), and a *C. difficile* specific defined enriched media (user inputted). 
+
 __Complete media__ contains the following ModelSEED compounds:  
-cpd00035, cpd00051, cpd00132, cpd00041, cpd00084, cpd00053, cpd00023, cpd00033, cpd00119, cpd00322, cpd00107, cpd00039, cpd00060, cpd00066, cpd00129, cpd00054, cpd00161, cpd00065, cpd00069, cpd00156, cpd00027, cpd00149, cpd00030, cpd00254, cpd00971, cpd00063, cpd10515, cpd00205, cpd00099  
+cpd00035 (L-Alanine), cpd00051 (L-Arginine), cpd00132 (L-Asparagine), cpd00041 (L-Aspartate), cpd00084 (L-Cysteine), cpd00053 (L-Glutamine), cpd00023 (L-Glutamate), cpd00033 (Glycine), cpd00119 (L-Histidine), cpd00322 (L-Isoleucine), cpd00107 (L-Leucine), cpd00039 (L-Lysine), cpd00060 (L-Methionine), cpd00066 (L-Phenylalanine), cpd00129 (L-Proline), cpd00054 (L-Serine), cpd00161 (L-Threonine), cpd00065 (L-Tryptophan), cpd00069 (L-Tyrosine), cpd00156 (L-Valine), cpd00027 (D-Glucose), cpd00149 (Cobalt), cpd00030 (Manganese), cpd00254 (Magnesium), cpd00971 (Sodium), cpd00063 (Calcium), cpd10515 (Iron), cpd00205 (Potassium), cpd00099 (Choride)  
 This reconstruction was generated using the following arugments:  
 ```
 --input 699034.5.fa --type 1 --gram positive  
