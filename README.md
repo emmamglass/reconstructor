@@ -235,8 +235,13 @@ For a metabolite named met:
 ```
 universal.remove_metabolites(met)
 ```
+### Saving new universal database
+After making modifications to the universal database, you can replace the existing universal database using the following command or similar:
+```
+pickle.dump(universal, open(script_path + '/universal.pickle', 'wb'))
+```
 
-## Additional Information
+# Additional Information
 Thank you for your interest in reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
 
 If you encounter any problems, please file an [issue](https://github.com/emmamglass/reconstructor/issues) along with a detailed description.
