@@ -174,7 +174,10 @@ This reconstruction was generated using the following arguments"
 The MEMOTE scores for *C. difficile* reconstruction in enriched defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedrich.html) 
 
 # Universal Database Modification
-If you wish to modify the universal reaction database you must first locate the universal.pickle file that was downloaded during the reconstructor installation phase. You can modify this file using a python script.  
+The universal reaction database used in reconstructor is a modified version of the ModelSEED biochemistry database avaliable [here](https://github.com/ModelSEED/ModelSEEDDatabase). We corrected poorly defined metabolite formulas and removed mass imbalanced reactions using the __curateuniversal.py__ script that is avaliable in this repository.  
+
+If you wish to modify the universal reaction database you must first locate the universal.pickle file that was downloaded during the reconstructor installation phase on your local computer. You can modify this file by running a python script. You must write this script yourself or use __curateuniversal.py__ as a template. You can then run this script in your command line. 
+
 ### Dependencies and loading universal.pickle
 Begin your script with the following dependencies:
 ```
