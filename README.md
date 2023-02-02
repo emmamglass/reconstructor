@@ -173,8 +173,68 @@ This reconstruction was generated using the following arguments"
 ```
 The MEMOTE scores for *C. difficile* reconstruction in enriched defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedrich.html) 
 
-#Universal Database Modification
-If you wish to modify the universal reaction database 
+# Universal Database Modification
+If you wish to modify the universal reaction database you must first locate the universal.pickle file that was downloaded during the reconstructor installation phase. You can modify this file using a python script.  
+### Dependencies and loading universal.pickle
+Begin your script with the following dependencies:
+```
+import os
+import cobra
+import pickle
+import argparse
+import warnings
+import symengine
+from random import shuffle
+from multiprocessing import cpu_count
+from sys import stdout
+from copy import deepcopy
+from subprocess import call
+from cobra.util import solver
+from cobra.manipulation.delete import *
+```
+Then, load your universal.pickle file using:  
+```
+filename = '/universal.pickle'
+with open(filename, 'rb') as f: universal = pickle.load(f)
+```
+Now you can freely add, change, or remove reactions and metabolites from the universal reaction database. You can add, remove, or modify reactions and metabolites from the universal database in the same way you would add, remove, or modify reactions and metabolites in a GENRE. Some examples of how to do this are below, but you can see further examples in the [cobrapy documentation](https://cobrapy.readthedocs.io/en/latest/building_model.html).  
+
+### Modifying existing metabolites
+If you want to change the formula, of a specific metabolite formula you can do so like below
+```
+universal.metabolites.cpd17677_e.formula = 'C17H24O2'
+```
+
+```
+universal.metabolites.cpd17677_e.name = 'new_name'
+```
+### Adding reactions
+You can add reactions to the universal database by defining the reaction, and then adding it to the model.
+```
+universal.reaction.add_metabolites({
+    malACP_c: -1.0,
+    h_c: -1.0,
+    ddcaACP_c: -1.0,
+    co2_c: 1.0,
+    ACP_c: 1.0,
+    omrsACP_c: 1.0
+})
+```
+```
+universal.add_reactions([reaction])
+```
+
+### Removing reactions and metabolites
+Examples of removing metabolites and reactions from the universal database are shown below.  
+For a reaction named rxn:
+```
+universal.remove_reactions(rxn)
+```
+
+For a metabolite named met:
+```
+universal.remove_metabolites(met)
+```
 
 ## Additional Information
 Thank you for your interest in reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
