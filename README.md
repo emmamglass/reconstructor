@@ -17,7 +17,7 @@ See below in the __Supplementary Model Checks and Analyses__ at the bottom of th
 #### /reconstructor
 contains all package source code
 
-## Installation:
+# Installation:
 ### Download DIAMOND Aligner
 You must first have the diamond sequence aligner downloaded (__MUST BE VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
 If you think you already have DIAMOND installed, you can check your version using the command:
@@ -39,7 +39,7 @@ Some windows configurations may require you to include ``` --user ``` in the pip
 pip install --user reconstructor
 ```
 
-## Test suite:
+# Test suite:
 #### Use the following command to run the test suite
 Run the following test to ensure reconstruction was installed correctly and is functional. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
 
@@ -52,41 +52,52 @@ python -m reconstructor --test yes
 ```
 *YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
 
-## Usage:
-### Use reconstructor via command line
+# Usage:
+## Use reconstructor via COMMAND LINE
 Now that reconstructor and all dependency databases are installed, you can proceed to use reconstructor via command line. An example would be:
 ```
-python -m reconstructor --input <input fasta file> --type <1,2,3> --gram <negative, positive> --other arguments <args>
+python -m reconstructor --input_file <input fasta file> --type_type <1,2,3> --gram <negative, positive> --other arguments <args>
 ```
 #### Type 1: Build GENRE from annotated amino acid fasta files
 ```
-python -m reconstructor --input Osplanchnicus.aa.fasta --type 1 --gram negative --other_args <args>
+python -m reconstructor --input_file Osplanchnicus.aa.fasta --file_type 1 --gram negative --other_args <args>
 ```
 
 #### Type 2: Build GENRE from BLASTp hits
 ```
-python -m reconstructor --input Osplanchnicus.hits.out --type 2 --gram negative --other_args <args>
+python -m reconstructor --input_file Osplanchnicus.hits.out --file_type 2 --gram negative --other_args <args>
 ```
 
 #### Type 3: Additional gap-filling (if necessary)
 ```
 python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
 ```
+## Use reconstructor directly in PYTHON
+You can use reconstructor directly in python for using directly with COBRApy analysis tools.
+To import the reconstruction function use the following line: 
+``` 
+from reconstructor import reconstruct
+```
+The reconstruct function is defined as follows, with the required argument being input_file. All other arguments have default options following the equals sign.
+```
+reconstruct(input_file, file_type = 1, media=[], org = 'default', min_frac = 0.01, max_frac = 0.5, gram='none', out = 'default', name = 'default', cpu = 1, gapfill = 'yes')
+```
+Here is an example of how to generate a GENRE from an annotated amino acid fasta file (.fa, type 1 input) directly in your python script.
+```
+model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
+```
 ### Required and optional arguments
 ```
---input <input file, Required>
+--input_file <input file, Required>
 ```
 ```
---type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1> 
+--file_type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1> 
 ```
 ```
 --gram <Type of Gram classificiation (positive or negative), default = positive>
 ```
 ```
 --media <List of strings of metabolites in modelseed namespace composing the media condition, comma separated. Must begin with EX_ and end with _e. For example: 'EX_cpd00001_e'. Not required.>
-```
-```
---tasks <List of metabolic tasks. Not required>
 ```
 ```
 --org <KEGG organism code. Not required>
