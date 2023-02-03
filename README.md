@@ -78,7 +78,7 @@ To import the reconstruction function use the following line:
 ``` 
 from reconstructor import reconstruct
 ```
-The reconstruct function is defined as follows, with the required argument being input_file. All other arguments have default options following the equals sign.
+The reconstruct function is defined as follows, with the required argument being input_file. All other arguments have default options following the equals sign. Argument descriptions are provided below
 ```
 reconstruct(input_file, file_type = 1, media=[], org = 'default', min_frac = 0.01, max_frac = 0.5, gram='none', out = 'default', name = 'default', cpu = 1, gapfill = 'yes')
 ```
@@ -88,41 +88,41 @@ model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
 ```
 ### Required and optional arguments
 ```
---input_file <input file, Required>
+--input_file <input file, Required, str>
 ```
 ```
---file_type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1> 
+--file_type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1, int> 
 ```
 ```
---gram <Type of Gram classificiation (positive or negative), default = positive>
+--gram <Type of Gram classificiation (positive or negative), default = positive, str>
 ```
 ```
 --media <List of strings of metabolites in modelseed namespace composing the media condition, comma separated. Must begin with EX_ and end with _e. For example: 'EX_cpd00001_e'. Not required.>
 ```
 ```
---org <KEGG organism code. Not required>
+--org <KEGG organism code. Not required, str>
 ```
 ```
---min_frac <Minimum objective fraction required during gapfilling, default = 0.01>
+--min_frac <Minimum objective fraction required during gapfilling, default = 0.01, float>
 ```
 ```
---max_frac <Maximum objective fraction allowed during gapfilling, default = 0.5>
+--max_frac <Maximum objective fraction allowed during gapfilling, default = 0.5 ,float>
 ```
 ```
---out <Name of output GENRE file, default = default>
+--out <Name of output GENRE file, default = default, str>
 ```
 ```
---name <ID of output GENRE, default = default>
+--name <ID of output GENRE, default = default, str>
 ```
 ```
---cpu <Number of processors to use, default = 1>
+--cpu <Number of processors to use, default = 1, int>
 ```
 
 ```
---test <run installation tests, default = no>
+--test <run installation tests, default = no, str>
 ```
 ```
---gapfill <perform pFBA 
+--gapfill <perform pFBA, yes or no, str>
 
 # Supplementary Model Checks and Analyses
 
