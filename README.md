@@ -123,6 +123,7 @@ model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
 ```
 ```
 --gapfill <perform pFBA, yes or no, str>
+```
 
 # Supplementary Model Checks and Analyses
 
