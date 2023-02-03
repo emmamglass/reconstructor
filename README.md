@@ -110,6 +110,8 @@ python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
 ```
 --test <run installation tests, default = no>
 ```
+```
+--gapfill <perform pFBA 
 
 # Supplementary Model Checks and Analyses
 
