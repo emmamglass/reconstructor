@@ -16,8 +16,31 @@ See below in the __Supplementary Model Checks and Analyses__ at the bottom of th
 
 #### /reconstructor
 contains all package source code
-
-# Installation:
+# Quick Installation Guide (Must be running python >=3.8):
+## MacOSX
+In terminal....  
+Download diamond sequence aligner (Version >= 2.0.15) using homebrew
+```
+brew install diamond`
+``
+Install reconstructor package using pip
+```
+pip install reconstructor
+```
+Use following command to download additional dependencies/run final installation checks
+```
+python -m reconstructor --test yes
+```
+## Windows
+Install reconstructor package using CMD.exe prompt launched from Anaconda navigator
+```
+pip install reconstructor
+```
+Use following command to download additional dependencies/run final installation checks
+```
+python -m reconstructor --test yes
+```
+# Detailed Installation Guide:
 ## Download DIAMOND Aligner
 ### Downloading DIAMOND on MacOS
 You must first have the diamond sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
@@ -41,7 +64,7 @@ pip install reconstructor
 
 *You must be running >= Python 3.8
 
-# Test suite (MUST RUN BEFORE USING RECONSTRUCTOR):
+## Test suite (MUST RUN BEFORE USING RECONSTRUCTOR):
 #### Use the following command to run the test suite
 Run the following test to ensure reconstruction was installed correctly and is functional, and downloads database files that are necessary for reconstructor to work. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
 
