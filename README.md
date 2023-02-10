@@ -16,13 +16,14 @@ See below in the __Supplementary Model Checks and Analyses__ at the bottom of th
 
 #### /reconstructor
 contains all package source code
+
 # Quick Installation Guide (Must be running python >=3.8):
 ## MacOSX
 In terminal....  
 Download diamond sequence aligner (Version >= 2.0.15) using homebrew
 ```
-brew install diamond`
-``
+brew install diamond
+```
 Install reconstructor package using pip
 ```
 pip install reconstructor
