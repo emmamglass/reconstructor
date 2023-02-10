@@ -63,7 +63,11 @@ This can be done via pip in terminal on Mac, or a CMD.exe Prompt launched from A
 pip install reconstructor
 ```
 
-*You must be running >= Python 3.8
+*You must be running >= Python 3.8*  
+To determine your python version you can use the following command 
+```
+python --version
+```
 
 ## Test suite (MUST RUN BEFORE USING RECONSTRUCTOR):
 #### Use the following command to run the test suite
