@@ -1,7 +1,7 @@
 # Reconstructor
 This repository contains all source code in the reconstructor python package, important file dependencies, and benchmarking scores for reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from gene fastas based on KEGG annotations.
 
-****Reconstructor is currently only compatible on MacOSX and Linux machines****
+****Reconstructor is currently only compatible on MacOSX and Windows machines****
 #### /RepresentativeGENRES
 /RepresentativeGENRES/Reconstructor: Contains 10 representative bacterial GENRES in .sbml format created by reconstructor from annotated .FASTA files.
 
@@ -18,26 +18,28 @@ See below in the __Supplementary Model Checks and Analyses__ at the bottom of th
 contains all package source code
 
 # Installation:
-### Download DIAMOND Aligner
-You must first have the diamond sequence aligner downloaded (__MUST BE VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
-If you think you already have DIAMOND installed, you can check your version using the command:
+## Download DIAMOND Aligner
+### Downloading DIAMOND on MacOS
+You must first have the diamond sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
+If you think you already have DIAMOND installed, you can check your version using the terminal command:
 ```
 diamond --version
 ```
+You can also download diamond through homebrew (if you have homebrew installed) using the terminal command:
+```
+brew install diamond
+```
+### DIAMOND on Windows
+You do not need to install DIAMOND on your windows machine. A Windows executable function is already pre-packaged within the reconstructor software.
 
-### Install Reconstructor python package
-This can be done via pip in terminal on mac
+## Install Reconstructor python package
+This can be done via pip in terminal on Mac, or a CMD.exe Prompt launched from Anaconda Navigator in Widnows
 
 ```
 pip install reconstructor
 ```
 
 *You must be running >= Python 3.8
-
-Some windows configurations may require you to include ``` --user ``` in the pip install line like below:
-```
-pip install --user reconstructor
-```
 
 # Test suite (MUST RUN BEFORE USING RECONSTRUCTOR):
 #### Use the following command to run the test suite
