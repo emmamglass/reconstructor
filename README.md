@@ -157,7 +157,7 @@ model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
 
 # Supplementary Model Checks and Analyses
 
-## Comparison of Reconstructor, ModelSEED, and CarveME GENREs
+## MEMOTE Comparison of Reconstructor, ModelSEED, and CarveME GENREs
 To view rendered .html MEMOTE benchmarking scores for Reconstructor models and the corresponding ModelSEED/CarveME models, use the links below:  
 __*Porphyromonas gingivalis:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.134.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/837.83C.html)  
 __*Bacillus amyloliquefaciens:*__ [Resonstructor](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556.redo.html) || [ModelSEED](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556MS.html) || [CarveME](https://emmamglass.github.io/ReconstructorMEMOTE.io/1390.556C.html)  
