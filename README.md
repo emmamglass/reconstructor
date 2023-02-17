@@ -20,6 +20,10 @@ contains all package source code
 # Quick Installation Guide (Must be running python >=3.8):
 ## MacOSX
 In terminal....  
+Install homebrew if you do not already have it installed (further instructions [here](https://brew.sh))
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 Download diamond sequence aligner (Version >= 2.0.15) using homebrew
 ```
 brew install diamond
