@@ -20,7 +20,7 @@ contains all package source code
 # Quick Installation Guide (Must be running python >=3.8):
 ## MacOSX
 In terminal....  
-Install homebrew if you do not already have it installed (further instructions [here](https://brew.sh))
+Install homebrew if you do not already have it installed by copying/pasting the following line into terminal (further instructions [here](https://brew.sh))
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
