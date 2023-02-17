@@ -41,7 +41,7 @@ Install reconstructor package using CMD.exe prompt launched from Anaconda naviga
 ```
 pip install reconstructor
 ```
-Use following command to download additional dependencies/run final installation checks
+Use following command to download additional dependencies/run final installation checks (hould take ~1hr to run depending on your system)
 ```
 python -m reconstructor --test yes
 ```
