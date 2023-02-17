@@ -1,34 +1,34 @@
 # Reconstructor
-This repository contains all source code in the reconstructor python package, important file dependencies, and benchmarking scores for reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from gene fastas based on KEGG annotations.
+This repository contains all source code in the Reconstructor Python package, important file dependencies, and benchmarking scores for Reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from annotated aminoa acid .fasta files based on KEGG annotations.
 
 ****Reconstructor is currently only compatible on MacOSX and Windows machines****
 #### /RepresentativeGENRES
-/RepresentativeGENRES/Reconstructor: Contains 10 representative bacterial GENRES in .sbml format created by reconstructor from annotated .FASTA files.
+/RepresentativeGENRES/Reconstructor: Contains 10 representative bacterial GENRES in .sbml format created by Reconstructor from annotated .fasta files.
 
-/RepresentativeGENREs/ModelSEED: Corresponding GENREs created with ModelSEED using the same genome sequence information as used in reconstructor. 
+/RepresentativeGENREs/ModelSEED: Corresponding GENREs created with ModelSEED using the same genome sequence information as used in Reconstructor. 
 
 /RepresentativeGRENREs/CarveME: Corresponding GENREs created with CarveME using genome sequences from the same species (or in one case, genus), but not exactly the same strain. These models were taken from the CarveME database ([https://github.com/cdanielmachado/carveme](https://github.com/cdanielmachado/carveme)).
 
 #### /MEMOTE
-Contains raw .html files for benchmarking scores for 10 representative reconstructor models
+Contains raw .html files for benchmarking scores for 10 representative Reconstructor models
 
 See below in the __Supplementary Model Checks and Analyses__ at the bottom of the README for links to stable .html renderings of the MEMOTE scores and comparisons to other automatic model generation tools
 
 #### /reconstructor
 contains all package source code
 
-# Quick Installation Guide (Must be running python >=3.8):
+# Quick Installation Guide (Must be running Python >=3.8):
 ## MacOSX
 In terminal....  
 Install homebrew if you do not already have it installed by copying/pasting the following line into terminal (further instructions [here](https://brew.sh))
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-Download diamond sequence aligner (Version >= 2.0.15) using homebrew
+Download DIAMOND sequence aligner (Version >= 2.0.15) using homebrew
 ```
 brew install diamond
 ```
-Install reconstructor package using pip
+Install Reconstructor package using pip
 ```
 pip install reconstructor
 ```
@@ -37,7 +37,7 @@ Use following command to download additional dependencies/run final installation
 python -m reconstructor --test yes
 ```
 ## Windows
-Install reconstructor package using CMD.exe prompt launched from Anaconda navigator
+Install Reconstructor package using CMD.exe prompt launched from Anaconda navigator
 ```
 pip install reconstructor
 ```
@@ -48,17 +48,17 @@ python -m reconstructor --test yes
 # Detailed Installation Guide:
 ## Download DIAMOND Aligner
 ### Downloading DIAMOND on MacOS
-You must first have the diamond sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
+You must first have the DIAMOND sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
 If you think you already have DIAMOND installed, you can check your version using the terminal command:
 ```
 diamond --version
 ```
-You can also download diamond through homebrew (if you have homebrew installed) using the terminal command:
+You can also download DIAMOND through homebrew (if you have homebrew installed) using the terminal command:
 ```
 brew install diamond
 ```
 ### DIAMOND on Windows
-You do not need to install DIAMOND on your windows machine. A Windows executable function is already pre-packaged within the reconstructor software.
+You do not need to install DIAMOND on your windows machine. A Windows executable function is already pre-packaged within the Reconstructor software.
 
 ## Install Reconstructor python package
 This can be done via pip in terminal on Mac, or a CMD.exe Prompt launched from Anaconda Navigator in Widnows
