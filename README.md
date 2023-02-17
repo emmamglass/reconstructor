@@ -32,7 +32,7 @@ Install reconstructor package using pip
 ```
 pip install reconstructor
 ```
-Use following command to download additional dependencies/run final installation checks
+Use following command to download additional dependencies/run final installation checks (should take ~1hr to complete depending on your system)
 ```
 python -m reconstructor --test yes
 ```
