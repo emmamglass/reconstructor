@@ -519,8 +519,11 @@ if __name__ == "__main__":
             home_directory = os.path.expanduser('~')
         if platform == 'Windows':
             home_directory = os.path.expanduser(r'C:Users$USERNAME')'''
-
-        p = str(Path(script_path).parent)
+        if platform == 'Darwin':
+            pa = Path(script_path).parent
+            p = str(Path(pa).parent)
+        if platform == 'Windows':
+            p = str(Path(script_path).parent)
         #path = os.path.join(script_path, 'opt')
         for root, dirs, files in os.walk(p,topdown = True):
             for name in files:
