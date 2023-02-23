@@ -1,81 +1,85 @@
 # Reconstructor
-This repository contains all source code in the reconstructor python package, important file dependencies, and benchmarking scores for reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from gene fastas based on KEGG annotations.
+This repository contains all source code in the Reconstructor Python package, important file dependencies, and benchmarking scores for Reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from annotated aminoa acid .fasta files based on KEGG annotations.
 
 ****Reconstructor is currently only compatible on MacOSX and Windows machines****
 #### /RepresentativeGENRES
-/RepresentativeGENRES/Reconstructor: Contains 10 representative bacterial GENRES in .sbml format created by reconstructor from annotated .FASTA files.
+/RepresentativeGENRES/Reconstructor: Contains 10 representative bacterial GENRES in .sbml format created by Reconstructor from annotated .fasta files.
 
-/RepresentativeGENREs/ModelSEED: Corresponding GENREs created with ModelSEED using the same genome sequence information as used in reconstructor. 
+/RepresentativeGENREs/ModelSEED: Corresponding GENREs created with ModelSEED using the same genome sequence information as used in Reconstructor. 
 
 /RepresentativeGRENREs/CarveME: Corresponding GENREs created with CarveME using genome sequences from the same species (or in one case, genus), but not exactly the same strain. These models were taken from the CarveME database ([https://github.com/cdanielmachado/carveme](https://github.com/cdanielmachado/carveme)).
 
 #### /MEMOTE
-Contains raw .html files for benchmarking scores for 10 representative reconstructor models
+Contains raw .html files for benchmarking scores for 10 representative Reconstructor models
 
 See below in the __Supplementary Model Checks and Analyses__ at the bottom of the README for links to stable .html renderings of the MEMOTE scores and comparisons to other automatic model generation tools
 
 #### /reconstructor
 contains all package source code
 
-# Quick Installation Guide (Must be running python >=3.8):
+# Quick Installation Guide (Must be running Python >=3.8):
 ## MacOSX
 In terminal....  
-Download diamond sequence aligner (Version >= 2.0.15) using homebrew
+Install homebrew if you do not already have it installed by copying/pasting the following line into terminal (further instructions [here](https://brew.sh)):
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+Download DIAMOND sequence aligner (Version >= 2.0.15) using homebrew:
 ```
 brew install diamond
 ```
-Install reconstructor package using pip
+Install Reconstructor package using pip:
 ```
 pip install reconstructor
 ```
-Use following command to download additional dependencies/run final installation checks
+Use following command to download additional dependencies/run final installation checks (should take ~1hr to complete depending on your system):
 ```
 python -m reconstructor --test yes
 ```
 ## Windows
-Install reconstructor package using CMD.exe prompt launched from Anaconda navigator
+Install Reconstructor package using CMD.exe prompt launched from Anaconda navigator:
 ```
 pip install reconstructor
 ```
-Use following command to download additional dependencies/run final installation checks
+Use following command to download additional dependencies/run final installation checks (hould take ~1hr to run depending on your system):
 ```
 python -m reconstructor --test yes
 ```
 # Detailed Installation Guide:
 ## Download DIAMOND Aligner
 ### Downloading DIAMOND on MacOS
-You must first have the diamond sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
+You must first have the DIAMOND sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
 If you think you already have DIAMOND installed, you can check your version using the terminal command:
 ```
 diamond --version
 ```
-You can also download diamond through homebrew (if you have homebrew installed) using the terminal command:
+You can also download DIAMOND through homebrew (if you have homebrew installed) using the terminal command:
 ```
 brew install diamond
 ```
 ### DIAMOND on Windows
-You do not need to install DIAMOND on your windows machine. A Windows executable function is already pre-packaged within the reconstructor software.
+You do not need to install DIAMOND on your windows machine. A Windows executable function is already pre-packaged within the Reconstructor software.
 
 ## Install Reconstructor python package
-This can be done via pip in terminal on Mac, or a CMD.exe Prompt launched from Anaconda Navigator in Widnows
+This can be done via pip in terminal on Mac, or a CMD.exe Prompt launched from Anaconda Navigator in Widnows:
 
 ```
 pip install reconstructor
 ```
 
 *You must be running >= Python 3.8*  
-To determine your python version you can use the following command 
+To determine your Python version you can use the following command:  
 ```
 python --version
 ```
 
 ## Test suite (MUST RUN BEFORE USING RECONSTRUCTOR):
 #### Use the following command to run the test suite
-Run the following test to ensure reconstruction was installed correctly and is functional, and downloads database files that are necessary for reconstructor to work. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
+Run the following test to ensure reconstruction was installed correctly and is functional, and downloads database files that are necessary for reconstructor to work. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for Reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
 
 MAC USERS MAY BE ASKED FOR TERMINAL TO HAVE ACCESS TO DOWNLOADS, CAMERA, LOCATION, ETC. Please allow terminal to have access to all locations on your computer. Reconstructor will NOT gather data from your camera, location, or other sensitive information. Reconstructor is simply searching for the file titled glpk_interface.py on your local machine (installed when COBRA module is installed) and replacing it with a newer, functional version.
 
-Use the command below to test reconstructor to ensure correct installation. 
+Use the command below to test reconstructor to ensure correct installation:   
 
 ```
 python -m reconstructor --test yes
@@ -84,11 +88,11 @@ python -m reconstructor --test yes
 
 # Usage:
 ## Use reconstructor via COMMAND LINE
-Now that reconstructor and all dependency databases are installed, you can proceed to use reconstructor via command line. An example would be:
+Now that Reconstructor and all dependency databases are installed, you can proceed to use Reconstructor via command line. An example would be:
 ```
 python -m reconstructor --input_file <input fasta file> --type_type <1,2,3> --gram <negative, positive> --other arguments <args>
 ```
-#### Type 1: Build GENRE from annotated amino acid fasta files
+#### Type 1: Build GENRE from annotated amino acid .fasta files
 ```
 python -m reconstructor --input_file Osplanchnicus.aa.fasta --file_type 1 --gram negative --other_args <args>
 ```
@@ -102,8 +106,8 @@ python -m reconstructor --input_file Osplanchnicus.hits.out --file_type 2 --gram
 ```
 python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
 ```
-## Use reconstructor directly in PYTHON
-You can use reconstructor directly in python for using directly with COBRApy analysis tools.
+## Use Reconstructor directly in PYTHON
+You can use Reconstructor directly in Python for using directly with COBRApy analysis tools.
 To import the reconstruction function use the following line: 
 ``` 
 from reconstructor import reconstruct
@@ -218,9 +222,9 @@ This reconstruction was generated using the following arguments"
 The MEMOTE scores for *C. difficile* reconstruction in enriched defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedrich.html) 
 
 # User-Specified Universal Database Modification
-The universal reaction database used in reconstructor is a modified version of the ModelSEED biochemistry database avaliable [here](https://github.com/ModelSEED/ModelSEEDDatabase). We corrected poorly defined metabolite formulas and removed mass imbalanced reactions using the __curateuniversal.py__ script that is avaliable in this repository.  
+The universal reaction database used in reconstructor is a modified version of the ModelSEED biochemistry database avaliable [here](https://github.com/ModelSEED/ModelSEEDDatabase). We generated the universal database using the __UniversalCreation.py__ script. We corrected poorly defined metabolite formulas and removed mass imbalanced reactions using the __curateuniversal.py__ script that is avaliable in this repository.  
 
-If you wish to modify the universal reaction database you must first locate the universal.pickle file that was downloaded during the reconstructor installation phase on your local computer. You can modify this file by running a python script. You must write this script yourself or use __curateuniversal.py__ as a template. You can then run this script in your command line. 
+If you wish to modify the provided universal reaction database you must first locate the universal.pickle file that was downloaded during the reconstructor installation phase on your local computer. You can modify this file by running a python script. You must write this script yourself or use __curateuniversal.py__ as a template. You can then run this script in your command line. 
 
 ### Dependencies and loading universal.pickle
 Begin your script with the following dependencies:
@@ -289,7 +293,7 @@ pickle.dump(universal, open(script_path + '/universal.pickle', 'wb'))
 ```
 
 # Additional Information
-Thank you for your interest in reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
+Thank you for your interest in Reconstructor. If you have any additional questions please email tfz5vy@virginia.edu.
 
 If you encounter any problems, please file an [issue](https://github.com/emmamglass/reconstructor/issues) along with a detailed description.
 
