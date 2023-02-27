@@ -17,7 +17,7 @@ See below in the __Supplementary Model Checks and Analyses__ at the bottom of th
 #### /reconstructor
 contains all package source code
 
-# Quick Installation Guide (Must be running Python 3.8 or 3.9):
+# Quick Installation Guide (Must have Anancoda installed with Python 3.9):
 ## MacOSX
 In terminal....  
 Install homebrew if you do not already have it installed by copying/pasting the following line into terminal (further instructions [here](https://brew.sh)):
