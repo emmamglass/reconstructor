@@ -122,10 +122,10 @@ model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
 ```
 ### Required and optional arguments
 ```
---input <input file, Required, str>
+--input_file <input file, Required, str>
 ```
 ```
---type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1, int> 
+--file_type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1, int> 
 ```
 ```
 --gram <Type of Gram classificiation (positive or negative), default = positive, str>
