@@ -90,7 +90,7 @@ python -m reconstructor --test yes
 ## Use reconstructor via COMMAND LINE
 Now that Reconstructor and all dependency databases are installed, you can proceed to use Reconstructor via command line. An example would be:
 ```
-python -m reconstructor --input_file <input fasta file> --type_type <1,2,3> --gram <negative, positive> --other arguments <args>
+python -m reconstructor --input_file <input fasta file> --file_type <1,2,3> --gram <negative, positive> --other arguments <args>
 ```
 #### Type 1: Build GENRE from annotated amino acid .fasta files
 ```
