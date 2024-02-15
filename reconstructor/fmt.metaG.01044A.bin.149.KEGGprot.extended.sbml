@@ -32692,7 +32692,7 @@
           <speciesReference species="M_cpd01311_e" stoichiometry="1" constant="true"/>
         </listOfReactants>
       </reaction>
-      <reaction metaid="meta_R_peptidoglycan_rxn" sboTerm="SBO:0000176" id="R_peptidoglycan_rxn" name="Peptidoglycan synthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_peptidoglycan_rxn" sboTerm="SBO:0000629" id="R_peptidoglycan_rxn" name="Peptidoglycan synthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_peptidoglycan_rxn">
@@ -32718,7 +32718,7 @@
           <speciesReference species="M_cpd00009_c" stoichiometry="4" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_EX_biomass" sboTerm="SBO:0000627" id="R_EX_biomass" name="Biomass sink" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_EX_biomass" sboTerm="SBO:0000632" id="R_EX_biomass" name="Biomass sink" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_cpd11416_c" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -32879,7 +32879,7 @@
           <speciesReference species="M_cpd11493_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_cofactor_rxn" sboTerm="SBO:0000176" id="R_cofactor_rxn" name="Cofactor Pool" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_cofactor_rxn" sboTerm="SBO:0000629" id="R_cofactor_rxn" name="Cofactor Pool" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_cofactor_rxn">
@@ -32994,7 +32994,7 @@
           <speciesReference species="M_cpd00182_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_rna_rxn" sboTerm="SBO:0000176" id="R_rna_rxn" name="RNA transcription" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_rna_rxn" sboTerm="SBO:0000629" id="R_rna_rxn" name="RNA transcription" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_rna_rxn">
@@ -33242,7 +33242,7 @@
           <speciesReference species="M_cpd00091_c" stoichiometry="30" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_lipid_rxn" sboTerm="SBO:0000176" id="R_lipid_rxn" name="Lipid composition" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_lipid_rxn" sboTerm="SBO:0000629" id="R_lipid_rxn" name="Lipid composition" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_lipid_rxn">
@@ -33440,7 +33440,7 @@
           <speciesReference species="M_cpd11459_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_protein_rxn" sboTerm="SBO:0000176" id="R_protein_rxn" name="Protein biosynthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_protein_rxn" sboTerm="SBO:0000629" id="R_protein_rxn" name="Protein biosynthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_protein_rxn">
@@ -33776,7 +33776,7 @@
           <speciesReference species="M_cpd15729_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_dna_rxn" sboTerm="SBO:0000176" id="R_dna_rxn" name="DNA replication" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_dna_rxn" sboTerm="SBO:0000629" id="R_dna_rxn" name="DNA replication" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_dna_rxn">
@@ -34219,7 +34219,7 @@
           <speciesReference species="M_cpd02964_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_GmPos_cellwall" sboTerm="SBO:0000176" id="R_GmPos_cellwall" name="Gram positive cell wall biosynthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_GmPos_cellwall" sboTerm="SBO:0000629" id="R_GmPos_cellwall" name="Gram positive cell wall biosynthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_cpd12894_c" stoichiometry="0.05" constant="true"/>
           <speciesReference species="M_cpd16661_c" stoichiometry="1.5" constant="true"/>
@@ -34632,7 +34632,7 @@
           <speciesReference species="M_cpd00067_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_teichoicacid_rxn" sboTerm="SBO:0000176" id="R_teichoicacid_rxn" name="Teichoic acid biosynthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_teichoicacid_rxn" sboTerm="SBO:0000629" id="R_teichoicacid_rxn" name="Teichoic acid biosynthesis" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <annotation>
           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
             <rdf:Description rdf:about="#meta_R_teichoicacid_rxn">
@@ -34882,7 +34882,7 @@
           <speciesReference species="M_cpd11458_c" stoichiometry="1" constant="true"/>
         </listOfProducts>
       </reaction>
-      <reaction metaid="meta_R_biomass_GmPos" sboTerm="SBO:0000629" id="R_biomass_GmPos" name="Biomass Reaction" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+      <reaction metaid="meta_R_biomass_GmPos" sboTerm="SBO:0000176" id="R_biomass_GmPos" name="Biomass Reaction" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
         <listOfReactants>
           <speciesReference species="M_cpd17041_c" stoichiometry="0.4" constant="true"/>
           <speciesReference species="M_cpd17043_c" stoichiometry="0.15" constant="true"/>

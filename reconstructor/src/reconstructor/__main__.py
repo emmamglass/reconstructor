@@ -63,7 +63,7 @@ from cobra.manipulation.delete import *
 parser = argparse.ArgumentParser(description='Generate genome-scale metabolic network reconstruction from KEGG BLAST hits.')
 parser.add_argument('--input_file', default='none')
 parser.add_argument('--file_type', default=1, help='Input file type: fasta=1, diamond blastp output=2, genre sbml=3')
-parser.add_argument('--media', default=[], help='List of metabolites composing the media condition. Not required.')
+parser.add_argument('--media', default='rich', help='List of metabolites composing the media condition. Not required.')
 parser.add_argument('--tasks', default=[], help='List of metabolic tasks. Not required.')
 parser.add_argument('--org', default='default', help='KEGG organism code. Not required.')
 parser.add_argument('--min_frac', default=0.01, help='Minimum objective fraction required during gapfilling')
@@ -308,36 +308,11 @@ def _gapfill_model(model, universal, new_rxn_ids, obj, step):
 
 
 # Set uptake of specific metabolites in complete medium gap-filling
-def _set_base_inputs(model, universal, media):
-    ''' Set uptake of specific metabolites in complete medium gap-filling '''
+def _set_base_inputs(model, universal):
     tasks = ['EX_cpd00035_e','EX_cpd00051_e','EX_cpd00132_e','EX_cpd00041_e','EX_cpd00084_e','EX_cpd00053_e','EX_cpd00023_e',
     'EX_cpd00033_e','EX_cpd00119_e','EX_cpd00322_e','EX_cpd00107_e','EX_cpd00039_e','EX_cpd00060_e','EX_cpd00066_e','EX_cpd00129_e',
     'EX_cpd00054_e','EX_cpd00161_e','EX_cpd00065_e','EX_cpd00069_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00149_e','EX_cpd00030_e',
     'EX_cpd00254_e','EX_cpd00971_e','EX_cpd00063_e','EX_cpd10515_e','EX_cpd00205_e','EX_cpd00099_e']
-
-    rich_media = ['EX_cpd00001_e','EX_cpd00035_e','EX_cpd00041_e','EX_cpd00023_e','EX_cpd00119_e','EX_cpd00107_e','EX_cpd00060_e','EX_cpd00161_e','EX_cpd00069_e','EX_cpd00084_e','EX_cpd00033_e',
-    'EX_cpd00322_e','EX_cpd00066_e','EX_cpd00054_e','EX_cpd00065_e','EX_cpd00156_e','EX_cpd00220_e','EX_cpd00644_e','EX_cpd00393_e','EX_cpd00133_e','EX_cpd00263_e','EX_cpd00104_e','EX_cpd00149_e',
-    'EX_cpd00971_e','EX_cpd00099_e','EX_cpd00205_e','EX_cpd00009_e','EX_cpd00063_e','EX_cpd00254_e','EX_cpd10515_e','EX_cpd00030_e','EX_cpd00242_e','EX_cpd00226_e','EX_cpd01242_e','EX_cpd00307_e',
-    'EX_cpd00092_e','EX_cpd00117_e','EX_cpd00067_e','EX_cpd00567_e','EX_cpd00132_e','EX_cpd00210_e','EX_cpd00320_e','EX_cpd03279_e','EX_cpd00246_e','EX_cpd00311_e','EX_cpd00367_e','EX_cpd00277_e',
-    'EX_cpd00182_e','EX_cpd00654_e','EX_cpd00412_e','EX_cpd00438_e','EX_cpd00274_e','EX_cpd00186_e','EX_cpd00637_e','EX_cpd00105_e','EX_cpd00305_e','EX_cpd00309_e','EX_cpd00098_e','EX_cpd00207_e',
-    'EX_cpd00082_e','EX_cpd00129_e']
-
-    minimal_media = ['EX_cpd00001_e','EX_cpd00065_e','EX_cpd00060_e','EX_cpd00322_e','EX_cpd00129_e','EX_cpd00156_e','EX_cpd00107_e','EX_cpd00084_e', 
-    'EX_cpd00149_e','EX_cpd00099_e','EX_cpd10515_e','EX_cpd00030_e','EX_cpd00254_e','EX_cpd00063_e','EX_cpd00205_e','EX_cpd00009_e','EX_cpd00971_e','EX_cpd00242_e',
-    'EX_cpd00104_e','EX_cpd00644_e','EX_cpd00263_e','EX_cpd00082_e']
-
-    if media == 'rich_media':
-        tasks = rich_media
-        print('rich media')
-    elif media == 'minimal_media':
-        tasks = minimal_media
-        print('minimal media')
-    elif media == ['[]']:
-        tasks = tasks
-        print('default media')
-    else:
-        tasks = media
-        print('defined media')
 
     new_rxns = []
     for exch in tasks: 
@@ -346,10 +321,7 @@ def _set_base_inputs(model, universal, media):
         except:
             new_rxns.append(deepcopy(universal.reactions.get_by_id(exch)))
     model.add_reactions(new_rxns)
-    if exchange_arg == 0:
-        for exch in tasks: model.reactions.get_by_id(exch).bounds = (0., 0)
-    else:
-        for exch in tasks: model.reactions.get_by_id(exch).bounds = (-1000., -0.01)
+    for exch in tasks: model.reactions.get_by_id(exch).bounds = (-1000., -0.01)
 
     return model
 
@@ -649,6 +621,37 @@ if __name__ == "__main__":
     else:
         universal_obj = str(draft_genre.objective.expression).split()[0].split('*')[-1]
 
+    # Handle media conditions
+    if media == 'rich':
+        media = ['cpd00001_e','cpd00035_e','cpd00041_e','cpd00023_e','cpd00119_e','cpd00107_e','cpd00060_e','cpd00161_e','cpd00069_e','cpd00084_e','cpd00033_e'
+    'cpd00322_e','cpd00066_e','cpd00054_e','cpd00065_e','cpd00156_e','cpd00220_e','cpd00644_e','cpd00393_e','cpd00133_e','cpd00263_e','cpd00104_e','cpd00149_e',
+    'cpd00971_e','cpd00099_e','cpd00205_e','cpd00009_e','cpd00063_e','cpd00254_e','cpd10515_e','cpd00030_e','cpd00242_e','cpd00226_e','cpd01242_e','cpd00307_e',
+    'cpd00092_e','cpd00117_e','cpd00067_e''cpd00567_e','cpd00132_e','cpd00210_e','cpd00320_e','cpd03279_e','cpd00246_e','cpd00311_e','cpd00367_e','cpd00277_e',
+    'cpd00182_e','cpd00654_e','cpd00412_e','cpd00438_e','cpd00274_e','cpd00186_e','cpd00637_e','cpd00105_e','cpd00305_e','cpd00309_e','cpd00098_e','cpd00207_e',
+    'cpd00082_e','cpd00129_e']
+    elif media == 'minimal':
+        media = ['cpd00001_e','cpd00065_e','cpd00060_e','cpd00322_e','cpd00129_e','cpd00156_e','cpd00107_e','cpd00084_e', 
+    'cpd00149_e','cpd00099_e','cpd10515_e','cpd00030_e','cpd00254_e','cpd00063_e','cpd00205_e','cpd00009_e','cpd00971_e','cpd00242_e',
+    'cpd00104_e','cpd00644_e','cpd00263_e','cpd00082_e']
+    elif media == 'default':
+        media = ['cpd00035_e','cpd00051_e','cpd00132_e','cpd00041_e','cpd00084_e','cpd00053_e','cpd00023_e',
+    'cpd00033_e','cpd00119_e','cpd00322_e','cpd00107_e','cpd00039_e','cpd00060_e','cpd00066_e','cpd00129_e',
+    'cpd00054_e','cpd00161_e','cpd00065_e','cpd00069_e','cpd00156_e','cpd00027_e','cpd00149_e','cpd00030_e',
+    'cpd00254_e','cpd00971_e','cpd00063_e','cpd10515_e','cpd00205_e','cpd00099_e']
+    else:
+        media = media
+    print(media)
+    
+    # Set media condition
+    if len(media) != 0:
+        media_condition = set(['EX_' + cpd for cpd in media])
+        universal_reactions = set([x.id for x in universal.reactions])
+        for rxn in universal_reactions:
+            if rxn.startswith('EX_') == True:
+                universal.reactions.get_by_id(rxn).bounds = (0, 1000.0)
+            if rxn in media_condition:
+                universal.reactions.get_by_id(rxn).bounds = (-1000.0, 10000)
+
     # Gapfill new model
     if gapfill == 'yes':
         if file_type != 3:
@@ -659,11 +662,11 @@ if __name__ == "__main__":
         draft_metabolites = set([x.id for x in draft_genre.metabolites])
         warnings.filterwarnings('ignore')
         new_reactions = _find_reactions(draft_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 1, file_type)
+        print(new_reactions)
         filled_genre = _gapfill_model(draft_genre, universal, new_reactions, universal_obj, 1)
         if file_type != 3:
             print('Identifying new metabolism (Step 2 of 2)...')
-            print(media)
-            filled_genre = _set_base_inputs(filled_genre, universal, media)
+            filled_genre = _set_base_inputs(filled_genre, universal)
             media_reactions = _find_reactions(filled_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 2, file_type)
             final_genre = _gapfill_model(filled_genre, universal, media_reactions, universal_obj, 2)
             final_genre = _add_annotation(final_genre, gram_type)
