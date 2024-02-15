@@ -1,4 +1,4 @@
-# Reconstructor
+# Reconstructor - Current Version: 1.1.0
 This repository contains all source code in the Reconstructor Python package, important file dependencies, and benchmarking scores for Reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from annotated aminoa acid .fasta files based on KEGG annotations.
 
 ****Reconstructor is currently only compatible on MacOSX and Windows machines****
@@ -90,21 +90,21 @@ python -m reconstructor --test yes
 ## Use reconstructor via COMMAND LINE
 Now that Reconstructor and all dependency databases are installed, you can proceed to use Reconstructor via command line. An example would be:
 ```
-python -m reconstructor --input_file <input fasta file> --type_type <1,2,3> --gram <negative, positive> --other arguments <args>
+python -m reconstructor --input_file <input fasta file> --file_type <1,2,3> --gram <negative, positive> --media rich
 ```
 #### Type 1: Build GENRE from annotated amino acid .fasta files
 ```
-python -m reconstructor --input_file Osplanchnicus.aa.fasta --file_type 1 --gram negative --other_args <args>
+python -m reconstructor --input_file Osplanchnicus.aa.fasta --file_type 1 --gram negative --media rich
 ```
 
 #### Type 2: Build GENRE from BLASTp hits
 ```
-python -m reconstructor --input_file Osplanchnicus.hits.out --file_type 2 --gram negative --other_args <args>
+python -m reconstructor --input_file Osplanchnicus.hits.out --file_type 2 --gram negative --media rich
 ```
 
 #### Type 3: Additional gap-filling (if necessary)
 ```
-python -m reconstructor --input Osplanchnicus.sbml --type 3 --other_args <args>
+python -m reconstructor --input Osplanchnicus.sbml --type 3 --media rich
 ```
 ## Use Reconstructor directly in PYTHON
 You can use Reconstructor directly in Python for using directly with COBRApy analysis tools.
@@ -122,16 +122,16 @@ model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
 ```
 ### Required and optional arguments
 ```
---input_file <input file, Required, str>
+--input_file <REQUIRED input file, Required, str>
 ```
 ```
---file_type <input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1, int> 
+--file_type <REQUIRED input file type, .fasta = 1, diamond blastp output = 2, .sbml = 3, Required, Default = 1, int> 
 ```
 ```
---gram <Type of Gram classificiation (positive or negative), default = positive, str>
+--gram <REQUIRED Type of Gram classificiation (positive or negative), default = positive, str>
 ```
 ```
---media <List of strings of metabolites in modelseed namespace composing the media condition, comma separated. Must begin with EX_ and end with _e. For example: 'EX_cpd00001_e'. Not required.>
+--media <REQUIRED 'rich' is the default and can be used to generate model based on a rich media. List of strings of metabolites in modelseed namespace composing the media condition, comma separated. Must end with _e. For example: 'cpd00001_e'.>
 ```
 ```
 --org <KEGG organism code. Not required, str>
@@ -155,9 +155,6 @@ model = reconstruct('218496.4.fa', file_type = 1, gram = 'negative')
 ```
 --test <run installation tests, default = no, str>
 ```
-```
---gapfill <perform pFBA, yes or no, str>
-```
 
 # Supplementary Model Checks and Analyses
 
@@ -179,7 +176,7 @@ __*Escherichia coli:*__ [Resonstructor](https://emmamglass.github.io/Reconstruct
 #### /C_difficile_Media
 This folder contains .sbml reconstrucitons for *C. difficile* on five different media conditions described below. These include a complete media (default reconstructor media if no media is defined), rich media (built into reconstructor), minimal media (built into reconstructor), *C. difficile* specific defined minimal media (user inputted), and a *C. difficile* specific defined enriched media (user inputted). 
 
-__Complete media__ contains the following ModelSEED compounds:  
+__Default media__ contains the following ModelSEED compounds:  
 cpd00035 (L-Alanine), cpd00051 (L-Arginine), cpd00132 (L-Asparagine), cpd00041 (L-Aspartate), cpd00084 (L-Cysteine), cpd00053 (L-Glutamine), cpd00023 (L-Glutamate), cpd00033 (Glycine), cpd00119 (L-Histidine), cpd00322 (L-Isoleucine), cpd00107 (L-Leucine), cpd00039 (L-Lysine), cpd00060 (L-Methionine), cpd00066 (L-Phenylalanine), cpd00129 (L-Proline), cpd00054 (L-Serine), cpd00161 (L-Threonine), cpd00065 (L-Tryptophan), cpd00069 (L-Tyrosine), cpd00156 (L-Valine), cpd00027 (D-Glucose), cpd00149 (Cobalt), cpd00030 (Manganese), cpd00254 (Magnesium), cpd00971 (Sodium), cpd00063 (Calcium), cpd10515 (Iron), cpd00205 (Potassium), cpd00099 (Choride)  
 This reconstruction was generated using the following arugments:  
 ```
@@ -207,7 +204,7 @@ __*C. difficile* defined minimal media__ contains the following ModelSEED compou
 cpd00001 (Water), cpd00104 (Biotin), cpd00644 (Pantothenate), cpd00263 (Pyridoxine), cpd00149 (Cobalt), cpd00099 (Chloride), cpd10515 (Iron), cpd00030 (Manganese), cpd00254 (Magnesium), cpd00063 (Calcium), cpd00205 (Potassium), cpd00009 (Phosphate), cpd00971 (Sodium), cpd00242 (Carbonate), cpd00322 (L-Isoleucine), cpd00129 (L-Proline),  cpd00156 (L-Valine), cpd00107 (L-Leucine), cpd00084 (L-Cysteine), cpd00065 (L-Tryptophan), cpd00027 (Glucose)  
 This reconstruction was generated using the following arguments:  
 ```
---input 699034.5.fa --type 1 --gram positive --media 'EX_cpd00001_e','EX_cpd00104_e','EX_cpd00644_e','EX_cpd00263_e','EX_cpd00149_e','EX_cpd00099_e','EX_cpd10515_e','EX_cpd00030_e','EX_cpd00254_e','EX_cpd00063_e','EX_cpd00205_e','EX_cpd00009_e','EX_cpd00971_e','EX_cpd00242_e','EX_cpd00322_e','EX_cpd00129_e','EX_cpd00156_e','EX_cpd00107_e','EX_cpd00084_e','EX_cpd00065_e','EX_cpd00027_e'
+--input 699034.5.fa --type 1 --gram positive --media 'cpd00001_e','cpd00104_e','cpd00644_e','cpd00263_e','cpd00149_e','cpd00099_e','cpd10515_e','cpd00030_e','cpd00254_e','cpd00063_e','cpd00205_e','cpd00009_e','cpd00971_e','cpd00242_e','cpd00322_e','cpd00129_e','cpd00156_e','cpd00107_e','cpd00084_e','cpd00065_e','cpd00027_e'
 ```
 The MEMOTE scores for *C. difficile* reconstruction in minimal defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedminimal.html) 
 
@@ -217,7 +214,7 @@ cpd00220 (Riboflavin), cpd00644 (Calcium Pantothentate), cpd00393 (Folate), cpd0
 cpd00254 (Magnesium), cpd10515 (Fe2+), cpd00030 (Mn2+), cpd00242 (Carbonate), cpd00001 (Water), cpd00226 (Hypoxanthine), cpd01242 (Thyminose), cpd00307 (Cytosine), cpd00092 (Uracil)  
 This reconstruction was generated using the following arguments" 
 ```
---input 699034.5.fa --type 1 --gram positive --media 'EX_cpd00035_e','EX_cpd00041_e','EX_cpd00023_e','EX_cpd00119_e','EX_cpd00107_e','EX_cpd00060_e','EX_cpd00129_e','EX_cpd00161_e','EX_cpd00051_e','EX_cpd00069_e','EX_cpd00084_e','EX_cpd00033_e','EX_cpd00322_e','EX_cpd00039_e','EX_cpd00066_e','EX_cpd00054_e','EX_cpd00065_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00220_e','EX_cpd00644_e','EX_cpd00393_e','EX_cpd00133_e','EX_cpd00263_e','EX_cpd00104_e','EX_cpd00149_e','EX_cpd00971_e','EX_cpd00099_e','EX_cpd00205_e','EX_cpd00009_e','EX_cpd00063_e','EX_cpd00254_e','EX_cpd10515_e','EX_cpd00030_e','EX_cpd00242_e','EX_cpd00001_e','EX_cpd00226_e','EX_cpd01242_e','EX_cpd00307_e','EX_cpd00092_e'
+--input 699034.5.fa --type 1 --gram positive --media 'cpd00035_e','cpd00041_e','cpd00023_e','cpd00119_e','cpd00107_e','cpd00060_e','cpd00129_e','cpd00161_e','cpd00051_e','cpd00069_e','cpd00084_e','cpd00033_e','cpd00322_e','cpd00039_e','cpd00066_e','cpd00054_e','cpd00065_e','cpd00156_e','cpd00027_e','cpd00220_e','cpd00644_e','cpd00393_e','cpd00133_e','cpd00263_e','cpd00104_e','cpd00149_e','cpd00971_e','cpd00099_e','cpd00205_e','cpd00009_e','cpd00063_e','cpd00254_e','cpd10515_e','cpd00030_e','cpd00242_e','cpd00001_e','cpd00226_e','cpd01242_e','cpd00307_e','cpd00092_e'
 ```
 The MEMOTE scores for *C. difficile* reconstruction in enriched defined media can be found [here](https://emmamglass.github.io/ReconstructorMEMOTE.io/699034.5.definedrich.html) 
 
