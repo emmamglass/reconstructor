@@ -1,4 +1,4 @@
-# Reconstructor
+# Reconstructor - Current Version: 1.1.0
 This repository contains all source code in the Reconstructor Python package, important file dependencies, and benchmarking scores for Reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from annotated aminoa acid .fasta files based on KEGG annotations.
 
 ****Reconstructor is currently only compatible on MacOSX and Windows machines****
