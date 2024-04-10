@@ -1,0 +1,834 @@
+[2.1.9]
+- Corrected the prefix of the query length field for the SAM format.
+- Added the size modifiers 'T', 'M' and 'K' for the `--memory-limit`/`-M`
+  option.
+- Added the option `--mutual-cover` to cluster sequences by mutual coverage
+  percentage of the cluster representative and member sequence.
+- Added the option `--symmetric` for computing greedy vertex cover with
+  symmetric edges.
+- Fixed an issue that caused the `--approx-id` option and the `approx_pident`
+  output field not to work correctly when using the `--anchored-swipe`
+  option.
+- Added the option `--no-reassign` to prevent reassignment to closest
+  representative for the greedy vertex cover workflow.
+- Added the option `--connected-component-depth` to activate clustering
+  of connected components at a given maximum depth for the greedy vertex
+  cover and the clustering workflows.
+- Fixed a compiler error for Clang v17.
+- Improved search performance when searching with mutual coverage threshold
+  by filtering for sequence length ratio.
+- Added the sensitivity mode `--shapes-30x10` with sensitivity approximately
+  equivalent to `--mid-sensitive`.
+- Added the options `--round-coverage` and `--round-approx-id` to set per
+  round cutoffs for cascaded clustering.
+- The CMake switch `-DKEEP_TARGET_ID` is now obsolete and the corresponding
+  function is always available.
+- Added the option `--include-lineage` to the taxonomic classification format
+  to include taxonomic lineage in the output.
+- Added native support for the ARM NEON instruction set (contributed by
+  Martin Larralde).
+
+[2.1.8]
+- Fixed an issue that could cause reduced performance when running in
+  query-indexed mode.
+- Added support for the JSON output format (option `-f json-flat`).
+- Added the option `--sam-query-len` to output query length in SAM format.
+
+[2.1.7]
+- Fixed a bug that caused taxonomy names not to be loaded correctly for the
+  `makedb` workflow.
+- Fixed a bug that caused a crash when using the `--target-indexed` option.
+- Fixed an error when using the `--tmpdir` option for the makedb workflow.
+- Added a warning message when sequence accessions are shortened due to parsing
+  rules for the `makedb` workflow.
+- Added the option `--no-parse-seqids` to disable parsing of sequence
+  accessions.
+- Changed the command line help to print options separated by command.
+- Fixed an issue that the `--ignore-warnings` option could not be used for
+  the `makedb` workflow.
+
+[2.1.6]
+- Fixed compatibility issues on older systems without support for AVX2.
+- Fixed linker errors when compiled with `-DX86=OFF`.
+- Fixed a compiler error on macOS systems.
+- Fixed a bug that could cause missing tags in the XML output format and
+  unaligned queries not to be reported correctly.
+- Fixed a bug that caused the PAF output format not to work correctly.
+
+[2.1.5]
+- Disabled the use of frequency based seed masking when using the linear-time
+  search feature with respect to the targets.
+- Fixed a bug that caused a `Database file is not a BLAST database` error message
+  for the `prepdb` workflow.
+- Fixed a bug that caused a segmentation fault when using BLAST databases.
+- Added line numbers for error messages when reading taxonomy mapping files.
+- Fixed a bug that could cause a crash when using the `greedy-vertex-cover`
+  workflow without the `--out` and `--centroid-out` options.
+- Fixed a bug that caused the `greedy-vertex-cover` workflow to only produce a
+  trivial clustering.
+- Fixed a bug that caused the last codon of the -2 reading frame to be translated
+  incorrectly.
+- Reduced the memory use of the clustering workflow.
+- Updated the bundled NCBI toolkit to the latest version.
+
+[2.1.4]
+- Leading spaces are now trimmed and tabulator characters escaped as `\t`
+  in sequence titles, and a warning message is produced.
+- Blank sequence titles are now replaced by `N/A`, and a warning message is
+  produced.
+- Fixed a bug that could cause a `Traceback error` in certain cases.
+- Fixed a bug that caused the `qlen` and `score` output fields not to be reported
+  correctly for the `realign` workflow.
+- Added an error message when using unsupported output fields for the `realign`
+  workflow.
+- Fixed an issue that could cause a `Missing fields in input line` error when
+  clustering.
+- Optimized the performance of the `linclust` workflow.
+- Reduced the memory use of the clustering workflow.
+- Fixed a bug that caused using standard input as the query not to work.
+
+[2.1.3]
+- Fixed compiler errors for GCC 4.8.
+- Fixed a GCC compiler error.
+- Fixed a segfault issue occuring when compiled using GCC 12 on ARM64 systems.
+- Fixed an issue that caused missing support for AVX2.
+
+[2.1.2]
+- The iterated search mode (option `--iterate`) now uses a linear-time feature as
+  the first search round.
+- Added the `linclust` command to cluster using only a single linear-time search
+  round.
+- Fixed compiler errors on macOS.
+- Fixed a bug that caused invalid alignment traceback output for the DAA `view`
+  workflow.
+- Added the `merge-daa` workflow to merge DAA files.
+- Fixed an error when using the `--max-target-seqs/-k` option for the DAA `view`
+  workflow.
+- Removed AVX2 support from the Windows release binary to ensure compatibility
+  with older systems.
+- Permitted the `--ignore-warnings` option for the `cluster` and `deepclust`
+  workflows.
+- Use unlinked temporary files for database blocks in clustering workflows.
+- Fixed a bug that could cause invalid results when using a clustering step with
+  linearization as the final round in combination with database processing in
+  multiple super blocks.
+- The `--lin-stage1` option can now be used without compilation using the
+  `-DEXTRA=ON` cmake option.
+- Added the option to specify the `_lin` suffix for sensitivity keywords for the
+  `--iterate` option to activate linear-time feature.
+- Added the option `--linsearch` to activate linear-time feature for the search
+  workflows.
+- Fixed a bug that caused the `ppos` and `positive` output fields not to work
+  for the `realign` workflow.
+- Fixed an issue that caused motif masking not to work when compiled with link
+  time optimization.
+
+[2.1.1]
+- Fixed compilation errors on non-x86 systems and for the clang compiler.
+- Fixed an error message when running the `recluster` workflow.
+- Fixed a bug that could cause an `invalid varint encoding` error when using the
+  DAA format.
+- Fixed a bug that could cause corrupted DAA output.
+- Fixed a bug that caused an error in the `view` workflow.
+- Adjusted the hit culling heuristic of the frameshift alignment mode to be less
+  aggressive.
+
+[2.1.0]
+- Added the `cluster` workflow to cluster protein sequences.
+- Added the `realign` workflow to generate clustering output.
+- Added the `recluster` workflow to correct errors in clusterings.
+- Added the `reassign` workflow to reassign cluster members to their closest centroid.
+- Added the option `-M/--memory-limit` to set a memory limit for clustering workflows.
+- Added the `--approx-id` option to filter alignments by approximate sequence identity
+  and to set an approximate sequence identity threshold for clustering.
+- Added the `--member-cover` option to set the coverage threshold of the cluster
+  member sequence.
+- Added the `--cluster-steps` option to set steps for cascaded clustering.
+- Added the `--clusters` option to specify clustering input file.
+- The `blastx` mode will now mask any open reading frame below the minimum required
+  length as specified by `--min-orf`.
+- The `blastx` mode will only count unmasked letters towards the block size.
+- Fixed a bug that caused an error when using the global ranking mode.
+- Added the fast mode as the first round in iterative searches.
+- Fixed a bug that caused the program not to function on systems without support
+  for SSE4.1.
+- Improved multi-threaded load balancing of gapped extension computations.
+- Improved performance of seed extension stage when HSP filter settings are used.
+- Added the option `--soft-masking` with possible values `0` and `tantan` to permit
+  soft-masking using the tantan algorithm.
+- Fixed a bug that could cause an `inflate error` in multiprocessing mode.
+- Added the option `--swipe` to compute full Smith Waterman alignments of all
+  queries against all targets.
+- Added the sensitivity mode `--faster`.
+- Added the output fields `approx_pident` and `corrected_bitscore` to the tabular
+  format.
+- Added the `--lin-stage1` option to linearize comparisons in the seeding stage
+  by only considering hits against the longest query sequence for identical seeds
+  (only supported when compiled with `-DEXTRA=ON`).
+- Added the `--kmer-ranking` option to rank sequences when `--lin-stage1` is used
+  (only supported when compiled with `-DKEEP_TARGET_ID=ON`).
+- Added the option `--no-block-size-limit` to deactivate upper limits for the block
+  size when the `--memory-limit` option is used.
+- Added the `greedy-vertex-cover` workflow to compute clustering based on
+  alignments.
+- Added the `--edge-format` option to set edge format for greedy vertex cover.
+- Added the `--edges` option to set input file for greedy vertex cover.
+- Added the `--centroid-out` option to output centroid sequences for greedy
+  vertex cover.
+- Added the `--unaligned-targets` option to generate an output file of unaligned
+  targets.
+- Fixed an issue that failed compilation using the Intel Compiler.
+- Fixed an issue that could cause a segmentation fault in rare cases.
+- The `--header` option can now be used with the parameter `simple` to enable
+  simple headers for the tabular format, or without a parameter to enable
+  headers for the clustering format.
+- Added the option `--mp-self` to optimize self-alignment in multiprocessing
+  mode.
+- Added the option `--query-or-subject-cover` to report alignments if the query
+  or the subject cover (or both) are above the given threshold.
+- Removed support for the `--comp-based-stats 2` option (now equivalent to
+  `--comp-based-stats 3`).
+- Removed hit culling in case of overlapping target ranges in frameshift
+  alignment mode.
+- Added the option `--anchored-swipe` to activate anchored SWIPE extension.
+
+[2.0.15]
+- Fixed a bug (present since v2.0.12) that caused the `diamond view` workflow to
+  report a zero bit score for all alignments.
+
+[2.0.14]
+- Fixed a compiler error on Linux systems that do not define `_SC_LEVEL3_CACHE_SIZE`.
+- Fixed an error when using `--unal 1` with the `cigar` output field.
+- Fixed an `illegal instruction` error on systems that did not support AVX2.
+- Fixed a bug (present since v2.0.12) that could cause an error or suboptimal
+  alignments when HSP filter settings were used.
+
+[2.0.13]
+- Fixed a bug that caused invalid bit scores in frameshift alignment mode.
+
+[2.0.12]
+- Fixed an error when using HSP filter settings together with a BLAST database.
+- Optimized the performance of alignment traceback.
+- A non-default setting of `--max-hsps` will now recompute a full-matrix Smith Waterman
+  alignment with the ranges of the known HSPs masked in the target.
+- A non-default setting for `--max-hsps` can now be used together with `--ext full`.
+- The sensitivity levels used for iterated searches can now be manually set by
+  using a space-separated list after the `--iterate` option.
+- Seeds are masked based on complexity instead of frequency by default.
+- Added the option `--seed-cut` to set a complexity cutoff for indexed seeds.
+- Added the option `--freq-masking` to enable masking seeds based on frequency.
+- The fast, default, mid-sensitive and sensitive modes will by default softmask
+  a fixed set of highly abundant sequence motifs.
+- Added the option `--motif-masking (0,1)` to enable or disable motif masking.
+- Added the option `--masking seg` to enable SEG masking of target sequences (BLAST
+  default) instead of tantan masking.
+- Fixed a bug that caused the `full_sseq` output field to contain invalid information
+  or to produce an error when using a BLAST database.
+- Changed composition based statistics to use BLOSUM62 background frequencies.
+- Fixed the zstd dependency in the Dockerfile.
+- Added support for gap letters in BLAST databases.
+- Fixed a bug that caused the `--custom-matrix` option not to function correctly.
+- Changed the overlap for merging adjoining bands to >0.0.
+- Use more moderate filtering of HPSs in the chaining stage.
+
+[2.0.11]
+- Fixed a bug that could cause invalid output when using `--masking 0` combined with
+  the global ranking mode.
+- Enabled lazy repeat masking in the query-indexed and contiguous seed modes when
+  using global ranking.
+- Added detection of cache size to auto-enable query-indexed mode.
+
+[2.0.10]
+- Using BLAST databases now requires a preprocessing step using the command `prepdb`.
+- Improved performance of searching small query files.
+- Added "iterative" search mode (option `--iterate`) to search the query dataset with
+  increasing sensitivity, only searching queries at the target sensitivity that fail
+  to align at a lower sensitivity search.
+- Added the "global ranking" mode (option `-g`) to set a limit on the number of
+  Smith Waterman extensions per query, with the target sequences ranked by their
+  ungapped extension scores.
+- Added the `--fast` sensitivity mode that is faster and less sensitive than the
+  default mode.
+- Reduced the time for loading target sequences from BLAST databases.
+- Added the contiguous-seed mode (option `--algo ctg`) to improve performance for
+  small query files.
+- Added support for using `--comp-based-stats (3,4)` in combination with `--ext full`.
+- Fixed a bug that could cause a `Traceback error` when using `--comp-based-stats (3,4)`
+  in rare cases.
+- Changed the `full_sseq` output field to always contain unmasked sequences.
+- Fixed an issue that could cause target output order to be nondeterministic in case
+  of identically scoring hits.
+- Added support for reading zstd-compressed input files (auto-detected) and writing
+  zstd-compressed output files (option `--compress zstd`) (requires compilation
+  using `cmake -DWITH_ZSTD=ON`).
+- Compilation with BLAST database support requires the zstd library.
+- Added error message when reading protein sequences from FASTA files that only
+  contain DNA letters (can be disabled using `--ignore-warnings`).
+
+[2.0.9]
+- Reduced the memory use of database building with taxonomy mapping.
+- Removed the limitation of sequence accession length.
+- Fixed a bug that could cause using a BLAST database not to function correctly.
+- Added support for using BLAST alias databases (created by `blastdb_aliastool`).
+- Reduced the memory use of the seed hit sorting stage.
+- Improved the consistency of results when running in query-indexed mode (`--algo 1`).
+- Added the option `--skip-missing-seqids` to ignore cases of missing sequences
+  in the database when using the `--seqidlist` option.
+- The `--min-orf` parameter now defaults to 1 in frameshift alignment mode.
+
+[2.0.8]
+- Added support for using BLAST database files instead of the Diamond-formatted
+  `.dmnd` files.
+- Added the option `--seqidlist` to filter the database by sequence accession (only
+  supported for BLAST databases).
+- Fixed a bug that caused the `--dbsize` option not to function correctly.
+- Added the command `makeidx` and the option `--target-indexed` that provide an
+  optimisation specialized for small databases (<10 Mb).
+- Added the option `--mp-recover` to recover aborted runs in multiprocessing mode.
+
+[2.0.7]
+- Added support for computing full-matrix instead of banded Smith Waterman extensions
+  (command line option `--ext full`).
+- Added support for the new `prot.accession2taxid.FULL.gz` taxonomy mapping file from
+  NCBI.
+- Added the option `--gapped-filter-evalue` to set the e-value threshold of the gapped
+  filter heuristic.
+- Added setting the scores of the mask letter according to BLAST rules when a
+  compositionally adjusted matrix is used.
+- Changed formatting of e-values to print two decimals instead of one.
+- Added the output field `qseq_translated` to print the translation of the aligned part
+  of the query sequence.
+- Added support for providing two input files to `--query/-q` when running alignment
+  in blastx mode.
+- Added the output field `full_qseq_mate` to print the sequence of the query's mate
+  (enabled when using two query files in blastx mode).
+- Fixed a bug that could cause a crash in blastx mode for very long queries.
+
+[2.0.6]
+- Changed the computation of expected values to use the method described in Park, Y.,
+  Sheetlin, S., Ma, N. et al. New finite-size correction for local alignment score
+  distributions. *BMC Res Notes* **5**, 286 (2012).
+- Enabled the use of a custom scoring matrix without having to specify the statistical
+  parameters (option `--custom-matrix`).
+- Added support for compositional matrix adjust as described in Yi-Kuo Yu, Stephen F.
+  Altschul, The construction of amino acid substitution matrices for the comparison of
+  proteins with non-standard compositions, *Bioinformatics*, Volume 21, Issue 7, 1 April
+  2005, Pages 902–911. Three additional modes have been added that can be enabled by
+  setting `--comp-based-stats (2,3,4)` (*the feature is not enabled by default and does
+  not support translated searches at the moment*).
+- Fixed a bug that could cause incorrect alignment coordinates, gaps counts and sequence
+  identities being reported by `diamond view`.
+- Targets are sorted by bit score instead of e-value in the alignment output when the
+  `--top` parameter is used.
+- Disabled support of custom scoring matrices for the DAA format.
+- Fixed a bug that caused the use of a custom scoring matrix not to function correctly.
+- Fixed an issue that caused the portable binary not to function on systems that did not
+  support AVX.
+- Added the option `--no-unlink` to prevent unlinking of temporary files.
+
+[2.0.5]
+- Fixed an issue that could cause high memory use in frameshift alignment mode.
+
+[2.0.4]
+- Fixed a bug that could cause the `--max-target-seqs/-k`, `--ext-chunk-size` and 
+  `--file-buffer-size` options not to function correctly on macOS.
+
+[2.0.3]
+- Added a new sensitivity mode that is between the default mode and the sensitive mode
+  in sensitivity (option `--mid-sensitive`).
+- Added counters for total number of reference blocks, shapes and index chunks to
+  the status messages.
+- Fixed a bug (persisting since v2.0.2) that could cause secondary HSPs within one
+  target not to be reported if the `--max-hsps` option was used with a non-default setting.
+- Fixed a bug that could cause an invalid error message with regard to the database
+  format in certain cases.
+- The `--no-self-hits` option is no longer supported in `blastx` mode.
+- Changed the semantics of the `--no-self-hits` option to check for equality of both
+  sequence and sequence id, independent of the computed alignment.
+- The selection of the top hit when using `--top` will respect the identity, coverage
+  and no-self-hits filter settings (does not apply when frameshift alignment is
+  enabled).
+- The inclusion criterion for `--top` is applied to the bit score instead of the raw
+  score and is no longer affected by integer rounding (does not apply when frameshift
+  alignment is enabled).
+- Improved the accuracy of the ranking heuristic.
+- Added the options `--ext-chunk-size` and `--no-ranking` to control the ranking
+  heuristic.
+
+[2.0.2]
+- Fixed a bug (persisting since v2.0.0) that could cause incomplete results in `blastx` mode.
+- Reduced the use of temporary disk space.
+- Fixed an issue that could cause long runtimes when using the `--taxon-list` option.
+
+[2.0.1]
+- Added feature for using the tool in a distributed computing environment.
+- Fixed an issue that could cause increased memory usage and runtimes for very long queries.
+- Fixed a bug that could cause a crash when using `--comp-based-stats 0`.
+- Fixed a bug that could cause a crash for small input files in certain cases.
+- Fixed a bug that could cause filtering hits for identity or range cover not to function correctly when using
+  the tabular format without traceback being enabled.
+- Added warning messages to recommend block size parameters based on system RAM.
+
+[2.0.0]
+- Added the sensitivity modes `--very-sensitive` and `--ultra-sensitive`.
+- The `--block-size`/`-b` parameter is set to 0.4 and the `--index-chunks`/`-c` parameter is set to 1 by default
+  in the new sensitivity modes.
+- Improved performance.
+- Added the option `--ext` with possible values `banded-fast` and `banded-slow` to adjust band setup for Smith
+  Waterman extensions (new default is `banded-fast` for the default and sensitive mode, and `banded-slow` otherwise).
+- Added automatic disabling of alignment traceback if not required by the user-defined output fields in tabular
+  output format.
+- Changed the default value of the `--max-hsps` parameter to 1.
+- Changed the default value of the `--freq-sd` parameter from 10 to 20 for the sensitive mode.
+- Fixed a compiler error on FreeBSD.
+
+[0.9.36]
+- Fixed a bug that could cause `makedb` to produce invalid database files when using taxonomy features.
+- Fixed a bug that could cause a crash when running in query-indexed mode.
+
+[0.9.35]
+- Fixed a bug in `diamond view` that would cause high memory usage and erroneous output.
+- Reduced the use of temporary disk space.
+- Fixed a database compatibility issue with big endian architectures.
+- Fixed a bug that would cause a crash for query sequences shorter than 5 letters in blastx mode.
+- Fixed a bug that would cause a crash when using a FASTA file as database parameter in blastx mode.
+- Added support for the following new ranks in the NCBI taxonomy: biotype, clade, forma specialis, genotype, isolate, morph, pathogroup, serogroup, serotype, strain, subvariety.
+
+[0.9.34]
+- Fixed a compiler error for native builds.
+- Fixed a compiler error for GCC 4.8.
+- Fixed a compiler error when support for SSSE3 was enabled without support for SSE4.1.
+- Implemented asynchronous loading of seed hits.
+
+[0.9.33]
+- Improved performance and sensitivity.
+- Increased use of temporary disk space.
+- Implemented support for the AVX2 instruction set.
+- Fixed a bug on big-endian architectures.
+- Fixed bugs for compilers with unsigned char.
+- Fixed compiler errors for generic builds.
+- Added compatibility of database files between little and big endian architectures.
+- Fixed various issues related to `Illegal instruction` errors on macOS.
+- Added option `--file-buffer-size` to set the size of the I/O buffers and set the default value to 64 MB.
+
+[0.9.32]
+- Fixed a bug that would generate an incorrect count of positive scoring letters in all output formats.
+- Fixed a compiler error on macOS.
+- Fixed an `illegal instruction` error on macOS.
+
+[0.9.31]
+- Improved performance.
+- Composition based statistics use integer scoring.
+- Option `--quiet` will suppress startup message.
+- Added output field `scovhsp` to print the subject coverage per HSP to the tabular format.
+- Added option `--culling-overlap` to set the minimum overlap with a higher scoring hit for a hit to be deleted and changed the
+  default value from 90% to 50%.
+- Added command `diamond test` to run a series of regression tests.
+- Fixed an off-by-one error of the query end position in the XML output format.
+- (Update 2020/06/08) Due to a bug, since this version DAA files are not backward compatible with previous versions when using frameshift alignment (option `-F`).
+
+[0.9.30]
+- Added support for output field `cigar` to the tabular format.
+- Changed the maximum repeat period to 50 for tantan masking.
+- Changed the tantan masking to ungapped mode.
+- Improved the performance of repeat masking.
+- Added output fields sskingdoms, skingdoms, and sphylums to print subject super kingdoms, subject kingdoms, and subject phylums.
+
+[0.9.29]
+- Fixed a bug that could cause taxonomy features to function incorrectly for databases created by versions 0.9.27 and 0.9.28.
+
+[0.9.28]
+- Fixed a bug that could cause alignment score overflows for scores > 65535 in frameshift alignment mode.
+- Fixed a clang compiler error.
+
+[0.9.27]
+- Improved performance of the seed matching stage.
+- Seed frequency counts are computed based on hit seeds.
+- Added option `--taxon-exclude` to exclude list of taxon ids from search.
+- Compiling from source will no longer perform a native build. Instead, a portable binary that contains code paths
+  for multiple architectures will be produced, with dispatch logic that is invoked at runtime.
+
+[0.9.26]
+- Fixed a bug that could cause undefined behaviour when using a database file of format version < 2.
+- Fixed a compiler error when compiled as generic C++.
+- Program will no longer terminate with an error if unlink system call fails.
+- Added option `--tantan-minMaskProb` to set minimum repeat probability for tantan masking and changed the default value to 0.9.
+- Added option `--tantan-maxRepeatOffset` to set maximum tandem repeat period to consider and changed the default value to 15.
+- Added option `--tantan-ungapped` to use tantan in ungapped mode and changed the default to gapped mode.
+- Changed score matrix lambda calculation for tantan masking.
+- Reference masking is recomputed during alignment runs.
+
+[0.9.25]
+- Added support for the `sscinames` output field to print subject scientific names to the tabular output format.
+- Fixed a compiler error for GCC 8.2.
+- Added option `--stop-match-score` to set the match score of stop codons.
+- Fixed a bug that caused the `qqual` output field to not be correctly clipped to the aligned part of the query.
+- Added output fields `qseq_gapped` and `sseq_gapped` to the tabular format.
+- Raised compiler requirement to GCC 4.8.
+- Fixed a bug that caused the final sequence positions to not be printed in the pairwise format.
+- Allow using `--min-score` instead of `--top` for the LCA computation of the taxonomy output format.
+- Reduced the number of temporary files.
+- Added output field `qstrand` to the tabular format.
+- Database format version changed to 3.
+- Fixed a bug in the `--range-culling` mode that could cause undefined behaviour.
+
+[0.9.24]
+- Fixed a compiler error on macOS.
+- Added --header option to output header for tabular output format.
+- The quality string output in tabular format (qqual field) is clipped to the aligned part of the query.
+- Print '*' as quality string if quality values are not available in tabular output format.
+- Added field 'full_qqual' to print unclipped query quality values to the tabular format.
+- Added field 'full_qseq' to print unclipped query sequence to the tabular format.
+- Added support for using the hyphen character '-' to denote the standard input for input file parameters.
+- Status messages are written to stderr.
+- Fixed a bug that could incorrectly report queries as unaligned in the output of the --un option.
+- Added option '--al' to write aligned queries to file.
+- Added options '--alfmt' and '--unfmt' to set the format of the aligned/unaligned query file (supported values: fasta, fastq).
+
+[0.9.23]
+- Fixed an issue that could cause too high memory usage.
+- Added output field 'qqual' to print query FASTQ quality values to the tabular format.
+- Changed license to GPL.
+- Raised compiler requirement to GCC 4.6.
+- Added option to use the DAA output format for diamond view.
+- Added support for using a FASTA file as the --db parameter in alignment workflows.
+- Added CL (command line) and VN (version) fields to the @PG SAM format header line.
+- Fixed a performance issue for very long query sequences.
+- Added shortcut --long-reads for --range-culling --top 10 -F 15.
+
+[0.9.22]
+- Added output field full_sseq to tabular output format.
+- Database sequences that exceed the maximum accession length will no longer cause an error.
+- Added support for PAF output format.
+- Optimized performance of database taxonomy filtering.
+
+[0.9.21]
+- Fixed compiler errors on some systems.
+
+[0.9.20]
+- Added Bioconda installation instructions to manual.
+- Added official docker release: https://hub.docker.com/r/buchfink/diamond/
+- Fixed a bug that could cause corrupted output if compression was activated.
+- Fixed an issue that could cause high memory usage by automatic use of the query-indexed algorithm.
+
+[0.9.19]
+- Fixed a bug in the --un function to write unaligned reads.
+- Fixed an issue in the LCA algorithm that could cause an assignment to a higher node.
+- --taxonmap and --taxonnodes parameters now apply exclusively to the makedb command.
+- Added option --taxonlist to filter searches by subject taxonomic id.
+- Changed database format; rebuilding is required.
+
+[0.9.18]
+- Optimized output writing performance.
+- Fixed a bug in the XML output format.
+
+[0.9.17]
+- Fixed a compiler error on FreeBSD.
+- Added option --range-culling.
+- Fixed escape sequences in XML output.
+
+[0.9.16]
+- Fixed a bug that caused an error for non-SSSE3 builds.
+
+[0.9.15]
+- Improved performance of frameshift alignment mode.
+
+[0.9.14]
+- Added support for frameshift alignments.
+
+[0.9.13]
+- Fixed query positions in pairwise format for translated searches.
+- Changed default behaviour of --max-hsps option to report unlimited number of HSPs.
+
+[0.9.12]
+- Fixed dbinfo command to be able to read older database formats.
+- Adjusted XML format for better compatibility with Blast2Go.
+- Fixed a potential error when running multiple instances of Diamond.
+
+[0.9.11]
+- Added option --xml-blord-format for alternative-style XML format.
+- Fixed a bug that could cause a crash when writing compressed output files.
+
+[0.9.10]
+- added --strand option to choose query strand
+- added dbinfo command
+
+[0.9.9]
+- Added taxonomic classification format.
+- Fixed a bug in getseq printing masked residues.
+- Fixed parsing of UniRef100_ sequence id prefixes.
+- Added support for using the staxids output field in diamond view.
+
+[0.9.8]
+- Fixed a compiler error.
+
+[0.9.7]
+- Fixed compiler errors.
+- Changed XML format to print accessions in the Hit_id and Hit_accession fields.
+
+[0.9.6]
+- Fixed compiler errors.
+
+[0.9.5]
+- Added support for named pipes.
+- Added support for reading input files from stdin.
+- Added more elaborate file I/O error messages.
+
+[0.9.4]
+- Improved performance.
+- Fixed a bug in the query-indexed algorithm.
+- Empty sequences are ignored instead of generating an error.
+
+[0.9.3]
+- Fixed a bug that could cause hanging.
+- Fixed a bug that could cause an error when using the staxids output field and the --unal option.
+
+[0.9.2]
+- Fixed a compiler error.
+- Improved performance for very small query files.
+
+[0.9.1]
+- fixed a performance issue
+
+[0.9.0]
+- improved performance
+- improved support for alignments with long gaps
+- removed SEG masking
+- added low complexity masking using tantan
+- changed license to AGPL
+
+[0.8.38]
+- fixed std::exception error messages
+- fixed sequence titles in XML format
+- XML and pairwise format contain full length titles by default
+
+[0.8.37]
+- fixed a bug that would cause an error message for empty DAA files
+- all scoring matrices use the respective default gap penalties from BLAST
+- added check for SSSE3 instruction set
+- added diamond-sse2 to the binary package
+- added staxids field to the tabular format
+
+[0.8.36]
+- fixed a compiler error
+
+[0.8.35]
+- added a check to detect incomplete database files
+- database files will be deleted in case database building fails
+- fixed a compiler error on 32 bit systems
+
+[0.8.34]
+- fixed a compiler error
+
+[0.8.33]
+- modified option --no-self-hits to also require matching sequence titles for filtering of a self hit
+- fixed a bug that could cause a crash in the `joining output blocks` stage
+
+[0.8.32]
+- improved speed and sensitivity
+- fixed an issue that could cause too high memory usage in certain cases
+
+[0.8.31]
+- renamed option --run-len to --min-orf
+- added compositional score adjustments (option --comp-based-stats (0,1), enabled by default)
+- removed --single-domain option and replaced by --max-hsps
+- added option --no-self-hits
+
+[0.8.30]
+- slightly improved sensitivity
+- added option to report unaligned queries (--unal)
+- pairwise, XML and SAM format will report unaligned queries by default
+- added option to filter alignments by subject cover (--subject-cover)
+
+[0.8.29]
+- fixed an issue that could cause a crash when using view on incomplete DAA files
+
+[0.8.28]
+- slightly improved sensitivity
+- added support for the BLAST pairwise format (option -f 0)
+
+[0.8.27]
+- added support for gzip compressed files containing multiple gzip streams
+
+[0.8.26]
+- fixed a compiler error
+- now compiles as generic C++ code without SSE being available
+- added option to write unaligned queries to file (--un)
+
+[0.8.25]
+- fixed a bug with the qseq field in the blast tabular format
+- added qtitle and btop fields to the blast tabular format
+- fixed a bug that could cause a crash when passing a nonexistant input file
+- fixed an issue that could cause unexpectedly long runtimes in certain cases
+
+[0.8.24]
+- error messages when reading sequence files include line numbers
+
+[0.8.23]
+- added option to change the genetic code used for translation in blastx mode
+
+[0.8.22]
+- the Hit_id and Hit_accession fields are now filled for the BLAST XML format
+
+[0.8.21]
+- fixed an error of 'diamond view' when using a custom scoring matrix
+
+[0.8.20]
+- added support for customizing the BLAST tabular output format
+
+[0.8.19]
+- ungapped xdrop score and ungapped and gapped filter scores are now set in bits
+- added support for custom scoring matrices
+
+[0.8.18]
+- fixed a crash bug
+- implemented getseq command to retrieve sequences from database files
+
+[0.8.17]
+- slightly improved sensitivity of fast and sensitive mode
+- added new alignment mode (option --more-sensitive)
+- the scoring matrix parameter will accept upper case spelling
+
+[0.8.16]
+- optimized performance
+
+[0.8.15]
+- fixed a compiler error on Mac
+- fixed a crash on some systems
+
+[0.8.14]
+- fixed a memory leak
+
+[0.8.13]
+- fixed a compiler error for GCC 4.1 and 4.2
+
+[0.8.12]
+- changed database format
+- block size parameter is set only for the alignment commands
+- the program will accept databases created by later versions if the format is compatible
+- improved sensitivity of sensitive mode with some loss in performance
+
+[0.8.11]
+- fixed a compiler error
+
+[0.8.10]
+- added option to directly generate all output formats
+- fixed some GCC 6.1 compiler errors
+
+[0.8.9]
+- optimized performance
+- improved local alignment accuracy
+- fixed some fields in the XML format
+
+[0.8.8]
+- fixed a clang compiler error
+
+[0.8.7]
+- added support for BLAST XML format
+- fixed the gzip compressed output option
+
+[0.8.6]
+- fixed a problem of the Windows version that could cause errors for larger files
+- optimized performance
+
+[0.8.5]
+- optimized performance
+
+[0.8.4]
+- fixed a problem that could cause very long runtimes for highly repetitive sequences
+- optimized performance
+- fixed a bug that could cause too high memory usage in blastp mode
+
+[0.8.3]
+- fixed a problem that could sometimes cause alignments to be missed
+- suppressed reporting of alignments that are enveloped by better alignments
+
+[0.8.2]
+- use parameter -k0 to report unlimited number of alignments
+- fixed a crash bug on Mac OS X
+- fixed a crash when view was used with terminal output
+
+[0.8.1]
+- added option to disable auto appending of DAA and DMND file extensions (--no-auto-append)
+- fixed some compiler errors for GCC 4.6
+
+[0.8.0]
+- fixed a bug that would sometimes cause alignments to be missed
+- fixed a bug that would cause alignments on the reverse strand to be missed in blastx mode
+- temporary directory now defaults to output directory
+- removed dependency on Boost
+- fixed a bug that would cause stop codons to be translated into 'X'
+
+[0.7.12]
+- fixed header string in SAM output to correctly identify the blastp alignment mode
+- added option to filter alignments for a given query cover (option --query-cover)
+- added option to print full subject titles in output files (option --salltitles)
+
+[0.7.11]
+- added --version switch
+- added static build option for CMake build
+- fixed a bug that would cause a return code of 1 without an error
+
+[0.7.10]
+- --log option works on OS X
+- added option to set effective database size (--dbsize)
+- added CMake build option
+- fixed a Clang compiler warning
+- dash characters (-) are ignored (treated as X) in protein sequences
+
+[0.7.9]
+- added --single-domain option
+- fixed a bug that could cause the program not to use all available threads
+- optimized performance
+
+[0.7.8]
+- fixed a bug that could produce an incorrect sort order of HSPs
+
+[0.7.7]
+- fixed a number formatting error in the SAM output format
+
+[0.7.6]
+- fixed a formatting error in CIGAR strings
+
+[0.7.5]
+- fixed a compiler error for Clang
+- compiles on OS X
+- fixed a bug that would not produce the correct sort order for HSPs with e-value 0
+- option --run-len defaults to 1 for sequences shorter than 30 letters
+
+[0.7.4]
+- removed OpenMP dependency
+- using explicit Makefile instead of autoconf
+- file extensions can be named explicitly for DAA and database files
+- HSPs are grouped by target sequence
+- fixed a bug that could produce incorrect output for view
+- fixed a bug that could report an incorrect number of alignments
+- fixed a compiler error for GCC 4.1.2
+
+[0.7.3]
+- changed database format (makedb required)
+- optimized multithreading load balancing
+- removed a non-determinism in alignment computation
+- IUPAC nucleotide ambiguity codes in DNA sequences are accepted and converted into N's
+- SEG masking is disabled by default for blastp mode
+- fixed a memory leak
+- reduced database file sizes
+
+[0.7.2]
+- fixed a bug that could create invalid DAA files when using the --id option
+- added integrity check of DAA files to view command
+- fixed a bug that could cause segmentation fault or file seek errors
+
+[0.7.1]
+- fixed a race condition for opening temporary files
+- temporary files are deleted on ungraceful termination of the program
+- blank lines in FASTA files are tolerated
+- fixed a compiler error for GCC 4.4.7
+- view command can write to standard output
+
+[0.7.0]
+- introduced DAA format
+- reduced usage of temporary disk space and memory
+- fixed a compiler error for GCC 4.1.2
+- fixed a bug that could cause the program to hang when running out of temporary space or memory
+- added --forwardonly option to view command

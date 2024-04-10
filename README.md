@@ -1,4 +1,4 @@
-# Reconstructor - Current Version: 1.1.0
+# Reconstructor - Current Version: 1.2.0
 This repository contains all source code in the Reconstructor Python package, important file dependencies, and benchmarking scores for Reconstructor models. Reconstructor is a COBRApy compatible, automated GENRE building tool from annotated aminoa acid .fasta files based on KEGG annotations.
 
 ****Reconstructor is currently only compatible on MacOSX and Windows machines****
@@ -17,22 +17,14 @@ See below in the __Supplementary Model Checks and Analyses__ at the bottom of th
 #### /reconstructor
 contains all package source code
 
-# Quick Installation Guide (Must have Anancoda installed with Python 3.9):
+# Installation Guide (Must have Python >= 3.8 installed):
 ## MacOSX
-In terminal....  
-Install homebrew if you do not already have it installed by copying/pasting the following line into terminal (further instructions [here](https://brew.sh)):
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-Download DIAMOND sequence aligner (Version >= 2.0.15) using homebrew:
-```
-brew install diamond
-```
+In terminal...
 Install Reconstructor package using pip:
 ```
 pip install reconstructor
 ```
-Use following command to download additional dependencies/run final installation checks (should take ~1hr to complete depending on your system):
+Use following command to run Reconstructor's setup script and final installation checks (should take ~30min to complete depending on your system):
 ```
 python -m reconstructor --test yes
 ```
@@ -41,53 +33,16 @@ Install Reconstructor package using CMD.exe prompt launched from Anaconda naviga
 ```
 pip install reconstructor
 ```
-Use following command to download additional dependencies/run final installation checks (hould take ~1hr to run depending on your system):
+Use following command to run Reconstructor's setup script and final installation checks (should take ~30min to run depending on your system):
 ```
 python -m reconstructor --test yes
 ```
-# Detailed Installation Guide:
-## Download DIAMOND Aligner
-### Downloading DIAMOND on MacOS
-You must first have the DIAMOND sequence aligner downloaded (__MUST BE >= VERSION 2.0.15__), installation instructions can be found here: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)  
-If you think you already have DIAMOND installed, you can check your version using the terminal command:
-```
-diamond --version
-```
-You can also download DIAMOND through homebrew (if you have homebrew installed) using the terminal command:
-```
-brew install diamond
-```
-### DIAMOND on Windows
-You do not need to install DIAMOND on your windows machine. A Windows executable function is already pre-packaged within the Reconstructor software.
-
-## Install Reconstructor python package
-This can be done via pip in terminal on Mac, or a CMD.exe Prompt launched from Anaconda Navigator in Widnows:
-
-```
-pip install reconstructor
-```
-
-*You must be running >= Python 3.8*  
-To determine your Python version you can use the following command:  
-```
-python --version
-```
-
-## Test suite (MUST RUN BEFORE USING RECONSTRUCTOR):
-#### Use the following command to run the test suite
-Run the following test to ensure reconstruction was installed correctly and is functional, and downloads database files that are necessary for reconstructor to work. This series of tests should take about an hour to run, dependent on computer/processor speed. These are runtimes for Reconstructor on a 2020 MacBook Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
-
-MAC USERS MAY BE ASKED FOR TERMINAL TO HAVE ACCESS TO DOWNLOADS, CAMERA, LOCATION, ETC. Please allow terminal to have access to all locations on your computer. Reconstructor will NOT gather data from your camera, location, or other sensitive information. Reconstructor is simply searching for the file titled glpk_interface.py on your local machine (installed when COBRA module is installed) and replacing it with a newer, functional version.
-
-Use the command below to test reconstructor to ensure correct installation:   
-
-```
-python -m reconstructor --test yes
-```
-*YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
 
 # Usage:
 ## Use reconstructor via COMMAND LINE
+
+* You must run the setup script described in the Installation Guide before proceeding
+
 Now that Reconstructor and all dependency databases are installed, you can proceed to use Reconstructor via command line. An example would be:
 ```
 python -m reconstructor --input_file <input fasta file> --file_type <1,2,3> --gram <negative, positive> --media rich

@@ -1,25 +1,30 @@
-[tool.poetry]
+[project]
 name = "reconstructor"
-version = "1.1.0"
+version = "1.2.0"
 description = "COBRApy Compatible Genome Scale Metabolic Network Reconstruction Tool: Reconstructor"
-authors = ["Matt Jenior and Emma Glass"]
-license = "MIT"
+authors = [
+  { name="Matt Jenior" },
+  { name="Emma Glass" },
+  { name="Leo Glass" },
+]
+requires-python = ">=3.8"
+license = {text = "MIT"}
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.8"
-cobra = "0.22.1"
-argparse = "^1.4.0"
-symengine = "^0.9.2"
-python-libsbml = "^5.19.0"
-cmake = "^3.24.1"
-wget = "^3.2"
-unipath = "1.1"
-
-[tool.poetry.dev-dependencies]
-
-
+dependencies = [
+    "numpy<=1.22",
+    "cobra==0.22.1",
+    "argparse>=1.4.0",
+    "symengine>=0.9.2",
+    "python-libsbml==5.19.0",
+    "wget>=3.2",
+    "unipath>=1.1",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = [
+    "setuptools>=42",
+    "scikit-build>=0.13",
+    "cmake>=3.15,<=3.26",
+    "ninja",
+]
+build-backend = "setuptools.build_meta"
