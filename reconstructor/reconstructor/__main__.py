@@ -37,22 +37,17 @@ Options for Running Reconstructor
 '''
 
 # Dependencies
-import sys
+import math
 import wget
-import shutil
 import os
 import cobra
 import pickle
 import argparse
 import warnings
 import symengine
-import subprocess
-from random import shuffle
 from multiprocessing import cpu_count
 from sys import stdout
 from copy import deepcopy
-from subprocess import call
-from cobra.util import solver
 import platform
 from unipath import Path
 from cobra.manipulation.delete import *
@@ -71,7 +66,7 @@ parser.add_argument('--max_frac', default=0.5, help='Maximum objective fraction 
 parser.add_argument('--gram', default='none', help='Type of Gram classificiation (positive or negative)')
 parser.add_argument('--out', default='default', help='Name of output GENRE file')
 parser.add_argument('--name', default='default', help='ID of output GENRE')
-parser.add_argument('--cpu', default=1, help='Number of processors to use')
+parser.add_argument('--cpu', default=cpu_count(), help='Number of logical processors to use')
 parser.add_argument('--gapfill', default='yes', help='gapfill your model?')
 parser.add_argument('--exchange', default = 1, help='open exchange: 1, shut down exchange: 0')
 parser.add_argument('--test', default = 'no', help='do you want to perform the test suite?')
@@ -219,6 +214,8 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
         # Set minimum lower bound for previous objective
         universal.objective = universal.reactions.get_by_id(obj) 
         prev_obj_val = universal.slim_optimize()
+        if math.isnan(prev_obj_val):
+            raise Exception('pFBA gapfilling failed. invalid media arguments?')
         if step == 1:
             prev_obj_constraint = universal.problem.Constraint(universal.reactions.get_by_id(obj).flux_expression, 
         	   lb=prev_obj_val*fraction, ub=prev_obj_val*max_fraction)
@@ -384,9 +381,9 @@ if __name__ == "__main__":
     file_type = int(args.file_type)
     name = str(args.name)
     org = str(args.org)
-    try:
+    if "," in str(args.media):
         media = str(args.media).split(",")
-    except:
+    else:
         media = str(args.media)
     min_frac = float(args.min_frac)
     max_frac = float(args.max_frac)
@@ -492,17 +489,17 @@ if __name__ == "__main__":
                     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/glpk_interface.py"
                     wget.download(url, out = path)
         if platform == 'Darwin':
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/488.146.fa --file_type 1 --gram negative"
+            cmd_line = "python3 -m reconstructor --input_file " + script_path+"/testfiles/488.146.fa --file_type 1 --gram negative"
             print("Performing test 1")
             print(cmd_line)
             os.system(cmd_line)
 
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/JCP8151B.KEGGprot.out --file_type 2 --gram negative"
+            cmd_line = "python3 -m reconstructor --input_file " + script_path+"/testfiles/JCP8151B.KEGGprot.out --file_type 2 --gram negative"
             print("Performing test 2")
             print(cmd_line)
             os.system(cmd_line)
 
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
+            cmd_line = "python3 -m reconstructor --input_file " + script_path+"/testfiles/fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
             print("Performing test 3")
             print(cmd_line)
             os.system(cmd_line)
@@ -510,17 +507,17 @@ if __name__ == "__main__":
             quit()
 
         if platform == 'Windows':
-            cmd_line = "python -m reconstructor --input_file " + script_path+r"\testfiles\488.146.fa --file_type 1 --gram negative"
+            cmd_line = "python3 -m reconstructor --input_file " + script_path+r"\testfiles\488.146.fa --file_type 1 --gram negative"
             print("Performing test 1")
             print(cmd_line)
             os.system(cmd_line)
 
-            cmd_line = "python -m reconstructor --input_file " + script_path+r"\testfiles\JCP8151B.KEGGprot.out --file_type 2 --gram negative"
+            cmd_line = "python3 -m reconstructor --input_file " + script_path+r"\testfiles\JCP8151B.KEGGprot.out --file_type 2 --gram negative"
             print("Performing test 2")
             print(cmd_line)
             os.system(cmd_line)
 
-            cmd_line = "python -m reconstructor --input_file " + script_path+r"\testfiles\fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
+            cmd_line = "python3 -m reconstructor --input_file " + script_path+r"\testfiles\fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
             print("Performing test 3")
             print(cmd_line)
             os.system(cmd_line)
