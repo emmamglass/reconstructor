@@ -620,7 +620,6 @@ if __name__ == "__main__":
     'cpd00254_e','cpd00971_e','cpd00063_e','cpd10515_e','cpd00205_e','cpd00099_e']
     else:
         media = media
-    print(media)
     
     # Set media condition
     if len(media) != 0:
@@ -642,7 +641,6 @@ if __name__ == "__main__":
         draft_metabolites = set([x.id for x in draft_genre.metabolites])
         warnings.filterwarnings('ignore')
         new_reactions = _find_reactions(draft_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 1, file_type)
-        print(new_reactions)
         filled_genre = _gapfill_model(draft_genre, universal, new_reactions, universal_obj, 1)
         if file_type != 3:
             print('Identifying new metabolism (Step 2 of 2)...')
