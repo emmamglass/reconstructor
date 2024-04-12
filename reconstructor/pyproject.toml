@@ -5,7 +5,6 @@ description = "COBRApy Compatible Genome Scale Metabolic Network Reconstruction 
 authors = [
   { name="Matt Jenior" },
   { name="Emma Glass" },
-  { name="Leo Glass" },
 ]
 requires-python = ">=3.8"
 license = {text = "MIT"}

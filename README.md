@@ -19,7 +19,7 @@ contains all package source code
 
 # Installation Guide (Must have Python >= 3.8 installed):
 ## MacOSX
-In terminal...
+
 Install Reconstructor package using pip:
 ```
 pip install reconstructor
@@ -29,6 +29,9 @@ Use following command to run Reconstructor's setup script and final installation
 python -m reconstructor --test yes
 ```
 ## Windows
+
+* Note: Windows users must install Reconstructor via Anaconda, as there are C dependencies not included in a standard Windows build environment
+
 Install Reconstructor package using CMD.exe prompt launched from Anaconda navigator:
 ```
 pip install reconstructor
