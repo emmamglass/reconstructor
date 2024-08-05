@@ -83,7 +83,7 @@ def _run_blast(inputfile, outputfile, database, processors, script_path):
     opsys =  platform.system()
     print(opsys)
     print('blasting %s vs %s'%(input_file,database))
-    if opsys == "Darwin":
+    if opsys == "Darwin" or opsys == "Linux":
         cmd_line = 'diamond blastp -p %s -d %s -q %s -o %s --more-sensitive --max-target-seqs 1 --quiet'%(processors,database,inputfile,outputfile)
         print('running blastp with the following command line...')
         print(cmd_line)
@@ -95,10 +95,7 @@ def _run_blast(inputfile, outputfile, database, processors, script_path):
         print('running blastp with the following command line...')
         print(cmd_line)
         os.system(cmd_line) 
-    elif opsys == 'Linux':
-        raise OperatingSystemError("Reconstructor does not currently support Linux")
-        quit()
-    
+
     print('finished blast')
 
     return outputfile
@@ -420,7 +417,7 @@ if __name__ == "__main__":
         platform =  platform.system()
         print(platform)
 
-        if platform == 'Darwin':
+        if platform == 'Darwin' or platform == 'Linux':
             if os.path.exists(script_path+'/refs') == False:
                     os.makedirs(script_path+'/refs')
             if os.path.exists(script_path+'/refs/gene_modelseed.pickle') == False:
@@ -453,14 +450,11 @@ if __name__ == "__main__":
                 url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
                 wget.download(url, out = script_path+r'\refs')
 
-        if platform == 'Linux':
-            raise OperatingSystemError("Reconstructor does not currently support Linux")
-            quit()
     #import test files 
     ##488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
     # JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
     # fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
-        if platform == 'Darwin':
+        if platform == 'Darwin' or platform == 'Linux':
             if os.path.exists(script_path+'/testfiles') == False:
                 os.makedirs(script_path+'/testfiles')
             if os.path.exists(script_path+'/testfiles/488.146.fa') == False:
@@ -491,7 +485,7 @@ if __name__ == "__main__":
             home_directory = os.path.expanduser('~')
         if platform == 'Windows':
             home_directory = os.path.expanduser(r'C:Users$USERNAME')'''
-        if platform == 'Darwin':
+        if platform == 'Darwin' or platform == 'Linux':
             pa = Path(script_path).parent
             p = str(Path(pa).parent)
         if platform == 'Windows':
@@ -508,18 +502,18 @@ if __name__ == "__main__":
                 
                     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/glpk_interface.py"
                     wget.download(url, out = path)
-        if platform == 'Darwin':
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/488.146.fa --file_type 1 --gram negative"
+        if platform == 'Darwin' or platform == 'Linux':
+            cmd_line = f'python -m reconstructor --input_file "{script_path}/testfiles/488.146.fa" --file_type 1 --gram negative'
             print("Performing test 1")
             print(cmd_line)
             os.system(cmd_line)
 
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/JCP8151B.KEGGprot.out --file_type 2 --gram negative"
+            cmd_line = f'python -m reconstructor --input_file "{script_path}/testfiles/JCP8151B.KEGGprot.out" --file_type 2 --gram negative'
             print("Performing test 2")
             print(cmd_line)
             os.system(cmd_line)
 
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
+            cmd_line = f'python -m reconstructor --input_file "{script_path}/testfiles/fmt.metaG.01044A.bin.149.KEGGprot.sbml" --file_type 3 --gram negative'
             print("Performing test 3")
             print(cmd_line)
             os.system(cmd_line)
