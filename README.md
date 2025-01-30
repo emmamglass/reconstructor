@@ -5,7 +5,7 @@ important file dependencies, and benchmarking scores for `Reconstructor`
 models. `Reconstructor` is a COBRApy compatible, automated GENRE building tool
 from annotated aminoa acid .fasta files based on KEGG annotations.
 
-> [!WARNING]
+> [!NOTE]
 > `Reconstructor` is currently only compatible on MacOSX and Windows machines
 
 ## Quick Installation Guide
@@ -167,7 +167,7 @@ its contents.
 
 Contains documentation files for `Reconstructor`.
 
-> [!CAUTION]
+> [!WARNING]
 > The documentation is still very much under development.
 
 ## Additional Information

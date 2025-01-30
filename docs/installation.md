@@ -30,6 +30,13 @@ using the terminal command:
 brew install diamond
 ```
 
+If homebrew is not installed, you can install it with this command in the
+terminal:
+
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 ### DIAMOND on Windows
 
 You do not need to install DIAMOND on your windows machine. A Windows executable
@@ -67,13 +74,15 @@ to work. This series of tests should take about an hour to run, dependent on
 computer/processor speed. These are runtimes for Reconstructor on a 2020 MacBook
 Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
 
-MAC USERS MAY BE ASKED FOR TERMINAL TO HAVE ACCESS TO DOWNLOADS, CAMERA,
-LOCATION, ETC. Please allow terminal to have access to all locations on your
-computer. Reconstructor will NOT gather data from your camera, location, or
-other sensitive information. Reconstructor is simply searching for the file
-titled glpk_interface.py on your local machine (installed when COBRA module is
-installed) and replacing it with a newer, functional version.
+> [!NOTE]
+> MAC USERS MAY BE ASKED FOR TERMINAL TO HAVE ACCESS TO DOWNLOADS, CAMERA,
+> LOCATION, ETC. Please allow terminal to have access to all locations on your
+> computer. Reconstructor will NOT gather data from your camera, location, or
+> other sensitive information. Reconstructor is simply searching for the file
+> titled glpk_interface.py on your local machine (installed when COBRA module is
+> installed) and replacing it with a newer, functional version.
 
 Use the command below to test reconstructor to ensure correct installation:
 
-*YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
+> [!CAUTION]
+> YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
