@@ -62,6 +62,9 @@ python --version
 
 ## Test suite (MUST RUN BEFORE USING RECONSTRUCTOR)
 
+> [!CAUTION]
+> YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
+
 Run the following test to ensure reconstruction was installed correctly and is
 functional:
 
@@ -81,8 +84,3 @@ Pro with a 1.4 GHz Quad-Core Intel Core i5 processor.
 > other sensitive information. Reconstructor is simply searching for the file
 > titled glpk_interface.py on your local machine (installed when COBRA module is
 > installed) and replacing it with a newer, functional version.
-
-Use the command below to test reconstructor to ensure correct installation:
-
-> [!CAUTION]
-> YOU MUST RUN THE TEST SUITE BEFORE PROCEEDING TO USE RECONSTRUCTOR
