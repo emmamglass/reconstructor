@@ -38,7 +38,7 @@ If you are proposing a feature:
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
 
-## Get Started!
+## Get Started
 
 Ready to contribute? Here's how to set up `Reconstructor` for local development.
 
@@ -46,13 +46,13 @@ Ready to contribute? Here's how to set up `Reconstructor` for local development.
 2. Install `Reconstructor` using `poetry`:
 
     ```console
-    $ poetry install
+    poetry install
     ```
 
 3. Use `git` (or similar) to create a branch for local development and make your changes:
 
     ```console
-    $ git checkout -b name-of-your-bugfix-or-feature
+    git checkout -b name-of-your-bugfix-or-feature
     ```
 
 4. When you're done making changes, check that your changes conform to any code formatting requirements and pass any tests.
