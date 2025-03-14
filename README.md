@@ -173,7 +173,7 @@ Contains documentation files for `Reconstructor`.
 ## Additional Information
 
 Thank you for your interest in `Reconstructor`. If you have any additional
-questions please open an issue. 
+questions please open an issue.
 
 If you encounter any problems, please file an [issue][github_issues] along with
 a detailed description.
