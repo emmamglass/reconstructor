@@ -93,8 +93,16 @@ if __name__ == "__main__":
     org = str(args.org)
     try:
         media = str(args.media).split(",")
+        media = list(media)
     except:
         media = str(args.media)
+    if media == ['default_media']:
+        media = 'default'
+    if media == ['rich']:
+        media = 'rich'
+    if media ==['minimal']:
+        media = 'minimal'
+    print(media)
     min_frac = float(args.min_frac)
     max_frac = float(args.max_frac)
     metabolic_tasks = list(args.tasks)
