@@ -138,5 +138,12 @@ dmypy.json
 **.Rproj
 **.Rhistory
 
+# Visual Studio Code files
+.vscode/
+
 # MacOS
 .DS_Store
+
+# Reconstructor stuff
+src/reconstructor/refs/
+src/reconstructor/testfiles/
