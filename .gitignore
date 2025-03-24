@@ -147,3 +147,6 @@ dmypy.json
 # Reconstructor stuff
 src/reconstructor/refs/
 src/reconstructor/testfiles/
+fmt.metaG.01044A.bin.149.KEGGprot.extended.sbml
+488.146.sbml
+JCP8151B.KEGGprot.sbml
