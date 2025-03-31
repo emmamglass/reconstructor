@@ -1,16 +1,4 @@
 import os
-import cobra
-import pickle
-import argparse
-import warnings
-import symengine
-from random import shuffle
-from multiprocessing import cpu_count
-from sys import stdout
-from copy import deepcopy
-from subprocess import call
-from cobra.util import solver
-from cobra.manipulation.delete import *
 
 def reconstruct(input_file, file_type = 1, media=[], org = 'default', min_frac = 0.01, max_frac = 0.5, gram='none', out = 'default', name = 'default', cpu = 1, gapfill = 'yes', test = 'no'):
     print('Generating reconstruction....')

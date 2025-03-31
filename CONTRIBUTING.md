@@ -49,13 +49,15 @@ Ready to contribute? Here's how to set up `Reconstructor` for local development.
     poetry install
     ```
 
-3. Use `git` (or similar) to create a branch for local development and make your changes:
+3. Use `git` (or similar) to create a branch for local development and make your
+   changes:
 
     ```console
     git checkout -b name-of-your-bugfix-or-feature
     ```
 
-4. When you're done making changes, check that your changes conform to any code formatting requirements and pass any tests.
+4. When you're done making changes, check that your changes conform to any code
+   formatting requirements and pass any tests.
 
 5. Commit your changes and open a pull request.
 
@@ -65,9 +67,11 @@ Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include additional tests if appropriate.
 2. If the pull request adds functionality, the docs should be updated.
-3. The pull request should work for all currently supported operating systems and versions of Python.
+3. The pull request should work for all currently supported operating systems
+   and versions of Python.
 
 ## Code of Conduct
 
 Please note that the `Reconstructor` project is released with a
-Code of Conduct. By contributing to this project you agree to abide by its terms.
+Code of Conduct. By contributing to this project you agree to abide by its
+terms.

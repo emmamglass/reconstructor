@@ -1,4 +1,4 @@
-# Reconstructor - Current Version: 1.1.1
+# Reconstructor - Current Version: 1.1.2
 
 This repository contains all source code in the `Reconstructor` Python package,
 important file dependencies, and benchmarking scores for `Reconstructor`
@@ -173,7 +173,7 @@ Contains documentation files for `Reconstructor`.
 ## Additional Information
 
 Thank you for your interest in `Reconstructor`. If you have any additional
-questions please open an issue. 
+questions please open an issue.
 
 If you encounter any problems, please file an [issue][github_issues] along with
 a detailed description.
