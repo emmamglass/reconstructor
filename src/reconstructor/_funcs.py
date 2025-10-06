@@ -1,11 +1,10 @@
 import os
 import platform
-from copy import deepcopy
 from sys import stdout
 import warnings
 
 import cobra
-import symengine
+from optlang.symbolics import Zero
 
 
 class OperatingSystemError(Exception):
@@ -97,8 +96,8 @@ def _create_model(rxn_db, universal, input_id):
 
     for x in rxn_db.keys():
         try:
-            rxn = deepcopy(universal.reactions.get_by_id(x))
-            new_model.add_reactions([rxn])
+            rxn = universal.reactions.get_by_id(x)
+            new_model.add_reactions([rxn.copy()])
             new_model.reactions.get_by_id(x).gene_reaction_rule = ' or '.join(rxn_db[x])
         except KeyError:
             continue
@@ -112,6 +111,7 @@ def _create_model(rxn_db, universal, input_id):
 # Add gene names
 def _add_names(model, gene_db):
     ''' Add gene names '''
+    #FIXME: the current gene database doesn't have any actual gene names in it
     for gene in model.genes:
         try:
             gene.name = gene_db[gene.id].title()
@@ -154,7 +154,7 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
         add_rxns = []
         for x in model.reactions:
             if x.id != obj or file_type == 3:
-                add_rxns.append(deepcopy(x))
+                add_rxns.append(x.copy())
         universal.add_reactions(add_rxns)
 
         # Set lower bounds for metaboloic tasks
@@ -182,7 +182,6 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
 
         # Assemble forward and reverse components of all reactions
         coefficientDict = {}
-        pfba_expr = symengine.RealDouble(0)
         for rxn in universal.reactions:
             if rxn.id in orig_rxn_ids:
                 coefficientDict[rxn.forward_variable] = 0.0
@@ -197,7 +196,7 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
         # Create objective, based on pFBA
         universal.objective = 0
         universal.solver.update()
-        universal.objective = universal.problem.Objective(symengine.RealDouble(0), direction='min', sloppy=True)
+        universal.objective = universal.problem.Objective(Zero, direction='min', sloppy=True)
         universal.objective.set_linear_coefficients(coefficientDict)
         
         stdout.write('\r[----------------------------------       ]')
@@ -211,7 +210,7 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
     warnings.filterwarnings('default')
 
     return(new_rxn_ids)    
-
+cobra.flux_analysis.parsimonious.add_pfba
 
 # Add new reactions to model
 def _gapfill_model(model, universal, new_rxn_ids, obj, step):
@@ -219,10 +218,10 @@ def _gapfill_model(model, universal, new_rxn_ids, obj, step):
     and identifies extracellular metabolites that still need exchanges '''
     # Get reactions and metabolites to be added to the model
     new_rxns = []
-    if step == 1: new_rxns.append(deepcopy(universal.reactions.get_by_id(obj)))
+    if step == 1: new_rxns.append(universal.reactions.get_by_id(obj).copy())
     for rxn in new_rxn_ids: 
         if rxn != obj:
-            new_rxns.append(deepcopy(universal.reactions.get_by_id(rxn)))
+            new_rxns.append(universal.reactions.get_by_id(rxn).copy())
     
     # Create gapfilled model 
     model.add_reactions(new_rxns)
@@ -255,7 +254,7 @@ def _set_base_inputs(model, universal):
         try:
             test = model.reactions.get_by_id(exch)
         except:
-            new_rxns.append(deepcopy(universal.reactions.get_by_id(exch)))
+            new_rxns.append(universal.reactions.get_by_id(exch).copy())
     model.add_reactions(new_rxns)
     for exch in tasks: model.reactions.get_by_id(exch).bounds = (-1000., -0.01)
 
@@ -266,19 +265,16 @@ def _add_annotation(model, gram, obj='built'):
     ''' Add gene, metabolite, reaction ,biomass reaction annotations '''
     # Genes
     for gene in model.genes:
-        gene._annotation = {}
         gene.annotation['sbo'] = 'SBO:0000243'
         gene.annotation['kegg.genes'] = gene.id
     
     # Metabolites
-    for cpd in model.metabolites: 
-        cpd._annotation = {}
+    for cpd in model.metabolites:
         cpd.annotation['sbo'] = 'SBO:0000247'
         if 'cpd' in cpd.id: cpd.annotation['seed.compound'] = cpd.id.split('_')[0]
 
     # Reactions
     for rxn in model.reactions:
-        rxn._annotation = {}
         if 'rxn' in rxn.id: rxn.annotation['seed.reaction'] = rxn.id.split('_')[0]
         compartments = set([x.compartment for x in list(rxn.metabolites)])
         if len(list(rxn.metabolites)) == 1:

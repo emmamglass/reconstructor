@@ -39,15 +39,15 @@ Options for Running Reconstructor
 # Dependencies
 import wget
 import os
-import cobra
+from pathlib import Path
 import pickle
 import argparse
 import warnings
 from multiprocessing import cpu_count
 from sys import stdout
 import platform
-from unipath import Path
-from cobra.manipulation.delete import *
+
+import cobra
 
 from reconstructor._funcs import (
     OperatingSystemError,
@@ -62,6 +62,7 @@ from reconstructor._funcs import (
     _add_annotation,
     _checkModel
 )
+
 
 # User defined arguments
 parser = argparse.ArgumentParser(description='Generate genome-scale metabolic network reconstruction from KEGG BLAST hits.')

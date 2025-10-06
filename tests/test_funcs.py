@@ -2,11 +2,8 @@ from pathlib import Path
 from tempfile import TemporaryDirectory as TempDir
 
 import pytest
-import cobra
 
 from reconstructor._funcs import _run_blast, _read_blast, _genes_to_rxns
-
-from . import utils
 
 
 def test_blast(tiny_fasta_file: Path, expected_blast_output_file: Path, kegg_prot_db: Path):
