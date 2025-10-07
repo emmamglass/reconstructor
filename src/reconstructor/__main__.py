@@ -40,28 +40,24 @@ Options for Running Reconstructor
 import wget
 import os
 from pathlib import Path
-import pickle
 import argparse
-import warnings
 from multiprocessing import cpu_count
-from sys import stdout
-import platform
 
 import cobra
 
 from reconstructor._funcs import (
-    OperatingSystemError,
-    _run_blast,
-    _read_blast,
-    _genes_to_rxns,
-    _create_model,
-    _add_names,
-    _find_reactions,
-    _gapfill_model,
-    _set_base_inputs,
-    _add_annotation,
-    _checkModel
+    run_blast,
+    read_blast,
+    genes_to_rxns,
+    create_model,
+    add_names,
+    find_reactions,
+    gapfill_model,
+    set_base_inputs,
+    add_annotation,
+    check_model
 )
+from reconstructor import resources
 
 
 # User defined arguments
@@ -92,18 +88,10 @@ if __name__ == "__main__":
     file_type = int(args.file_type)
     name = str(args.name)
     org = str(args.org)
-    try:
-        media = str(args.media).split(",")
-        media = list(media)
-    except:
+    if args.media in ["default", "default_media", "rich", "minimal"]:
         media = str(args.media)
-    if media == ['default_media']:
-        media = 'default'
-    if media == ['rich']:
-        media = 'rich'
-    if media ==['minimal']:
-        media = 'minimal'
-    print(media)
+    else:
+        media = str(args.media).split(",")
     min_frac = float(args.min_frac)
     max_frac = float(args.max_frac)
     metabolic_tasks = list(args.tasks)
@@ -116,134 +104,41 @@ if __name__ == "__main__":
 
     #----------------------------------------------------------------------------------------------------------------------#
     if test == 'yes':
-        script_path = str(os.path.dirname(os.path.realpath(__file__)))
-        platform =  platform.system()
-        print(platform)
+        from tempfile import TemporaryDirectory
 
-        if platform == 'Darwin':
-            if os.path.exists(script_path+'/refs') == False:
-                    os.makedirs(script_path+'/refs')
-            if os.path.exists(script_path+'/refs/gene_modelseed.pickle') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_modelseed.pickle"
-                wget.download(url, out = script_path+'/refs')
-            if os.path.exists(script_path+'/refs/gene_names.pickle') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_names.pickle"
-                wget.download(url, out = script_path+'/refs')
-            if os.path.exists(script_path+'/refs/screened_kegg_prokaryotes_pep_db.dmnd') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
-                wget.download(url, out = script_path+'/refs')
-            if os.path.exists(script_path+'/refs/universal.pickle') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
-                wget.download(url, out = script_path+'/refs')
+        # Download the diamond database file if it hasn't been downloaded yet
+        diamond_db_path = resources.get_diamond_db_path()
+        if not diamond_db_path.exists():
+            resources.download_diamond_db()
 
-        if platform == 'Windows':
-            if os.path.exists(script_path+r'\refs') == False:
-                os.makedirs(script_path+r'\refs')
-                print('script path', script_path)
-            if os.path.exists(script_path+r'\refs\gene_modelseed.pickle') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_modelseed.pickle"
-                wget.download(url, out = script_path+r'\refs')
-            if os.path.exists(script_path+r'\refs\gene_names.pickle') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/gene_names.pickle"
-                wget.download(url, out = script_path+r'\refs')
-            if os.path.exists(script_path+r'\refs\screened_kegg_prokaryotes_pep_db.dmnd') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
-                wget.download(url, out = script_path+r'\refs')
-            if os.path.exists(script_path+r'\refs\universal.pickle') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/universal.pickle"
-                wget.download(url, out = script_path+r'\refs')
+        # Run the three tests (each with a different input file)
+        # - 488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
+        # - JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
+        # - fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
+        test_file_names = ["488.146.fa", "JCP8151B.KEGGprot.out", "fmt.metaG.01044A.bin.149.KEGGprot.sbml"]
+        input_types = [1, 2, 3]
+        test_num = 0
+        for test_file_name, input_type in zip(test_file_names, input_types):
+            test_num += 1
+            print(f"Performing test {test_num}")
+            
+            # Temporary directory to hold test files (and clean them up after test finishes)
+            with TemporaryDirectory() as tempdir:
+                testdir = Path(tempdir)
 
-        if platform == 'Linux':
-            raise OperatingSystemError("Reconstructor does not currently support Linux")
+                # Download the input file for the test
+                test_file = testdir.joinpath(test_file_name)
+                url = f"https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/{test_file_name}"
+                wget.download(url, out=test_file)
 
-    #import test files 
-    ##488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
-    # JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
-    # fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
-        if platform == 'Darwin':
-            if os.path.exists(script_path+'/testfiles') == False:
-                os.makedirs(script_path+'/testfiles')
-            if os.path.exists(script_path+'/testfiles/488.146.fa') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/488.146.fa"
-                wget.download(url, out = script_path+'/testfiles')
-            if os.path.exists(script_path+'/testfiles/JCP8151B.KEGGprot.out') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/JCP8151B.KEGGprot.out"
-                wget.download(url, out = script_path+'/testfiles')
-            if os.path.exists(script_path+'/testfiles/fmt.metaG.01044A.bin.149.KEGGprot.sbml') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/fmt.metaG.01044A.bin.149.KEGGprot.sbml"
-                wget.download(url, out = script_path+'/testfiles')
+                # Run reconstructor 
+                cmd = f"python -m reconstructor --input_file {test_file} --file_type {input_type} --gram negative"
+                print(cmd)
+                os.system(cmd)
 
-        if platform == 'Windows':
-            if os.path.exists(script_path+r'\testfiles' == False):
-                os.makedirs(script_path+r'\testfiles')
-            if os.path.exists(script_path+r'\testfiles\488.146.fa') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/488.146.fa"
-                wget.download(url, out = script_path+r'\testfiles')
-            if os.path.exists(script_path+r'\testfiles\JCP8151B.KEGGprot.out') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/JCP8151B.KEGGprot.out"
-                wget.download(url, out = script_path+r'\testfiles')
-            if os.path.exists(script_path+r'\testfiles\fmt.metaG.01044A.bin.149.KEGGprot.sbml') == False:
-                url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/fmt.metaG.01044A.bin.149.KEGGprot.sbml"
-                wget.download(url, out = script_path+r'\testfiles')
-
-        exe = 'glpk_interface.py'
-        '''if platform == 'Darwin' or platform == 'Linux':
-            home_directory = os.path.expanduser('~')
-        if platform == 'Windows':
-            home_directory = os.path.expanduser(r'C:Users$USERNAME')'''
-        if platform == 'Darwin':
-            pa = Path(script_path).parent
-            p = str(Path(pa).parent)
-        if platform == 'Windows':
-            p = str(Path(script_path).parent)
-        #path = os.path.join(script_path, 'opt')
-        for root, dirs, files in os.walk(p,topdown = True):
-            for name in files:
-                if name == exe:
-                    file_path = os.path.abspath(os.path.join(root,name))
-                    path = os.path.abspath(os.path.join(root))
-
-                    if os.path.exists(file_path):
-                        os.remove(file_path)
-                
-                    url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/glpk_interface.py"
-                    wget.download(url, out = path)
-        if platform == 'Darwin':
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/488.146.fa --file_type 1 --gram negative"
-            print("Performing test 1")
-            print(cmd_line)
-            os.system(cmd_line)
-
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/JCP8151B.KEGGprot.out --file_type 2 --gram negative"
-            print("Performing test 2")
-            print(cmd_line)
-            os.system(cmd_line)
-
-            cmd_line = "python -m reconstructor --input_file " + script_path+"/testfiles/fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
-            print("Performing test 3")
-            print(cmd_line)
-            os.system(cmd_line)
-
-            quit()
-
-        if platform == 'Windows':
-            cmd_line = "python -m reconstructor --input_file " + script_path+r"\testfiles\488.146.fa --file_type 1 --gram negative"
-            print("Performing test 1")
-            print(cmd_line)
-            os.system(cmd_line)
-
-            cmd_line = "python -m reconstructor --input_file " + script_path+r"\testfiles\JCP8151B.KEGGprot.out --file_type 2 --gram negative"
-            print("Performing test 2")
-            print(cmd_line)
-            os.system(cmd_line)
-
-            cmd_line = "python -m reconstructor --input_file " + script_path+r"\testfiles\fmt.metaG.01044A.bin.149.KEGGprot.sbml --file_type 3 --gram negative"
-            print("Performing test 3")
-            print(cmd_line)
-            os.system(cmd_line)
-
-            quit()
+        quit()
     #----------------------------------------------------------------------------------------------------------------------#
+
     if gram_type == 'positive':
         print('\nUsing Gram positive objective function')
         universal_obj = 'biomass_GmPos'
@@ -277,28 +172,21 @@ if __name__ == "__main__":
 
     # Load databases
     print('Loading GENRE construction databases...')
-    script_path = str(os.path.dirname(os.path.realpath(__file__)))
-    kegg_prot_db = script_path + '/refs/screened_kegg_prokaryotes_pep_db'
-    stdout.write('\r[                                         ]')
-    stdout.flush()
-    filename = script_path + '/refs/gene_modelseed.pickle'
-    with open(filename, 'rb') as f: gene_modelseed = pickle.load(f)
-    stdout.write('\r[---------------                          ]')
-    stdout.flush()
-    filename = script_path + '/refs/universal.pickle'
-    with open(filename, 'rb') as f: universal = pickle.load(f)
-    stdout.write('\r[------------------------------           ]')
-    stdout.flush()
-    filename = script_path + '/refs/gene_names.pickle'
-    with open(filename, 'rb') as f: gene_names = pickle.load(f)
-    stdout.write('\r[-----------------------------------------]\n')
+    kegg_prot_db = resources.get_diamond_db_path()
+    print('\r[                                         ]', end='', flush=True)
+    gene_modelseed = resources.get_gene_mseed_map()
+    print('\r[---------------                          ]', end='', flush=True)
+    universal = resources.get_universal_model()
+    print('\r[------------------------------           ]', end='', flush=True)
+    gene_names = resources.get_gene_name_map()
+    print('\r[-----------------------------------------]')
 
     # Check input file type
     if file_type == 1:
         print('Aligning peptide sequences to KEGG database, may take some time...')
         blast_results = input_file.rstrip('fastn') + 'KEGGprot.out'
         print('Saving BLASTp results to', blast_results,'\n')
-        _run_blast(input_file, blast_results, kegg_prot_db, str(processors), script_path)
+        run_blast(input_file, blast_results, kegg_prot_db, str(processors))
     elif file_type == 2:
         blast_results = input_file
     else:
@@ -312,28 +200,28 @@ if __name__ == "__main__":
     if file_type != 3:
         if blast_results != 'none':
             print('Creating draft GENRE from BLAST results...')
-            gene_hits = _read_blast(blast_results)
+            gene_hits = read_blast(blast_results)
         else: 
             gene_hits = set()
-        rxns = _genes_to_rxns(gene_hits, gene_modelseed, org)
-        draft_genre = _create_model(rxns, universal, new_id)
-        draft_genre = _add_names(draft_genre, gene_names)
+        rxns = genes_to_rxns(gene_hits, gene_modelseed, org)
+        draft_genre = create_model(rxns, universal, new_id)
+        draft_genre = add_names(draft_genre, gene_names)
     else:
         universal_obj = str(draft_genre.objective.expression).split()[0].split('*')[-1]
 
     # Handle media conditions
     if media == 'rich':
-        media = ['cpd00001_e','cpd00035_e','cpd00041_e','cpd00023_e','cpd00119_e','cpd00107_e','cpd00060_e','cpd00161_e','cpd00069_e','cpd00084_e','cpd00033_e'
+        media = ['cpd00001_e','cpd00035_e','cpd00041_e','cpd00023_e','cpd00119_e','cpd00107_e','cpd00060_e','cpd00161_e','cpd00069_e','cpd00084_e','cpd00033_e',
     'cpd00322_e','cpd00066_e','cpd00054_e','cpd00065_e','cpd00156_e','cpd00220_e','cpd00644_e','cpd00393_e','cpd00133_e','cpd00263_e','cpd00104_e','cpd00149_e',
     'cpd00971_e','cpd00099_e','cpd00205_e','cpd00009_e','cpd00063_e','cpd00254_e','cpd10515_e','cpd00030_e','cpd00242_e','cpd00226_e','cpd01242_e','cpd00307_e',
-    'cpd00092_e','cpd00117_e','cpd00067_e''cpd00567_e','cpd00132_e','cpd00210_e','cpd00320_e','cpd03279_e','cpd00246_e','cpd00311_e','cpd00367_e','cpd00277_e',
+    'cpd00092_e','cpd00117_e','cpd00067_e','cpd00567_e','cpd00132_e','cpd00210_e','cpd00320_e','cpd03279_e','cpd00246_e','cpd00311_e','cpd00367_e','cpd00277_e',
     'cpd00182_e','cpd00654_e','cpd00412_e','cpd00438_e','cpd00274_e','cpd00186_e','cpd00637_e','cpd00105_e','cpd00305_e','cpd00309_e','cpd00098_e','cpd00207_e',
     'cpd00082_e','cpd00129_e']
     elif media == 'minimal':
         media = ['cpd00001_e','cpd00065_e','cpd00060_e','cpd00322_e','cpd00129_e','cpd00156_e','cpd00107_e','cpd00084_e', 
     'cpd00149_e','cpd00099_e','cpd10515_e','cpd00030_e','cpd00254_e','cpd00063_e','cpd00205_e','cpd00009_e','cpd00971_e','cpd00242_e',
     'cpd00104_e','cpd00644_e','cpd00263_e','cpd00082_e']
-    elif media == 'default':
+    elif media == 'default' or media == "default_media":
         media = ['cpd00035_e','cpd00051_e','cpd00132_e','cpd00041_e','cpd00084_e','cpd00053_e','cpd00023_e',
     'cpd00033_e','cpd00119_e','cpd00322_e','cpd00107_e','cpd00039_e','cpd00060_e','cpd00066_e','cpd00129_e',
     'cpd00054_e','cpd00161_e','cpd00065_e','cpd00069_e','cpd00156_e','cpd00027_e','cpd00149_e','cpd00030_e',
@@ -360,24 +248,22 @@ if __name__ == "__main__":
             print('Identifying new metabolism...')
         draft_reactions = set([x.id for x in draft_genre.reactions])
         draft_metabolites = set([x.id for x in draft_genre.metabolites])
-        warnings.filterwarnings('ignore')
-        new_reactions = _find_reactions(draft_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 1, file_type)
+        new_reactions = find_reactions(draft_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 1, file_type)
         print(new_reactions)
-        filled_genre = _gapfill_model(draft_genre, universal, new_reactions, universal_obj, 1)
+        filled_genre = gapfill_model(draft_genre, universal, new_reactions, universal_obj, 1)
         if file_type != 3:
             print('Identifying new metabolism (Step 2 of 2)...')
-            filled_genre = _set_base_inputs(filled_genre, universal)
-            media_reactions = _find_reactions(filled_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 2, file_type)
-            final_genre = _gapfill_model(filled_genre, universal, media_reactions, universal_obj, 2)
-            final_genre = _add_annotation(final_genre, gram_type)
+            filled_genre = set_base_inputs(filled_genre, universal)
+            media_reactions = find_reactions(filled_genre, universal, metabolic_tasks, universal_obj, min_frac, max_frac, 2, file_type)
+            final_genre = gapfill_model(filled_genre, universal, media_reactions, universal_obj, 2)
+            final_genre = add_annotation(final_genre, gram_type)
         else: 
-            final_genre = _add_annotation(filled_genre, universal_obj)
+            final_genre = add_annotation(filled_genre, universal_obj)
     else:
         draft_reactions = set([x.id for x in draft_genre.reactions])
         draft_metabolites = set([x.id for x in draft_genre.metabolites])
         final_genre = draft_genre
-        final_genre = _add_annotation(final_genre, gram_type)
-    warnings.filterwarnings('default')
+        final_genre = add_annotation(final_genre, gram_type)
 
     # Correct exchanges and check new model
     if exchange_arg == 0:
@@ -387,31 +273,32 @@ if __name__ == "__main__":
     for rxn in final_genre.reactions:
         if 'Exchange reaction for' in rxn.name:
             rxn.name = list(rxn.metabolites)[0].name + ' exchange'
-    biomass = _checkModel(draft_reactions, draft_metabolites, final_genre)
+    biomass = check_model(draft_reactions, draft_metabolites, final_genre)
 
     # Write new model to sbml
-    input_file = input_file.split('/')[-1] # write to working directory
-    if file_type == 1:
-        if new_id != 'default':
-            out_file = input_file.rstrip('fastn') + new_id + '.sbml'
-        else:
-            out_file = input_file.rstrip('fastn') + 'sbml'
-    elif file_type == 2:
-        if new_id != 'default':
-            if input_file != 'none':
-                out_file = input_file.rstrip('out') + new_id + '.sbml'
+    if out_file == "default":
+        input_file = input_file.split('/')[-1] # write to working directory
+        if file_type == 1:
+            if new_id != 'default':
+                out_file = input_file.rstrip('fastn') + new_id + '.sbml'
             else:
-                out_file = new_id + '.sbml'
-        else:
-            if org != 'default':
-                out_file = org + '.sbml'
+                out_file = input_file.rstrip('fastn') + 'sbml'
+        elif file_type == 2:
+            if new_id != 'default':
+                if input_file != 'none':
+                    out_file = input_file.rstrip('out') + new_id + '.sbml'
+                else:
+                    out_file = new_id + '.sbml'
             else:
-                out_file = input_file.rstrip('out') + 'sbml'
-    elif file_type == 3:
-        if new_id != 'default':
-            out_file = input_file.rstrip('sbml') + new_id + '.extended.sbml'
-        else:
-            out_file = input_file.rstrip('sbml') + 'extended.sbml'
+                if org != 'default':
+                    out_file = org + '.sbml'
+                else:
+                    out_file = input_file.rstrip('out') + 'sbml'
+        elif file_type == 3:
+            if new_id != 'default':
+                out_file = input_file.rstrip('sbml') + new_id + '.extended.sbml'
+            else:
+                out_file = input_file.rstrip('sbml') + 'extended.sbml'
 
     print('\nSaving new GENRE to', out_file, '\n')
     cobra.io.write_sbml_model(final_genre, out_file)

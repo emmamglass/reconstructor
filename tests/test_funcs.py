@@ -3,7 +3,7 @@ from tempfile import TemporaryDirectory as TempDir
 
 import pytest
 
-from reconstructor._funcs import _run_blast, _read_blast, _genes_to_rxns
+from reconstructor._funcs import run_blast, read_blast, genes_to_rxns
 
 
 def test_blast(tiny_fasta_file: Path, expected_blast_output_file: Path, kegg_prot_db: Path):
@@ -12,7 +12,7 @@ def test_blast(tiny_fasta_file: Path, expected_blast_output_file: Path, kegg_pro
     """
     with TempDir() as tmpdir:
         out_path = Path(tmpdir).joinpath("blast.out")
-        _run_blast(tiny_fasta_file, out_path, kegg_prot_db, 1, None)
+        run_blast(tiny_fasta_file, out_path, kegg_prot_db, 1, None)
         with out_path.open("r") as f:
             results = f.read()
         with expected_blast_output_file.open("w") as f:
@@ -36,7 +36,7 @@ def test_read_blast(blast_output_file: Path):
         "cth:Cthe_0797",
         "bbp:BBPR_1794"
     }
-    result = _read_blast(blast_output_file)
+    result = read_blast(blast_output_file)
     assert result == expected
 
 
@@ -70,6 +70,6 @@ def test_genes_to_rxns(blast_output_file: Path, modelseed_db: dict[str, list[str
         'rxn03933_c': ['gvh:HMPREF9231_1083']
     }
 
-    blast_hits = _read_blast(blast_output_file)
-    reactions = _genes_to_rxns(blast_hits, modelseed_db, "default")
+    blast_hits = read_blast(blast_output_file)
+    reactions = genes_to_rxns(blast_hits, modelseed_db, "default")
     assert reactions == expected

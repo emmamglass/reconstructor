@@ -19,7 +19,7 @@ def resource_dir() -> Path:
 
 @pytest.fixture
 def modelseed_db() -> dict[str, list[str]]:
-    reconstructor.resources.get_gene_mseed_map()
+    return reconstructor.resources.get_gene_mseed_map()
     
 
 @pytest.fixture
