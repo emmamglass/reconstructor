@@ -51,8 +51,9 @@ with TemporaryDirectory() as tempdir:
     os.rename(os.path.join(tempdir, "diamond"), linux_exe)
 
 
-    # Now place each of the binaries in a single zip archive
-    zippath = resources.RESOURCE_DIR.joinpath("diamond.zip")
-    with zipfile.ZipFile(zippath, "w", zipfile.ZIP_DEFLATED) as archive:
-        for exe in [windows_exe, darwin_exe, linux_exe]:
-            archive.write(exe, os.path.basename(exe))
+    # Now place each of the binaries in separate zip archives in the resources folder
+    for exe in [windows_exe, darwin_exe, linux_exe]:
+        exe_name = os.path.basename(exe)
+        zippath = resources.RESOURCE_DIR.joinpath(f"{exe_name}.zip")
+        with zipfile.ZipFile(zippath, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.write(exe, exe_name)

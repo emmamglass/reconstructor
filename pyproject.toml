@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 include = [
     "reconstructor/resources/*.gz",
-    "reconstructor/resources/diamond.zip"
+    "reconstructor/resources/diamond-*.zip"
 ]
 
 [tool.poetry.dependencies]
