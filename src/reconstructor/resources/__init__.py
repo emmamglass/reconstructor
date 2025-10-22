@@ -62,7 +62,17 @@ def download_diamond_db():
     Downloads the DIAMOND database file from the Reconstructor releases page.
     """
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
-    wget.download(url, out=get_diamond_db_path())
+    wget.download(url, out=str(get_diamond_db_path()))
+
+
+def remove_diamond_db():
+    """
+    Deletes the DIAMOND database file. This is mean to be used prior to
+    uninstalling Reconstructor; otherwise, the DIAMOND database will be left
+    behind when Reconstructor is uninstalled.
+    """
+    path = get_diamond_db_path()
+    path.unlink(missing_ok=True)
 
 
 @contextmanager

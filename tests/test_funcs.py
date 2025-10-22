@@ -12,7 +12,7 @@ def test_blast(tiny_fasta_file: Path, expected_blast_output_file: Path, kegg_pro
     """
     with TempDir() as tmpdir:
         out_path = Path(tmpdir).joinpath("blast.out")
-        run_blast(tiny_fasta_file, out_path, kegg_prot_db, 1, None)
+        run_blast(tiny_fasta_file, out_path, kegg_prot_db, 1)
         with out_path.open("r") as f:
             results = f.read()
         with expected_blast_output_file.open("w") as f:

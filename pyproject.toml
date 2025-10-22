@@ -9,9 +9,12 @@ include = [
     "reconstructor/resources/*.gz",
     "reconstructor/resources/diamond-*.zip"
 ]
+exclude = [
+    "reconstructor/resources/screened_kegg_prokaryotes_pep_db.dmnd"
+]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4"
+python = ">=3.9,<4"
 wget = "^3.2"
 cobra = "^0.29.1"
 

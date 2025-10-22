@@ -8,11 +8,6 @@ import reconstructor.resources
 
 
 @pytest.fixture
-def base_dir() -> Path:
-    return Path(__file__).parent.parent
-
-
-@pytest.fixture
 def resource_dir() -> Path:
     return resources.files(__package__).joinpath("resources")
 
@@ -28,8 +23,8 @@ def universal_model() -> cobra.Model:
 
 
 @pytest.fixture
-def kegg_prot_db(base_dir: Path) -> Path:
-    return base_dir / "src" / "reconstructor" / "refs" / "screened_kegg_prokaryotes_pep_db"
+def kegg_prot_db() -> Path:
+    return reconstructor.resources.get_diamond_db_path()
     
 
 @pytest.fixture

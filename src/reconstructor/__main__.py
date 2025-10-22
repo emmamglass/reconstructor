@@ -109,12 +109,16 @@ if __name__ == "__main__":
         # Download the diamond database file if it hasn't been downloaded yet
         diamond_db_path = resources.get_diamond_db_path()
         if not diamond_db_path.exists():
+            print("Downloading the DIAMOND database for blasting...")
             resources.download_diamond_db()
 
         # Run the three tests (each with a different input file)
         # - 488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
         # - JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
         # - fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
+
+        # TODO: change the test cases because the fasta file doesn't work with the newer DIAMOND version (it doesn't like entries with empty sequences)
+        # maybe make smaller input files that can be directly included in the package or something?
         test_file_names = ["488.146.fa", "JCP8151B.KEGGprot.out", "fmt.metaG.01044A.bin.149.KEGGprot.sbml"]
         input_types = [1, 2, 3]
         test_num = 0
@@ -123,16 +127,17 @@ if __name__ == "__main__":
             print(f"Performing test {test_num}")
             
             # Temporary directory to hold test files (and clean them up after test finishes)
-            with TemporaryDirectory() as tempdir:
+            with TemporaryDirectory(dir=resources.RESOURCE_DIR) as tempdir:
                 testdir = Path(tempdir)
 
                 # Download the input file for the test
                 test_file = testdir.joinpath(test_file_name)
                 url = f"https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/{test_file_name}"
-                wget.download(url, out=test_file)
+                wget.download(url, out=str(test_file))
 
-                # Run reconstructor 
-                cmd = f"python -m reconstructor --input_file {test_file} --file_type {input_type} --gram negative"
+                # Run reconstructor
+                output_file = test_file.with_suffix(".out.sbml")
+                cmd = f"python -m reconstructor --input_file {test_file} --file_type {input_type} --out {output_file} --gram negative --cpu {processors}"
                 print(cmd)
                 os.system(cmd)
 
