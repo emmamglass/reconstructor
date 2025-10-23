@@ -37,7 +37,6 @@ Options for Running Reconstructor
 '''
 
 # Dependencies
-import wget
 import os
 from pathlib import Path
 import argparse
@@ -57,7 +56,7 @@ from reconstructor._funcs import (
     add_annotation,
     check_model
 )
-from reconstructor import resources
+from reconstructor import resources, errors
 
 
 # User defined arguments
@@ -105,6 +104,7 @@ if __name__ == "__main__":
     #----------------------------------------------------------------------------------------------------------------------#
     if test == 'yes':
         from tempfile import TemporaryDirectory
+        import zipfile
 
         # Download the diamond database file if it hasn't been downloaded yet
         diamond_db_path = resources.get_diamond_db_path()
@@ -113,13 +113,10 @@ if __name__ == "__main__":
             resources.download_diamond_db()
 
         # Run the three tests (each with a different input file)
-        # - 488.146.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
+        # - 488.146.clean.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
         # - JCP8151B.KEGGprot.out: a blast output file used to test a type 2 input to reconstructor
         # - fmt.metaG.01044A.bin.149.KEGGprot.sbml: a .sbml genre used to test a type three input to reconstructor
-
-        # TODO: change the test cases because the fasta file doesn't work with the newer DIAMOND version (it doesn't like entries with empty sequences)
-        # maybe make smaller input files that can be directly included in the package or something?
-        test_file_names = ["488.146.fa", "JCP8151B.KEGGprot.out", "fmt.metaG.01044A.bin.149.KEGGprot.sbml"]
+        test_file_names = ["488.146.clean.fa", "JCP8151B.KEGGprot.out", "fmt.metaG.01044A.bin.149.KEGGprot.sbml"]
         input_types = [1, 2, 3]
         test_num = 0
         for test_file_name, input_type in zip(test_file_names, input_types):
@@ -128,18 +125,18 @@ if __name__ == "__main__":
             
             # Temporary directory to hold test files (and clean them up after test finishes)
             with TemporaryDirectory(dir=resources.RESOURCE_DIR) as tempdir:
-                testdir = Path(tempdir)
 
-                # Download the input file for the test
-                test_file = testdir.joinpath(test_file_name)
-                url = f"https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/{test_file_name}"
-                wget.download(url, out=str(test_file))
+                # Extract the test file
+                with zipfile.ZipFile(resources.RESOURCE_DIR.joinpath("testfiles.zip")) as archive:
+                    test_file = archive.extract(test_file_name, tempdir)
 
                 # Run reconstructor
-                output_file = test_file.with_suffix(".out.sbml")
+                output_file = Path(test_file).with_suffix(".out.sbml")
                 cmd = f"python -m reconstructor --input_file {test_file} --file_type {input_type} --out {output_file} --gram negative --cpu {processors}"
                 print(cmd)
-                os.system(cmd)
+                exitcode = os.system(cmd)
+                if exitcode != 0:
+                    raise errors.ReconstructorError(f"Test {test_num} failed with an error")
 
         quit()
     #----------------------------------------------------------------------------------------------------------------------#

@@ -7,7 +7,8 @@ license = "MIT"
 readme = "README.md"
 include = [
     "reconstructor/resources/*.gz",
-    "reconstructor/resources/diamond-*.zip"
+    "reconstructor/resources/diamond-*.zip",
+    "reconstructor/resources/testfiles.zip"
 ]
 exclude = [
     "reconstructor/resources/screened_kegg_prokaryotes_pep_db.dmnd"

@@ -3,12 +3,13 @@ import os
 import cobra
 from optlang.symbolics import Zero
 
-from reconstructor import resources
+from reconstructor import resources, errors
 
 
-# Run protein BLAST and save results
 def run_blast(inputfile, outputfile, database, processors):
-    ''' runs protein BLAST and saves results '''
+    """
+    Runs protein BLAST and saves results.
+    """
 
     print('blasting %s vs %s'%(inputfile,database))
 
@@ -32,15 +33,19 @@ def run_blast(inputfile, outputfile, database, processors):
         # Run the blast command
         print('running blastp with the following command line...')
         print(cmd)
-        os.system(cmd) 
+        exitcode = os.system(cmd) 
+        if exitcode != 0:
+            raise errors.DiamondError()
         print('finished blast')
 
     return outputfile
 
 
-# Retreive KEGG hits
 def read_blast(blast_hits):
-    ''' Retrieves KEGG hits '''
+    """
+    Retrieves KEGG hits from blast output.
+    """
+
     hits = set()
     with open(blast_hits, 'r') as file:
         for line in file:
@@ -49,9 +54,11 @@ def read_blast(blast_hits):
     return hits
 
 
-# Translate genes to ModelSEED reactions
 def genes_to_rxns(kegg_hits, gene_modelseed, organism):
-    ''' Translates genes to ModelSEED reactions '''
+    """
+    Translates genes to ModelSEED reactions
+    """
+
     if organism != 'default':
         new_hits = _get_org_rxns(gene_modelseed, organism)
         gene_count = len(kegg_hits)
@@ -71,9 +78,11 @@ def genes_to_rxns(kegg_hits, gene_modelseed, organism):
     return rxn_db
 
 
-# Get genes for organism from reference genome
 def _get_org_rxns(gene_modelseed, organism):
-    ''' Get genes for organism from reference genome '''
+    """
+    Get genes for organism from reference genome.
+    """
+
     org_genes = []
     for gene in gene_modelseed.keys():
         current = gene.split(':')[0]
@@ -83,9 +92,11 @@ def _get_org_rxns(gene_modelseed, organism):
     return set(org_genes)
 
 
-# Create draft GENRE and integrate GPRs
 def create_model(rxn_db, universal, input_id):
-    ''' Create draft GENRE and integrate GPRs '''
+    """
+    Create draft GENRE and integrate GPRs.
+    """
+
     new_model = cobra.Model('new_model')
 
     for x in rxn_db.keys():
@@ -100,9 +111,11 @@ def create_model(rxn_db, universal, input_id):
     return new_model
 
 
-# Add gene names
 def add_names(model, gene_db):
-    ''' Add gene names '''
+    """
+    Add gene names.
+    """
+
     #FIXME: the current gene database doesn't have any actual gene names in it
     for gene in model.genes:
         if gene.id in gene_db:
@@ -111,12 +124,18 @@ def add_names(model, gene_db):
     return model
 
 
-# pFBA gapfiller
 def find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step, file_type):
-    ''' pFBA gapfiller that modifies universal reaction bag, removes overlapping reacitons from universal reaction bag
-    and resets objective if needed, adds model reaction to universal bag, sets lower bound for metabolic tasks, 
-    sets minimum lower bound for previous objective, assemble forward and reverse components of all reactions,
-    create objective, based on pFBA, run FBA and identify reactions from universal that are now active'''
+    """
+    pFBA gapfiller.
+    
+    Modifies universal reaction bag, removes overlapping reacitons from
+    universal reaction bag and resets objective if needed, adds model reaction
+    to universal bag, sets lower bound for metabolic tasks, sets minimum lower
+    bound for previous objective, assemble forward and reverse components of all
+    reactions, create objective, based on pFBA, run FBA and identify reactions
+    from universal that are now active.
+    """
+
     print('\r[                                         ]', end="", flush=True)
 
     # Modify universal reaction bag
@@ -191,10 +210,13 @@ def find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step
     return(new_rxn_ids)    
 
 
-# Add new reactions to model
 def gapfill_model(model, universal, new_rxn_ids, obj, step):
-    '''Adds new reactions to model by getting reactions and metabolites to be added to the model, creates gapfilled model, 
-    and identifies extracellular metabolites that still need exchanges '''
+    """
+    Adds new reactions to model by getting reactions and metabolites to be added
+    to the model, creates gapfilled model, and identifies extracellular
+    metabolites that still need exchanges.
+    """
+
     # Get reactions and metabolites to be added to the model
     new_rxns = []
     if step == 1: new_rxns.append(universal.reactions.get_by_id(obj).copy())
@@ -219,8 +241,11 @@ def gapfill_model(model, universal, new_rxn_ids, obj, step):
     return model
 
 
-# Set uptake of specific metabolites in complete medium gap-filling
 def set_base_inputs(model, universal):
+    """
+    Set uptake of specific metabolites in complete medium gap-filling.
+    """
+
     tasks = ['EX_cpd00035_e','EX_cpd00051_e','EX_cpd00132_e','EX_cpd00041_e','EX_cpd00084_e','EX_cpd00053_e','EX_cpd00023_e',
     'EX_cpd00033_e','EX_cpd00119_e','EX_cpd00322_e','EX_cpd00107_e','EX_cpd00039_e','EX_cpd00060_e','EX_cpd00066_e','EX_cpd00129_e',
     'EX_cpd00054_e','EX_cpd00161_e','EX_cpd00065_e','EX_cpd00069_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00149_e','EX_cpd00030_e',
@@ -238,7 +263,10 @@ def set_base_inputs(model, universal):
 
 
 def add_annotation(model, gram, obj='built'):
-    ''' Add gene, metabolite, reaction ,biomass reaction annotations '''
+    """
+    Add gene, metabolite, reaction, and biomass reaction annotations.
+    """
+
     # Genes
     for gene in model.genes:
         gene.annotation['sbo'] = 'SBO:0000243'
@@ -281,9 +309,10 @@ def add_annotation(model, gram, obj='built'):
     return model
     
 
-# Run some basic checks on new models
 def check_model(pre_reactions, pre_metabolites, post_model):
-    ''' Run basic checks on new models (checking for objective flux'''
+    """
+    Run basic checks on new models (checking for objective flux).
+    """
 
 	# Check for objective flux
     new_genes = len(post_model.genes)
