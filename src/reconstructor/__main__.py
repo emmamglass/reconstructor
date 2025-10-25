@@ -41,6 +41,8 @@ import os
 from pathlib import Path
 import argparse
 from multiprocessing import cpu_count
+from tempfile import TemporaryDirectory
+import zipfile
 
 import cobra
 
@@ -56,6 +58,7 @@ from reconstructor._funcs import (
     add_annotation,
     check_model
 )
+from reconstructor.diamond import Diamond, download_diamond, DEFAULT_DIAMOND_VERSION
 from reconstructor import resources, errors
 
 
@@ -75,6 +78,23 @@ parser.add_argument('--cpu', default=1, help='Number of processors to use')
 parser.add_argument('--gapfill', default='yes', help='gapfill your model?')
 parser.add_argument('--exchange', default = 1, help='open exchange: 1, shut down exchange: 0')
 parser.add_argument('--test', default = 'no', help='do you want to perform the test suite?')
+
+# Diamond download options (only used when running the test suite)
+group = parser.add_mutually_exclusive_group(required=False)
+group.add_argument(
+    "--diamond",
+    nargs="?",
+    const=DEFAULT_DIAMOND_VERSION,
+    default=None,
+    help="Force DIAMOND to be downloaded when running the test suite, and optionally specify the version"
+)
+group.add_argument(
+    "--skip-diamond",
+    action="store_true",
+    default=False,
+    help="Skip downloading a DIAMOND binary if running the test suite"
+)
+
 args = parser.parse_args()
 
 
@@ -103,14 +123,27 @@ if __name__ == "__main__":
 
     #----------------------------------------------------------------------------------------------------------------------#
     if test == 'yes':
-        from tempfile import TemporaryDirectory
-        import zipfile
+
+        # Download a diamond binary if needed
+        if args.diamond is not None:
+            print(f"Getting DIAMOND v{args.diamond} from https://github.com/bbuchfink/diamond/releases")
+            download_diamond(diamond_version=args.diamond)
+        if not args.skip_diamond:
+            try:
+                diamond = Diamond()
+            except errors.DiamondNotFoundError:
+                print("DIAMOND not found...getting DIAMOND from https://github.com/bbuchfink/diamond/releases")
+                download_diamond()
+                diamond = Diamond()
+            finally:
+                print(f"Using DIAMOND v{diamond.get_version()} at {diamond.path}")
 
         # Download the diamond database file if it hasn't been downloaded yet
         diamond_db_path = resources.get_diamond_db_path()
         if not diamond_db_path.exists():
             print("Downloading the DIAMOND database for blasting...")
             resources.download_diamond_db()
+            print("Done")
 
         # Run the three tests (each with a different input file)
         # - 488.146.clean.fa: an amino acid .fasta file used to test a type 1 input to reconstructor
@@ -187,7 +220,7 @@ if __name__ == "__main__":
     if file_type == 1:
         print('Aligning peptide sequences to KEGG database, may take some time...')
         blast_results = input_file.rstrip('fastn') + 'KEGGprot.out'
-        print('Saving BLASTp results to', blast_results,'\n')
+        print('Blast results will be saved to', blast_results,'\n')
         run_blast(input_file, blast_results, kegg_prot_db, str(processors))
     elif file_type == 2:
         blast_results = input_file
@@ -230,7 +263,6 @@ if __name__ == "__main__":
     'cpd00254_e','cpd00971_e','cpd00063_e','cpd10515_e','cpd00205_e','cpd00099_e']
     else:
         media = media
-    print(media)
     
     # Set media condition
     if len(media) != 0:

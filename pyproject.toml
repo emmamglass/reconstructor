@@ -1,17 +1,17 @@
 [tool.poetry]
 name = "reconstructor"
-version = "1.1.2"
+version = "1.2.0a0"
 description = "COBRApy Compatible Genome Scale Metabolic Network Reconstruction Tool: Reconstructor"
 authors = ["Matt Jenior and Emma Glass"]
 license = "MIT"
 readme = "README.md"
 include = [
     "reconstructor/resources/*.gz",
-    "reconstructor/resources/diamond-*.zip",
     "reconstructor/resources/testfiles.zip"
 ]
 exclude = [
-    "reconstructor/resources/screened_kegg_prokaryotes_pep_db.dmnd"
+    "reconstructor/resources/screened_kegg_prokaryotes_pep_db.dmnd",
+    "reconstructor/bin/*"
 ]
 
 [tool.poetry.dependencies]

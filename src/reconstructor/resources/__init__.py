@@ -1,14 +1,8 @@
-from typing import Generator
 from functools import lru_cache
 from importlib import resources
 from pathlib import Path
-from tempfile import TemporaryDirectory
-from contextlib import contextmanager
 import gzip
 import json
-import platform
-import zipfile
-import stat
 
 import wget
 import cobra
@@ -73,35 +67,3 @@ def remove_diamond_db():
     """
     path = get_diamond_db_path()
     path.unlink(missing_ok=True)
-
-
-@contextmanager
-def diamond_exe() -> Generator[Path, None, None]:
-    """
-    Context manager returning a filepath to the DIAMOND executable.
-
-    This involves extracting the appropriate executable from the zip archive
-    containing all the DIAMOND executables into a temporary directory. The path
-    to the executable in the resulting temporary directory is then returned.
-    """
-    with TemporaryDirectory(dir=RESOURCE_DIR) as tempdir:
-        yield _unpack_diamond_exe(platform.system(), tempdir)
-
-
-def _unpack_diamond_exe(system: str, dir = None) -> Path:
-    """
-    Unpacks the DIAMOND appropriate DIAMOND binary for the provided system into
-    the specified directory and returns the path to the binary.
-    """
-    zip_path = RESOURCE_DIR.joinpath(f"diamond-{system}.zip")
-    with zipfile.ZipFile(zip_path, "r", zipfile.ZIP_DEFLATED) as archive:
-        pathstr = archive.extract(f"diamond-{system}", dir)
-    path = Path(pathstr)
-
-    # Make sure it is executable on MacOS or Linux
-    if system in ["Darwin", "Linux"]:
-        curr_mode = path.stat().st_mode
-        new_mode = curr_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
-        path.chmod(new_mode)
-
-    return path

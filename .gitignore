@@ -145,6 +145,7 @@ dmypy.json
 .DS_Store
 
 # Reconstructor stuff
+src/reconstructor/bin
 src/reconstructor/refs/
 src/reconstructor/testfiles/
 src/reconstructor/resources/screened_kegg_prokaryotes_pep_db.dmnd

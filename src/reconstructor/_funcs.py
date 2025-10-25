@@ -1,9 +1,7 @@
-import os
-
 import cobra
 from optlang.symbolics import Zero
 
-from reconstructor import resources, errors
+from reconstructor.diamond import Diamond
 
 
 def run_blast(inputfile, outputfile, database, processors):
@@ -13,30 +11,17 @@ def run_blast(inputfile, outputfile, database, processors):
 
     print('blasting %s vs %s'%(inputfile,database))
 
-    # Get DIAMOND executable
-    with resources.diamond_exe() as diamond:
-    
-        # Build the command string
-        cmd_params = [
-            str(diamond),
-            "blastp",
-            f"-p {processors}",
-            f"-d {database}",
-            f"-q {inputfile}",
-            f"-o {outputfile}",
-            "--more-sensitive",
-            "--max-target-seqs 1",
-            "--quiet"
-        ]
-        cmd = " ".join(cmd_params)
-
-        # Run the blast command
-        print('running blastp with the following command line...')
-        print(cmd)
-        exitcode = os.system(cmd) 
-        if exitcode != 0:
-            raise errors.DiamondError()
-        print('finished blast')
+    diamond = Diamond()
+    diamond.blastp(
+        database,
+        inputfile,
+        outputfile, 
+        "-p", processors,
+        "--more-sensitive",
+        "--max-target-seqs", "1",
+        capture_output=True
+    )
+    print('finished blast')
 
     return outputfile
 
