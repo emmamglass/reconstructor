@@ -61,7 +61,7 @@ def download_diamond_db():
 
 def remove_diamond_db():
     """
-    Deletes the DIAMOND database file. This is mean to be used prior to
+    Deletes the DIAMOND database file. This is meant to be used prior to
     uninstalling Reconstructor; otherwise, the DIAMOND database will be left
     behind when Reconstructor is uninstalled.
     """
