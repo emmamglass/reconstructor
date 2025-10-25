@@ -1,23 +1,30 @@
 [tool.poetry]
 name = "reconstructor"
-version = "1.1.2"
+version = "1.2.0"
 description = "COBRApy Compatible Genome Scale Metabolic Network Reconstruction Tool: Reconstructor"
 authors = ["Matt Jenior and Emma Glass"]
 license = "MIT"
 readme = "README.md"
+include = [
+    "reconstructor/resources/*.gz",
+    "reconstructor/resources/testfiles.zip"
+]
+exclude = [
+    "reconstructor/resources/screened_kegg_prokaryotes_pep_db.dmnd",
+    "reconstructor/bin/*"
+]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
-cobra = ">0.22.1,<0.24"
-symengine = "^0.9.2"
+python = ">=3.9,<4"
 wget = "^3.2"
-unipath = "1.1"
-numpy = "<1.24"
-
-[tool.poetry.dev-dependencies]
-
+cobra = "^0.29.1"
 
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=7.0)"
+]

@@ -1,57 +1,49 @@
-import os
-import platform
-from copy import deepcopy
-from sys import stdout
-import warnings
-
 import cobra
-import symengine
+from optlang.symbolics import Zero
+
+from reconstructor.diamond import Diamond
 
 
-class OperatingSystemError(Exception):
-    pass
+def run_blast(inputfile, outputfile, database, processors):
+    """
+    Runs protein BLAST and saves results.
+    """
 
-
-# Run protein BLAST and save results
-def _run_blast(inputfile, outputfile, database, processors, script_path):
-    ''' runs protein BLAST and saves results '''
-    opsys =  platform.system()
-    print(opsys)
     print('blasting %s vs %s'%(inputfile,database))
-    if opsys == "Darwin":
-        cmd_line = 'diamond blastp -p %s -d %s -q %s -o %s --more-sensitive --max-target-seqs 1 --quiet'%(processors,database,inputfile,outputfile)
-        print('running blastp with the following command line...')
-        print(cmd_line)
-        os.system(cmd_line) 
-    elif opsys == "Windows":
-        script_path = str(os.path.dirname(os.path.realpath(__file__)))
-        diamond_path = script_path + r"\diamond"
-        cmd_line = str(diamond_path)+' blastp -p %s -d %s -q %s -o %s --more-sensitive --max-target-seqs 1 --quiet'%(processors,database,inputfile,outputfile)
-        print('running blastp with the following command line...')
-        print(cmd_line)
-        os.system(cmd_line) 
-    elif opsys == 'Linux':
-        raise OperatingSystemError("Reconstructor does not currently support Linux")
-    
+
+    diamond = Diamond()
+    diamond.blastp(
+        database,
+        inputfile,
+        outputfile, 
+        "-p", processors,
+        "--more-sensitive",
+        "--max-target-seqs", "1",
+        capture_output=True
+    )
     print('finished blast')
 
     return outputfile
 
 
-# Retreive KEGG hits
-def _read_blast(blast_hits):
-    ''' Retrieves KEGG hits '''
+def read_blast(blast_hits):
+    """
+    Retrieves KEGG hits from blast output.
+    """
+
     hits = set()
-    with open(blast_hits, 'r') as inFile:
-        for line in inFile:
+    with open(blast_hits, 'r') as file:
+        for line in file:
             line = line.split()
-            hits |= set([line[1]])
+            hits.add(line[1])
     return hits
 
 
-# Translate genes to ModelSEED reactions
-def _genes_to_rxns(kegg_hits, gene_modelseed, organism):
-    ''' Translates genes to ModelSEED reactions '''
+def genes_to_rxns(kegg_hits, gene_modelseed, organism):
+    """
+    Translates genes to ModelSEED reactions
+    """
+
     if organism != 'default':
         new_hits = _get_org_rxns(gene_modelseed, organism)
         gene_count = len(kegg_hits)
@@ -61,25 +53,20 @@ def _genes_to_rxns(kegg_hits, gene_modelseed, organism):
 
     rxn_db = {}
     for gene in kegg_hits:
-        try:
-            rxns = gene_modelseed[gene]
-        except KeyError:
-            continue
-
-        for rxn in rxns:
+        for rxn in gene_modelseed.get(gene, []):
             rxn = rxn + '_c'
-            try:
+            if rxn in rxn_db:
                 rxn_db[rxn].append(gene)
-            except KeyError:
+            else:
                 rxn_db[rxn] = [gene]
 
     return rxn_db
 
 
-# Get genes for organism from reference genome
 def _get_org_rxns(gene_modelseed, organism):
-    ''' Get genes for organism from reference genome '''
-    rxn_db = {}
+    """
+    Get genes for organism from reference genome.
+    """
 
     org_genes = []
     for gene in gene_modelseed.keys():
@@ -90,18 +77,18 @@ def _get_org_rxns(gene_modelseed, organism):
     return set(org_genes)
 
 
-# Create draft GENRE and integrate GPRs
-def _create_model(rxn_db, universal, input_id):
-    ''' Create draft GENRE and integrate GPRs '''
+def create_model(rxn_db, universal, input_id):
+    """
+    Create draft GENRE and integrate GPRs.
+    """
+
     new_model = cobra.Model('new_model')
 
     for x in rxn_db.keys():
-        try:
-            rxn = deepcopy(universal.reactions.get_by_id(x))
-            new_model.add_reactions([rxn])
+        if universal.reactions.has_id(x):
+            rxn = universal.reactions.get_by_id(x)
+            new_model.add_reactions([rxn.copy()])
             new_model.reactions.get_by_id(x).gene_reaction_rule = ' or '.join(rxn_db[x])
-        except KeyError:
-            continue
 
     if input_id != 'default':
         new_model.id = input_id
@@ -109,64 +96,63 @@ def _create_model(rxn_db, universal, input_id):
     return new_model
 
 
-# Add gene names
-def _add_names(model, gene_db):
-    ''' Add gene names '''
+def add_names(model, gene_db):
+    """
+    Add gene names.
+    """
+
+    #FIXME: the current gene database doesn't have any actual gene names in it
     for gene in model.genes:
-        try:
+        if gene.id in gene_db:
             gene.name = gene_db[gene.id].title()
-        except KeyError:
-            continue
 
     return model
 
 
-# pFBA gapfiller
-def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step, file_type):
-    ''' pFBA gapfiller that modifies universal reaction bag, removes overlapping reacitons from universal reaction bag
-    and resets objective if needed, adds model reaction to universal bag, sets lower bound for metabolic tasks, 
-    sets minimum lower bound for previous objective, assemble forward and reverse components of all reactions,
-    create objective, based on pFBA, run FBA and identify reactions from universal that are now active'''
-    stdout.write('\r[                                         ]')
-    stdout.flush()
+def find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step, file_type):
+    """
+    pFBA gapfiller.
+    
+    Modifies universal reaction bag, removes overlapping reacitons from
+    universal reaction bag and resets objective if needed, adds model reaction
+    to universal bag, sets lower bound for metabolic tasks, sets minimum lower
+    bound for previous objective, assemble forward and reverse components of all
+    reactions, create objective, based on pFBA, run FBA and identify reactions
+    from universal that are now active.
+    """
+
+    print('\r[                                         ]', end="", flush=True)
 
     # Modify universal reaction bag
     new_rxn_ids = set() #make empty set we will add new reaction ids to
     with reaction_bag as universal: #set the reaction bag as the universal reaction databse
 
         # Remove overlapping reactions from universal bag, and reset objective if needed
-        warnings.filterwarnings('ignore')
         orig_rxn_ids = set()    #original reaction ids start as an empty set
-        remove_rxns = []    #reactions to remove is empty vector
+        remove_rxns = set()    #reactions to remove is empty vector
         for rxn in model.reactions: #for a reaction in the draft model reactions
             if rxn.id == obj and file_type != 3: #if a reaction is part of the objective function 
                 continue
 
-            orig_rxn_ids |= set([rxn.id])
-            try:
-                test = universal.reactions.get_by_id(rxn.id)
-                remove_rxns.append(rxn.id)
-            except:
-                continue
+            orig_rxn_ids.add(rxn.id)
+            if universal.reactions.has_id(rxn.id):
+                remove_rxns.add(rxn.id)
 
         # Add model reactions to universal bag
-        universal.remove_reactions(list(set(remove_rxns)))
+        universal.remove_reactions(remove_rxns)
         add_rxns = []
         for x in model.reactions:
             if x.id != obj or file_type == 3:
-                add_rxns.append(deepcopy(x))
+                add_rxns.append(x.copy())
         universal.add_reactions(add_rxns)
 
         # Set lower bounds for metaboloic tasks
         if len(tasks) != 0:
             for rxn in tasks:
-                try:
+                if universal.reactions.has_id(rxn):
                     universal.reactions.get_by_id(rxn).lower_bound = fraction
-                except:
-                    continue
 
-        stdout.write('\r[---------------                          ]')
-        stdout.flush()
+        print('\r[---------------                          ]', end="", flush=True)
 
         # Set minimum lower bound for previous objective
         universal.objective = universal.reactions.get_by_id(obj) 
@@ -182,7 +168,6 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
 
         # Assemble forward and reverse components of all reactions
         coefficientDict = {}
-        pfba_expr = symengine.RealDouble(0)
         for rxn in universal.reactions:
             if rxn.id in orig_rxn_ids:
                 coefficientDict[rxn.forward_variable] = 0.0
@@ -191,38 +176,38 @@ def _find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, ste
                 coefficientDict[rxn.forward_variable] = 1.0
                 coefficientDict[rxn.reverse_variable] = 1.0
 
-        stdout.write('\r[--------------------------               ]')
-        stdout.flush()
+        print('\r[--------------------------               ]', end="", flush=True)
 
         # Create objective, based on pFBA
         universal.objective = 0
         universal.solver.update()
-        universal.objective = universal.problem.Objective(symengine.RealDouble(0), direction='min', sloppy=True)
+        universal.objective = universal.problem.Objective(Zero, direction='min', sloppy=True)
         universal.objective.set_linear_coefficients(coefficientDict)
         
-        stdout.write('\r[----------------------------------       ]')
-        stdout.flush()
+        print('\r[----------------------------------       ]', end="", flush=True)
 
         # Run FBA and identify reactions from universal that are now active
         solution = universal.optimize()
         
     new_rxn_ids = set([rxn.id for rxn in reaction_bag.reactions if abs(solution.fluxes[rxn.id]) > 1e-6]).difference(orig_rxn_ids)
-    stdout.write('\r[-----------------------------------------]\n')
-    warnings.filterwarnings('default')
+    print('\r[-----------------------------------------]')
 
     return(new_rxn_ids)    
 
 
-# Add new reactions to model
-def _gapfill_model(model, universal, new_rxn_ids, obj, step):
-    '''Adds new reactions to model by getting reactions and metabolites to be added to the model, creates gapfilled model, 
-    and identifies extracellular metabolites that still need exchanges '''
+def gapfill_model(model, universal, new_rxn_ids, obj, step):
+    """
+    Adds new reactions to model by getting reactions and metabolites to be added
+    to the model, creates gapfilled model, and identifies extracellular
+    metabolites that still need exchanges.
+    """
+
     # Get reactions and metabolites to be added to the model
     new_rxns = []
-    if step == 1: new_rxns.append(deepcopy(universal.reactions.get_by_id(obj)))
+    if step == 1: new_rxns.append(universal.reactions.get_by_id(obj).copy())
     for rxn in new_rxn_ids: 
         if rxn != obj:
-            new_rxns.append(deepcopy(universal.reactions.get_by_id(rxn)))
+            new_rxns.append(universal.reactions.get_by_id(rxn).copy())
     
     # Create gapfilled model 
     model.add_reactions(new_rxns)
@@ -233,18 +218,19 @@ def _gapfill_model(model, universal, new_rxn_ids, obj, step):
         if cpd.compartment != 'extracellular':
             continue
         else:
-            try:
-                test = model.reactions.get_by_id('EX_' + cpd.id)
-            except KeyError:
-                exch_id = 'EX_' + cpd.id
+            exch_id = 'EX_' + cpd.id
+            if not model.reactions.has_id(exch_id):
                 model.add_boundary(cpd, type='exchange', reaction_id=exch_id, lb=-1000.0, ub=1000.0)
                 model.reactions.get_by_id(exch_id).name = cpd.name + ' exchange'
 
     return model
 
 
-# Set uptake of specific metabolites in complete medium gap-filling
-def _set_base_inputs(model, universal):
+def set_base_inputs(model, universal):
+    """
+    Set uptake of specific metabolites in complete medium gap-filling.
+    """
+
     tasks = ['EX_cpd00035_e','EX_cpd00051_e','EX_cpd00132_e','EX_cpd00041_e','EX_cpd00084_e','EX_cpd00053_e','EX_cpd00023_e',
     'EX_cpd00033_e','EX_cpd00119_e','EX_cpd00322_e','EX_cpd00107_e','EX_cpd00039_e','EX_cpd00060_e','EX_cpd00066_e','EX_cpd00129_e',
     'EX_cpd00054_e','EX_cpd00161_e','EX_cpd00065_e','EX_cpd00069_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00149_e','EX_cpd00030_e',
@@ -252,33 +238,32 @@ def _set_base_inputs(model, universal):
 
     new_rxns = []
     for exch in tasks: 
-        try:
-            test = model.reactions.get_by_id(exch)
-        except:
-            new_rxns.append(deepcopy(universal.reactions.get_by_id(exch)))
+        if not model.reactions.has_id(exch):
+            new_rxns.append(universal.reactions.get_by_id(exch).copy())
     model.add_reactions(new_rxns)
-    for exch in tasks: model.reactions.get_by_id(exch).bounds = (-1000., -0.01)
+    for exch in tasks:
+        model.reactions.get_by_id(exch).bounds = (-1000., -0.01)
 
     return model
 
 
-def _add_annotation(model, gram, obj='built'):
-    ''' Add gene, metabolite, reaction ,biomass reaction annotations '''
+def add_annotation(model, gram, obj='built'):
+    """
+    Add gene, metabolite, reaction, and biomass reaction annotations.
+    """
+
     # Genes
     for gene in model.genes:
-        gene._annotation = {}
         gene.annotation['sbo'] = 'SBO:0000243'
         gene.annotation['kegg.genes'] = gene.id
     
     # Metabolites
-    for cpd in model.metabolites: 
-        cpd._annotation = {}
+    for cpd in model.metabolites:
         cpd.annotation['sbo'] = 'SBO:0000247'
         if 'cpd' in cpd.id: cpd.annotation['seed.compound'] = cpd.id.split('_')[0]
 
     # Reactions
     for rxn in model.reactions:
-        rxn._annotation = {}
         if 'rxn' in rxn.id: rxn.annotation['seed.reaction'] = rxn.id.split('_')[0]
         compartments = set([x.compartment for x in list(rxn.metabolites)])
         if len(list(rxn.metabolites)) == 1:
@@ -309,9 +294,10 @@ def _add_annotation(model, gram, obj='built'):
     return model
     
 
-# Run some basic checks on new models
-def _checkModel(pre_reactions, pre_metabolites, post_model):
-    ''' Run basic checks on new models (checking for objective flux'''
+def check_model(pre_reactions, pre_metabolites, post_model):
+    """
+    Run basic checks on new models (checking for objective flux).
+    """
 
 	# Check for objective flux
     new_genes = len(post_model.genes)

@@ -1,35 +1,11 @@
-# Reconstructor - Current Version: 1.1.2
+# Reconstructor - Current Version: 1.2.0
 
 This repository contains all source code in the `Reconstructor` Python package,
 important file dependencies, and benchmarking scores for `Reconstructor`
 models. `Reconstructor` is a COBRApy compatible, automated GENRE building tool
 from annotated aminoa acid .fasta files based on KEGG annotations.
 
-> [!NOTE]
-> `Reconstructor` is currently only compatible on MacOSX and Windows machines
-
-## Quick Installation Guide
-
-### MacOSX pre-installation steps
-
-In a terminal....
-
-Install homebrew if you do not already have it installed by copying/pasting the
-following line into the terminal (further instructions [here](https://brew.sh)):
-
-```shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Download the DIAMOND sequence aligner (version >= 2.0.15) using homebrew:
-
-```shell
-brew install diamond
-```
-
-Now continue to the [instructions for all platforms](#installation-all-platforms).
-
-### Installation (all platforms)
+## Installation
 
 Install `Reconstructor` using pip:
 
@@ -43,6 +19,12 @@ checks (should take ~1hr to complete depending on your system):
 ```shell
 python -m reconstructor --test yes
 ```
+
+> [!NOTE]
+> Running the test suite will automatically download a DIAMOND database and a
+> DIAMOND binary for blasting. If you do not want it to automatically download
+> the DIAMOND binary, then you can use the `--skip-diamond` option. See the
+> [documentation](docs/installation.md) for details.
 
 See the [documentation](docs/installation.md) for additional details about
 installation.

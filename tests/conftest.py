@@ -1,38 +1,30 @@
 from pathlib import Path
-import pickle
-from importlib.resources import files
+from importlib import resources
 
 import pytest
 import cobra
 
-
-@pytest.fixture
-def base_dir() -> Path:
-    return Path(__file__).parent.parent
+import reconstructor.resources
 
 
 @pytest.fixture
 def resource_dir() -> Path:
-    return files(__package__).joinpath("resources")
+    return resources.files(__package__).joinpath("resources")
 
 
 @pytest.fixture
-def modelseed_db(base_dir: Path) -> dict[str, list[str]]:
-    db_path = base_dir / "src" / "reconstructor" / "refs" / "gene_modelseed.pickle"
-    with db_path.open("rb") as db:
-        return pickle.load(db)
+def modelseed_db() -> dict[str, list[str]]:
+    return reconstructor.resources.get_gene_mseed_map()
     
 
 @pytest.fixture
-def universal_model(base_dir: Path) -> cobra.Model:
-    model_path = base_dir / "src" / "reconstructor" / "refs" / "universal.pickle"
-    with model_path.open("rb") as db:
-        return pickle.load(db)
+def universal_model() -> cobra.Model:
+    return reconstructor.resources.get_universal_model()
 
 
 @pytest.fixture
-def kegg_prot_db(base_dir: Path) -> Path:
-    return base_dir / "src" / "reconstructor" / "refs" / "screened_kegg_prokaryotes_pep_db"
+def kegg_prot_db() -> Path:
+    return reconstructor.resources.get_diamond_db_path()
     
 
 @pytest.fixture
