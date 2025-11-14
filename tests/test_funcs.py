@@ -25,16 +25,16 @@ def test_read_blast(blast_output_file: Path):
     and parsed correctly.
     """
     expected = {
-        "aai:AARI_04680",
-        "gvg:HMPREF0421_20718",
-        "cst:CLOST_0588",
-        "vei:Veis_0353",
-        "dwd:DSCW_47150",
-        "gvh:HMPREF9231_1083",
-        "jli:EXU32_08840",
-        "gvh:HMPREF9231_0377",
-        "cth:Cthe_0797",
-        "bbp:BBPR_1794"
+        "WP_004111608.1": "aai:AARI_04680",
+        "WP_004111823.1": "gvg:HMPREF0421_20718",
+        "WP_004112121.1": "cst:CLOST_0588",
+        "WP_004113321.1": "vei:Veis_0353",
+        "WP_004113429.1": "dwd:DSCW_47150",
+        "WP_196227846.1": "gvh:HMPREF9231_1083",
+        "WP_196227848.1": "jli:EXU32_08840",
+        "WP_196227849.1": "gvh:HMPREF9231_0377",
+        "WP_230479112.1": "cth:Cthe_0797",
+        "WP_230479416.1": "bbp:BBPR_1794"
     }
     result = read_blast(blast_output_file)
     assert result == expected
@@ -46,28 +46,28 @@ def test_genes_to_rxns(blast_output_file: Path, modelseed_db: dict[str, list[str
     converted to a dictionary of reactions and associated genes.
     """
     expected = {
-        'rxn38278_c': ['vei:Veis_0353'],
-        'rxn32389_c': ['vei:Veis_0353'],
-        'rxn38702_c': ['vei:Veis_0353'],
-        'rxn03869_c': ['vei:Veis_0353'],
-        'rxn06522_c': ['vei:Veis_0353'],
-        'rxn38142_c': ['vei:Veis_0353'],
-        'rxn02518_c': ['cst:CLOST_0588'],
-        'rxn01962_c': ['cst:CLOST_0588'],
-        'rxn33568_c': ['cst:CLOST_0588'],
-        'rxn32974_c': ['cst:CLOST_0588'],
-        'rxn32148_c': ['cst:CLOST_0588'],
-        'rxn32257_c': ['cst:CLOST_0588'],
-        'rxn33469_c': ['gvh:HMPREF9231_0377'],
-        'rxn01987_c': ['gvh:HMPREF9231_0377'],
-        'rxn02008_c': ['jli:EXU32_08840'],
-        'rxn15597_c': ['cth:Cthe_0797'],
-        'rxn30045_c': ['dwd:DSCW_47150'],
-        'rxn16583_c': ['aai:AARI_04680'],
-        'rxn15443_c': ['bbp:BBPR_1794'],
-        'rxn37953_c': ['gvg:HMPREF0421_20718'],
-        'rxn03408_c': ['gvh:HMPREF9231_1083'],
-        'rxn03933_c': ['gvh:HMPREF9231_1083']
+        "rxn16583_c": ["WP_004111608.1"],
+        "rxn37953_c": ["WP_004111823.1"],
+        "rxn02518_c": ["WP_004112121.1"],
+        "rxn01962_c": ["WP_004112121.1"],
+        "rxn33568_c": ["WP_004112121.1"],
+        "rxn32974_c": ["WP_004112121.1"],
+        "rxn32148_c": ["WP_004112121.1"],
+        "rxn32257_c": ["WP_004112121.1"],
+        "rxn38278_c": ["WP_004113321.1"],
+        "rxn32389_c": ["WP_004113321.1"],
+        "rxn38702_c": ["WP_004113321.1"],
+        "rxn03869_c": ["WP_004113321.1"],
+        "rxn06522_c": ["WP_004113321.1"],
+        "rxn38142_c": ["WP_004113321.1"],
+        "rxn30045_c": ["WP_004113429.1"],
+        "rxn03408_c": ["WP_196227846.1"],
+        "rxn03933_c": ["WP_196227846.1"],
+        "rxn02008_c": ["WP_196227848.1"],
+        "rxn33469_c": ["WP_196227849.1"],
+        "rxn01987_c": ["WP_196227849.1"],
+        "rxn15597_c": ["WP_230479112.1"],
+        "rxn15443_c": ["WP_230479416.1"]
     }
 
     blast_hits = read_blast(blast_output_file)

@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import cobra
 from optlang.symbolics import Zero
 
@@ -26,40 +28,40 @@ def run_blast(inputfile, outputfile, database, processors):
     return outputfile
 
 
-def read_blast(blast_hits):
+def read_blast(blast_hits) -> dict[str, str]:
     """
     Retrieves KEGG hits from blast output.
     """
 
-    hits = set()
+    hits = {}
     with open(blast_hits, 'r') as file:
         for line in file:
-            line = line.split()
-            hits.add(line[1])
+            items = line.split()
+            hits[items[0]] = items[1]
     return hits
 
 
-def genes_to_rxns(kegg_hits, gene_modelseed, organism):
+def genes_to_rxns(kegg_hits: dict[str, str], gene_modelseed: dict[str, list[str]], organism) -> defaultdict[str, list[str]]:
     """
     Translates genes to ModelSEED reactions
     """
+    org_genes = set()
+    if organism != "default":
+        blasted_genes = set(kegg_hits.values())
+        org_genes = _get_org_rxns(gene_modelseed, organism).difference(blasted_genes)
+        print(f"Adding {len(org_genes)} from organism {organism}")
 
-    if organism != 'default':
-        new_hits = _get_org_rxns(gene_modelseed, organism)
-        gene_count = len(kegg_hits)
-        kegg_hits |= new_hits
-        gene_count = len(kegg_hits) - gene_count
-        print('Added', gene_count, 'genes from', organism)
+    rxn_db: defaultdict[str, list[str]] = defaultdict(list)
+    for gene, kegg_gene in kegg_hits.items():
+        for rxn in gene_modelseed.get(kegg_gene, []):
+            rxn = rxn + "_c"
+            rxn_db[rxn].append(gene)
 
-    rxn_db = {}
-    for gene in kegg_hits:
-        for rxn in gene_modelseed.get(gene, []):
-            rxn = rxn + '_c'
-            if rxn in rxn_db:
-                rxn_db[rxn].append(gene)
-            else:
-                rxn_db[rxn] = [gene]
-
+    for kegg_gene in org_genes:
+        for rxn in gene_modelseed.get(kegg_gene, []):
+            rxn = rxn + "_c"
+            rxn_db[rxn].append(kegg_gene)
+    
     return rxn_db
 
 
@@ -77,26 +79,24 @@ def _get_org_rxns(gene_modelseed, organism):
     return set(org_genes)
 
 
-def create_model(rxn_db, universal, input_id):
+def create_model(rxn_db: dict[str, list[str]], universal: cobra.Model, model_id):
     """
     Create draft GENRE and integrate GPRs.
     """
-
-    new_model = cobra.Model('new_model')
+    if model_id == "default":
+        model_id = "new_model"
+    new_model = cobra.Model(model_id)
 
     for x in rxn_db.keys():
         if universal.reactions.has_id(x):
-            rxn = universal.reactions.get_by_id(x)
+            rxn: cobra.Reaction = universal.reactions.get_by_id(x)
             new_model.add_reactions([rxn.copy()])
             new_model.reactions.get_by_id(x).gene_reaction_rule = ' or '.join(rxn_db[x])
-
-    if input_id != 'default':
-        new_model.id = input_id
 
     return new_model
 
 
-def add_names(model, gene_db):
+def add_names(model: cobra.Model, gene_db: dict[str, str]):
     """
     Add gene names.
     """
@@ -255,7 +255,6 @@ def add_annotation(model, gram, obj='built'):
     # Genes
     for gene in model.genes:
         gene.annotation['sbo'] = 'SBO:0000243'
-        gene.annotation['kegg.genes'] = gene.id
     
     # Metabolites
     for cpd in model.metabolites:
