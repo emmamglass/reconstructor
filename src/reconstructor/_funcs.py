@@ -255,7 +255,6 @@ def add_annotation(model, gram, obj='built'):
     # Genes
     for gene in model.genes:
         gene.annotation['sbo'] = 'SBO:0000243'
-        gene.annotation['kegg.genes'] = gene.id
     
     # Metabolites
     for cpd in model.metabolites:
