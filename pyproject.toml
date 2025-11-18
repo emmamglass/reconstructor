@@ -16,7 +16,6 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
-wget = "^3.2"
 cobra = "^0.29.1"
 
 

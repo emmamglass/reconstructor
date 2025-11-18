@@ -1141,17 +1141,6 @@ files = [
 ]
 
 [[package]]
-name = "wget"
-version = "3.2"
-description = "pure python download utility"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "wget-3.2.zip", hash = "sha256:35e630eca2aa50ce998b9b1a127bb26b30dfee573702782aa982f875e3f16061"},
-]
-
-[[package]]
 name = "zipp"
 version = "3.20.2"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -1175,4 +1164,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9,<4"
-content-hash = "e085a51ebe42dcd9117849bb798803def66febedec7545a1de360d2797140da7"
+content-hash = "49ead74c3574a49655cb204a44b4039b1e978d7d7404dd08562fdc63b4e3d985"

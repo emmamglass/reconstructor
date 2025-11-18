@@ -13,14 +13,8 @@ import subprocess
 import re
 
 from reconstructor import errors
+from reconstructor.utils import download, CallbackT, DownloadProgress
 
-
-_CALLBACK = Callable[[int, int, int], Any]
-_DOWNLOAD_PROGRESS = lambda count, block, total: print(
-    f"\rDownloading... {count*block/total:.1%}",
-    end=("" if count*block < total else "\n"),
-    flush=True
-)
 
 DEFAULT_DIAMOND_VERSION = "2.1.14"
 _DIAMOND_URL_TEMPLATE = "https://github.com/bbuchfink/diamond/releases/download/v{version}/diamond-{system}{ext}"
@@ -104,7 +98,7 @@ def download_diamond(
         dir: Optional[Union[str, bytes, os.PathLike]] = _BIN_DIR,
         diamond_version: str = DEFAULT_DIAMOND_VERSION,
         bin_name: Optional[str] = None,
-        callback: Optional[_CALLBACK] = _DOWNLOAD_PROGRESS
+        callback: Optional[CallbackT] = DownloadProgress()
     ) -> str:
     """
     Download the appropriate DIAMOND binary for the operating system from
@@ -135,7 +129,12 @@ def cleanup_bin():
         shutil.rmtree(_BIN_DIR)
 
 
-def _download_windows(dir: Optional[Union[str, bytes, os.PathLike]], diamond_version: str, bin_name: Optional[str], callback: Optional[_CALLBACK] = None) -> str:
+def _download_windows(
+        dir: Optional[Union[str, bytes, os.PathLike]],
+        diamond_version: str,
+        bin_name: Optional[str],
+        callback: Optional[CallbackT] = None
+    ) -> str:
     if bin_name is None:
         bin_name = _WINDOWS_BIN
 
@@ -147,7 +146,12 @@ def _download_windows(dir: Optional[Union[str, bytes, os.PathLike]], diamond_ver
     return os.path.join(dir, bin_name)
 
 
-def _download_macos(dir: Optional[Union[str, bytes, os.PathLike]], diamond_version: str, bin_name: Optional[str], callback: Optional[_CALLBACK] = None) -> str:
+def _download_macos(
+        dir: Optional[Union[str, bytes, os.PathLike]],
+        diamond_version: str,
+        bin_name: Optional[str],
+        callback: Optional[CallbackT] = None
+    ) -> str:
     if bin_name is None:
         bin_name = _MACOS_BIN
 
@@ -159,7 +163,12 @@ def _download_macos(dir: Optional[Union[str, bytes, os.PathLike]], diamond_versi
     return os.path.join(dir, bin_name)
 
 
-def _download_linux(dir: Optional[Union[str, bytes, os.PathLike]], diamond_version: str, bin_name: Optional[str], callback: Optional[_CALLBACK] = None) -> str:
+def _download_linux(
+        dir: Optional[Union[str, bytes, os.PathLike]],
+        diamond_version: str,
+        bin_name: Optional[str],
+        callback: Optional[CallbackT] = None
+    ) -> str:
     if bin_name is None:
         bin_name = _LINUX_BIN
 
@@ -171,28 +180,18 @@ def _download_linux(dir: Optional[Union[str, bytes, os.PathLike]], diamond_versi
     return os.path.join(dir, bin_name)
 
 
-def _download_archive(dir: Optional[Union[str, bytes, os.PathLike]], diamond_version: str, system: str, ext: str, callback: Optional[_CALLBACK] = None) -> str:
+def _download_archive(
+        dir: Optional[Union[str, bytes, os.PathLike]],
+        diamond_version: str,
+        system: str,
+        ext: str,
+        callback: Optional[CallbackT] = None
+    ) -> str:
     url = _DIAMOND_URL_TEMPLATE.format(version=diamond_version, system=system, ext=ext)
     download_path = os.path.join(dir, "diamond.zip")
 
     try:
-        with request.urlopen(url) as response, open(download_path, "wb") as file:
-            response: http.client.HTTPResponse
-            total_size = int(response.info().get("content-length", 0))
-            block_size = 16 * 1024
-            count = 0
-            
-            while True:
-                chunk = response.read(block_size)
-                if not chunk:
-                    break
-
-                count += 1
-                file.write(chunk)
-
-                if callback is not None:
-                    callback(count, block_size, total_size)
-
+        download(url, download_path, callback)
     except HTTPError as e:
         raise errors.DiamondDownloadError(e, diamond_version, system) from e
 

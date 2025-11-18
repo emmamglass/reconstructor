@@ -4,8 +4,9 @@ from pathlib import Path
 import gzip
 import json
 
-import wget
 import cobra
+
+from reconstructor.utils import download, DownloadProgress
 
 
 RESOURCE_DIR = resources.files(__package__)
@@ -51,12 +52,12 @@ def get_diamond_db_path() -> Path:
     return Path(RESOURCE_DIR.joinpath("screened_kegg_prokaryotes_pep_db.dmnd"))
 
 
-def download_diamond_db():
+def download_diamond_db() -> Path:
     """
     Downloads the DIAMOND database file from the Reconstructor releases page.
     """
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
-    wget.download(url, out=str(get_diamond_db_path()))
+    return download(url, path=get_diamond_db_path(), callback=DownloadProgress())
 
 
 def remove_diamond_db():
