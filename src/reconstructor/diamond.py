@@ -67,7 +67,7 @@ class Diamond:
         args = ["blastp", "--db", db, "--query", query]
         if out is not None:
             args.extend(["--out", out])
-        args.extend(options)
+        args.extend([str(x) for x in options])
         return self.__call__(args, **sp_kwargs)
     
     def get_version(self):
