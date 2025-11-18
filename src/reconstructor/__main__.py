@@ -134,9 +134,7 @@ if __name__ == "__main__":
         # Download the diamond database file if it hasn't been downloaded yet
         diamond_db_path = resources.get_diamond_db_path()
         if not diamond_db_path.exists():
-            print("Downloading the DIAMOND database for blasting...")
             resources.download_diamond_db()
-            print("Done")
 
         # Run the three tests (each with a different input file)
         # - 488.146.clean.fa: an amino acid .fasta file used to test a type 1 input to reconstructor

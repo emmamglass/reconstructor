@@ -59,7 +59,7 @@ def download(url: str, path: Union[str, bytes, os.PathLike], callback: Optional[
         with request.urlopen(url) as response, open(tmp_path, "wb") as file:
             response: http.client.HTTPResponse
             total_size = int(response.info().get("content-length", 0))
-            block_size = 16 * 1024
+            block_size = 64 * 1024
             count = 0
             
             while True:

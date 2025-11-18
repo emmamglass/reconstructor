@@ -98,7 +98,7 @@ def download_diamond(
         dir: Optional[Union[str, bytes, os.PathLike]] = _BIN_DIR,
         diamond_version: str = DEFAULT_DIAMOND_VERSION,
         bin_name: Optional[str] = None,
-        callback: Optional[CallbackT] = DownloadProgress()
+        callback: Optional[CallbackT] = DownloadProgress("Downloading DIAMOND...")
     ) -> str:
     """
     Download the appropriate DIAMOND binary for the operating system from

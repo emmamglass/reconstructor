@@ -57,7 +57,8 @@ def download_diamond_db() -> Path:
     Downloads the DIAMOND database file from the Reconstructor releases page.
     """
     url = "https://github.com/emmamglass/reconstructor/releases/download/v0.0.1/screened_kegg_prokaryotes_pep_db.dmnd"
-    return download(url, path=get_diamond_db_path(), callback=DownloadProgress())
+    progress = DownloadProgress("Downloading the DIAMOND database for blasting...")
+    return download(url, path=get_diamond_db_path(), callback=progress)
 
 
 def remove_diamond_db():
