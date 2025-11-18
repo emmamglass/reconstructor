@@ -1,71 +1,88 @@
+from typing import Optional, Union, Sequence, Literal
 from collections import defaultdict
+import os
 
 import cobra
 from optlang.symbolics import Zero
 
 from reconstructor.diamond import Diamond
+from reconstructor import medium, utils
+from reconstructor._version import __version__
 
 
-def run_blast(inputfile, outputfile, database, processors):
+def run_blast(
+        inputfile: Union[str, os.PathLike],
+        outputfile: Union[str, os.PathLike],
+        database: Union[str, os.PathLike],
+        processors: Optional[int] = None
+    ) -> Union[str, os.PathLike]:
     """
     Runs protein BLAST and saves results.
     """
 
-    print('blasting %s vs %s'%(inputfile,database))
+    if processors is None:
+        options = ["--more-sensitive", "--max-target-seqs", "1"]
+    else:
+        options = ["-p", processors, "--more-sensitive", "--max-target-seqs", "1"]
 
     diamond = Diamond()
     diamond.blastp(
         database,
         inputfile,
         outputfile, 
-        "-p", processors,
-        "--more-sensitive",
-        "--max-target-seqs", "1",
+        *options,
         capture_output=True
     )
-    print('finished blast')
 
     return outputfile
 
 
-def read_blast(blast_hits) -> dict[str, str]:
+def read_blast(blast_hits: Union[str, os.PathLike]) -> list[cobra.Gene]:
     """
     Retrieves KEGG hits from blast output.
     """
 
-    hits = {}
+    hits: list[cobra.Gene] = []
     with open(blast_hits, 'r') as file:
         for line in file:
-            items = line.split()
-            hits[items[0]] = items[1]
+            query_id, kegg_id, *_ = line.split()
+            gene = cobra.Gene(utils.sanitize_sbml_id(query_id))
+            gene.annotation["kegg.gene"] = kegg_id
+            hits.append(gene)
     return hits
 
 
-def genes_to_rxns(kegg_hits: dict[str, str], gene_modelseed: dict[str, list[str]], organism) -> defaultdict[str, list[str]]:
+def genes_to_rxns(
+        kegg_hits: list[cobra.Gene],
+        gene_modelseed: dict[str, list[str]],
+        organism: Optional[str]
+    ) -> defaultdict[str, list[cobra.Gene]]:
     """
     Translates genes to ModelSEED reactions
     """
     org_genes = set()
-    if organism != "default":
-        blasted_genes = set(kegg_hits.values())
+    if organism is not None:
+        blasted_genes = set(g.annotation["kegg.gene"] for g in kegg_hits)
         org_genes = _get_org_rxns(gene_modelseed, organism).difference(blasted_genes)
         print(f"Adding {len(org_genes)} from organism {organism}")
 
-    rxn_db: defaultdict[str, list[str]] = defaultdict(list)
-    for gene, kegg_gene in kegg_hits.items():
-        for rxn in gene_modelseed.get(kegg_gene, []):
+    rxn_db: defaultdict[str, list[cobra.Gene]] = defaultdict(list)
+    for gene in kegg_hits:
+        for rxn in gene_modelseed.get(gene.annotation["kegg.gene"], []):
             rxn = rxn + "_c"
             rxn_db[rxn].append(gene)
 
     for kegg_gene in org_genes:
         for rxn in gene_modelseed.get(kegg_gene, []):
             rxn = rxn + "_c"
-            rxn_db[rxn].append(kegg_gene)
+            gene = cobra.Gene(kegg_gene)
+            gene.annotation["kegg.gene"] = kegg_gene
+            rxn_db[rxn].append(gene)
     
     return rxn_db
 
 
-def _get_org_rxns(gene_modelseed, organism):
+def _get_org_rxns(gene_modelseed: dict[str, list[str]], organism: str) -> set[str]:
     """
     Get genes for organism from reference genome.
     """
@@ -79,24 +96,35 @@ def _get_org_rxns(gene_modelseed, organism):
     return set(org_genes)
 
 
-def create_model(rxn_db: dict[str, list[str]], universal: cobra.Model, model_id):
+def create_model(
+        rxn_db: dict[str, list[cobra.Gene]],
+        universal: cobra.Model,
+        model_id: Optional[str] = None
+    ) -> cobra.Model:
     """
     Create draft GENRE and integrate GPRs.
     """
-    if model_id == "default":
-        model_id = "new_model"
     new_model = cobra.Model(model_id)
+    new_model.notes["source"] = f"Reconstructor v{__version__}"
 
-    for x in rxn_db.keys():
-        if universal.reactions.has_id(x):
-            rxn: cobra.Reaction = universal.reactions.get_by_id(x)
+    # Add the genes to the model
+    for gene_lst in rxn_db.values():
+        for gene in gene_lst:
+            if not new_model.genes.has_id(gene.id):
+                new_model.genes.add(gene)
+    
+    # Add the reactions to the model
+    for rxn_id in rxn_db.keys():
+        if universal.reactions.has_id(rxn_id):
+            rxn: cobra.Reaction = universal.reactions.get_by_id(rxn_id)
             new_model.add_reactions([rxn.copy()])
-            new_model.reactions.get_by_id(x).gene_reaction_rule = ' or '.join(rxn_db[x])
+            gpr = " or ".join(g.id for g in rxn_db[rxn_id])
+            new_model.reactions.get_by_id(rxn_id).gene_reaction_rule = gpr
 
     return new_model
 
 
-def add_names(model: cobra.Model, gene_db: dict[str, str]):
+def add_names(model: cobra.Model, gene_db: dict[str, str]) -> cobra.Model:
     """
     Add gene names.
     """
@@ -109,7 +137,16 @@ def add_names(model: cobra.Model, gene_db: dict[str, str]):
     return model
 
 
-def find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step, file_type):
+def find_reactions(
+        model: cobra.Model,
+        reaction_bag: cobra.Model,
+        tasks: Optional[Sequence[str]],
+        obj: str,
+        fraction: float,
+        max_fraction: float,
+        step: Literal[1, 2], 
+        file_type: Literal[1, 2, 3]
+    ) -> set[str]:
     """
     pFBA gapfiller.
     
@@ -147,7 +184,7 @@ def find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step
         universal.add_reactions(add_rxns)
 
         # Set lower bounds for metaboloic tasks
-        if len(tasks) != 0:
+        if tasks is not None:
             for rxn in tasks:
                 if universal.reactions.has_id(rxn):
                     universal.reactions.get_by_id(rxn).lower_bound = fraction
@@ -195,7 +232,13 @@ def find_reactions(model, reaction_bag, tasks, obj, fraction, max_fraction, step
     return(new_rxn_ids)    
 
 
-def gapfill_model(model, universal, new_rxn_ids, obj, step):
+def gapfill_model(
+        model: cobra.Model,
+        universal: cobra.Model,
+        new_rxn_ids: Sequence[str],
+        obj: str,
+        step: Literal[1, 2]
+    ) -> cobra.Model:
     """
     Adds new reactions to model by getting reactions and metabolites to be added
     to the model, creates gapfilled model, and identifies extracellular
@@ -226,15 +269,12 @@ def gapfill_model(model, universal, new_rxn_ids, obj, step):
     return model
 
 
-def set_base_inputs(model, universal):
+def set_base_inputs(model: cobra.Model, universal: cobra.Model) -> cobra.Model:
     """
     Set uptake of specific metabolites in complete medium gap-filling.
     """
 
-    tasks = ['EX_cpd00035_e','EX_cpd00051_e','EX_cpd00132_e','EX_cpd00041_e','EX_cpd00084_e','EX_cpd00053_e','EX_cpd00023_e',
-    'EX_cpd00033_e','EX_cpd00119_e','EX_cpd00322_e','EX_cpd00107_e','EX_cpd00039_e','EX_cpd00060_e','EX_cpd00066_e','EX_cpd00129_e',
-    'EX_cpd00054_e','EX_cpd00161_e','EX_cpd00065_e','EX_cpd00069_e','EX_cpd00156_e','EX_cpd00027_e','EX_cpd00149_e','EX_cpd00030_e',
-    'EX_cpd00254_e','EX_cpd00971_e','EX_cpd00063_e','EX_cpd10515_e','EX_cpd00205_e','EX_cpd00099_e']
+    tasks = [f"EX_{cpd}" for cpd in medium.COMPLETE]
 
     new_rxns = []
     for exch in tasks: 
@@ -247,7 +287,7 @@ def set_base_inputs(model, universal):
     return model
 
 
-def add_annotation(model, gram, obj='built'):
+def add_annotation(model: cobra.Model, gram: str, obj='built') -> cobra.Model:
     """
     Add gene, metabolite, reaction, and biomass reaction annotations.
     """
@@ -293,7 +333,7 @@ def add_annotation(model, gram, obj='built'):
     return model
     
 
-def check_model(pre_reactions, pre_metabolites, post_model):
+def check_model(pre_reactions: Sequence[str], pre_metabolites: Sequence[str], post_model: cobra.Model):
     """
     Run basic checks on new models (checking for objective flux).
     """
@@ -304,7 +344,6 @@ def check_model(pre_reactions, pre_metabolites, post_model):
     new_cpd_ids = set([x.id for x in post_model.metabolites]).difference(pre_metabolites)
     test_flux = round(post_model.slim_optimize(), 3)
 
-	
 	# Report to user
     print('\tDraft reconstruction had', str(new_genes), 'genes,', str(len(pre_reactions)), 'reactions, and', str(len(pre_metabolites)), 'metabolites')
     print('\tGapfilled', str(len(new_rxn_ids)), 'reactions and', str(len(new_cpd_ids)), 'metabolites\n')

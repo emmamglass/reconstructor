@@ -7,6 +7,8 @@ belong in any of the other test files.
 import pytest
 import cobra
 
+from reconstructor import medium
+
 
 def test_write_sbml(universal_model: cobra.Model, tmp_path):
     """
@@ -25,3 +27,14 @@ def test_write_sbml(universal_model: cobra.Model, tmp_path):
     # Test writing the model
     model_path = tmp_path / "model.sbml"
     cobra.io.write_sbml_model(new_model, str(model_path))
+
+
+def test_medium():
+    test_medium = ["a", "b", "c", "d", "e"]
+    medium.register(test_medium, "test")
+    assert test_medium == medium.get_medium("test")
+
+
+def test_medium_error():
+    with pytest.raises(KeyError):
+        medium.get_medium("missing")
