@@ -1,16 +1,6 @@
 ##setting up the universal reactions database
 import os
-import cobra
 import pickle
-import argparse
-import warnings
-import symengine
-from random import shuffle
-from multiprocessing import cpu_count
-from sys import stdout
-from copy import deepcopy
-from subprocess import call
-from cobra.util import solver
 from cobra.manipulation.delete import *
 
 script_path = str(os.path.dirname(os.path.realpath(__file__)))

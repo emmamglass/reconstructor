@@ -4,13 +4,10 @@
 # In[1]:
 
 
-import symengine
 import cobra
 from copy import deepcopy
 import json
 import pickle
-import pandas
-from optlang.symbolics import Zero
 
 # building the universal model, add all reactions in together make sure syntax is correct, fist step of model creation
 

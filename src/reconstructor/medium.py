@@ -78,7 +78,7 @@ RICH = [
     "cpd00098_e",
     "cpd00207_e",
     "cpd00082_e",
-    "cpd00129_e"
+    "cpd00129_e",
 ]
 
 COMPLETE = [
@@ -110,7 +110,7 @@ COMPLETE = [
     "cpd00063_e",
     "cpd10515_e",
     "cpd00205_e",
-    "cpd00099_e"
+    "cpd00099_e",
 ]
 
 MINIMAL = [
@@ -121,7 +121,7 @@ MINIMAL = [
     "cpd00129_e",
     "cpd00156_e",
     "cpd00107_e",
-    "cpd00084_e", 
+    "cpd00084_e",
     "cpd00149_e",
     "cpd00099_e",
     "cpd10515_e",
@@ -135,7 +135,7 @@ MINIMAL = [
     "cpd00104_e",
     "cpd00644_e",
     "cpd00263_e",
-    "cpd00082_e"
+    "cpd00082_e",
 ]
 
 

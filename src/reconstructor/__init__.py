@@ -1,6 +1,6 @@
 __all__ = [
-    "reconstruct"
+    "reconstruct",
 ]
 
 from reconstructor.build import reconstruct
-from reconstructor._version import __version__
+from reconstructor._version import __version__ as __version__

@@ -47,21 +47,23 @@ def sanitize_sbml_id(id_: str):
     return re.sub(invalid_chars, "_", id_)
 
 
-def download(url: str, path: Union[str, bytes, os.PathLike], callback: Optional[CallbackT] = None):
+def download(
+    url: str, path: Union[str, bytes, os.PathLike], callback: Optional[CallbackT] = None
+):
     """
     Download the contents of a url and save to the specified path.
     """
 
     with TemporaryDirectory() as tmpdir:
         tmp_path = os.path.join(tmpdir, "download.tmp")
-        
+
         # Download contents to a temporary path
         with request.urlopen(url) as response, open(tmp_path, "wb") as file:
             response: http.client.HTTPResponse
             total_size = int(response.info().get("content-length", 0))
             block_size = 64 * 1024
             count = 0
-            
+
             while True:
                 chunk = response.read(block_size)
                 if not chunk:
@@ -75,7 +77,7 @@ def download(url: str, path: Union[str, bytes, os.PathLike], callback: Optional[
 
         # Rename the temporary downloaded file to the provided path
         os.replace(tmp_path, path)
-    
+
     return path
 
 
@@ -91,7 +93,7 @@ class DownloadProgress:
 
     def __call__(self, count: int, block: int, total: int) -> None:
         now = time.monotonic()
-        finished = count*block >= total
+        finished = count * block >= total
         if self._prev is None or finished or (now - self._prev) >= self.freq:
             self._prev = now
             progress = f"\r{self.msg} {count*block/total:.1%}"

@@ -6,6 +6,7 @@ class ReconstructorError(Exception):
     """
     Base class for Reconstructor errors.
     """
+
     pass
 
 
@@ -13,6 +14,7 @@ class DiamondError(ReconstructorError):
     """
     Base class for errors originating from DIAMOND.
     """
+
     pass
 
 
@@ -35,7 +37,7 @@ class DiamondDownloadError(DiamondError, HTTPError):
     The error raised if an HTTPError is encountered while trying to download
     DIAMOND.
     """
-    
+
     def __init__(self, error: HTTPError, version, system):
         super().__init__(error.url, error.code, error.msg, error.hdrs, error.fp)
         self.version = version
@@ -58,5 +60,5 @@ class DiamondProcessError(DiamondError, subprocess.CalledProcessError):
             returncode=error.returncode,
             cmd=error.cmd,
             output=error.output,
-            stderr=error.stderr
+            stderr=error.stderr,
         )
