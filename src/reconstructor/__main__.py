@@ -45,7 +45,12 @@ import zipfile
 
 import cobra
 
-from reconstructor.diamond import Diamond, download_diamond, DEFAULT_DIAMOND_VERSION, get_diamond_path
+from reconstructor.diamond import (
+    Diamond,
+    download_diamond,
+    DEFAULT_DIAMOND_VERSION,
+    get_diamond_path,
+)
 from reconstructor import resources, reconstruct
 
 
