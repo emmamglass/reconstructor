@@ -41,7 +41,7 @@ def read_blast(blast_hits: Union[str, os.PathLike]) -> list[cobra.Gene]:
         for line in file:
             query_id, kegg_id, *_ = line.split()
             gene = cobra.Gene(utils.sanitize_sbml_id(query_id))
-            gene.annotation["kegg.gene"] = kegg_id
+            gene.annotation["kegg.genes"] = kegg_id
             hits.append(gene)
     return hits
 
@@ -56,13 +56,13 @@ def genes_to_rxns(
     """
     org_genes = set()
     if organism is not None:
-        blasted_genes = set(g.annotation["kegg.gene"] for g in kegg_hits)
+        blasted_genes = set(g.annotation["kegg.genes"] for g in kegg_hits)
         org_genes = _get_org_rxns(gene_modelseed, organism).difference(blasted_genes)
         print(f"Adding {len(org_genes)} from organism {organism}")
 
     rxn_db: defaultdict[str, list[cobra.Gene]] = defaultdict(list)
     for gene in kegg_hits:
-        for rxn in gene_modelseed.get(gene.annotation["kegg.gene"], []):
+        for rxn in gene_modelseed.get(gene.annotation["kegg.genes"], []):
             rxn = rxn + "_c"
             rxn_db[rxn].append(gene)
 
@@ -70,7 +70,7 @@ def genes_to_rxns(
         for rxn in gene_modelseed.get(kegg_gene, []):
             rxn = rxn + "_c"
             gene = cobra.Gene(kegg_gene)
-            gene.annotation["kegg.gene"] = kegg_gene
+            gene.annotation["kegg.genes"] = kegg_gene
             rxn_db[rxn].append(gene)
 
     return rxn_db
