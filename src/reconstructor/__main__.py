@@ -45,8 +45,8 @@ import zipfile
 
 import cobra
 
-from reconstructor.diamond import Diamond, download_diamond, DEFAULT_DIAMOND_VERSION
-from reconstructor import resources, errors, reconstruct
+from reconstructor.diamond import Diamond, download_diamond, DEFAULT_DIAMOND_VERSION, get_diamond_path
+from reconstructor import resources, reconstruct
 
 
 # User defined arguments
@@ -151,14 +151,11 @@ if __name__ == "__main__":
             print(f"Getting DIAMOND v{args.diamond} from {diamond_url}")
             download_diamond(diamond_version=args.diamond)
         if not args.skip_diamond:
-            try:
-                diamond = Diamond()
-            except errors.DiamondNotFoundError:
+            if get_diamond_path() is None:
                 print(f"DIAMOND not found...getting DIAMOND from {diamond_url}")
                 download_diamond()
-                diamond = Diamond()
-            finally:
-                print(f"Using DIAMOND v{diamond.get_version()} at {diamond.path}")
+            diamond = Diamond()
+            print(f"Using DIAMOND v{diamond.get_version()} at {diamond.path}")
 
         # Download the diamond database file if it hasn't been downloaded yet
         diamond_db_path = resources.get_diamond_db_path()

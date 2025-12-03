@@ -76,13 +76,15 @@ class Diamond:
 
 def get_diamond_path(name: Optional[str] = None) -> Optional[str]:
     """
-    Get the path to a DIAMOND executable or raise an error if one is not found.
+    Get the path to a DIAMOND executable or return None if one is not found.
 
     Checks the following locations (in the order shown) and returns the first
     one that is found:
 
     1. reconstructor/bin/ (a bin folder inside the reconstructor package directory)
     2. The user's PATH by calling `shutil.which(name)`
+
+    If DIAMOND is not found, then `None` is returned.
     """
     if name is None:
         name = "diamond.exe" if platform.system() == "Windows" else "diamond"
