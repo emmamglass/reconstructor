@@ -1,3 +1,11 @@
+> [!IMPORTANT]
+> **Maintenance and updates for this project have moved to the
+> [csbl/reconstructor](https://github.com/csbl/reconstructor) repository.
+> Consequently this repository is no longer being updated. Please visit the
+> [csbl/reconstructor](https://github.com/csbl/reconstructor) repository to view
+> the most up-to-date version of the project, report bugs, provide feedback,
+> and/or contribute to the project.**
+
 # Reconstructor - Current Version: 1.2.0
 
 This repository contains all source code in the `Reconstructor` Python package,
